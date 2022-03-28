@@ -3,7 +3,7 @@
  * It will not be available on npm and will not be listed in a user's package.json, but we could provide a "@types/azure__functions-worker" package for it
  * The goal of this module is to be very barebones and closely match the types the worker uses to communicate with the host over the rpc channel
  */
-declare module '@azure/functions-worker' {
+declare module '@azure/functions-core' {
     export interface FunctionMetadata {
         name: string;
 
@@ -25,14 +25,29 @@ declare module '@azure/functions-worker' {
     }
 
     /**
-     * @return Disposable which unregisters this hook on disposal.
+     * Register a hook to interact with the lifecycle of Azure Functions.
+     * Hooks are executed in the order they were registered and will block execution if they throw an error
      */
-    export function registerHook(hookName: string, callback: (...args: any[]) => any): Disposable;
+    export function registerHook(hookName: string, callback: HookCallback): Disposable;
+
+    export type HookCallback = (context: HookContext) => void | Promise<void>;
+
+    export type HookData = { [key: string]: any };
+
+    /**
+     * Base interface for all hook context objects
+     */
+    export interface HookContext {
+        /**
+         * The recommended place to share data between hooks
+         */
+        hookData: HookData;
+    }
 }
 
 /**
  * This module provides all the main benefits of the new programming model. It should have:
- * 1. More intuitive methods compared to the barebones "@azure/functions-worker" methods
+ * 1. More intuitive methods compared to the barebones "@azure/functions-core" methods
  * 2. Any niceity we provide on top of the rpc types, including several pieces currently shipped with the worker like `Context` and `HttpRequest`
  * 3. Intellisense for both JS and TS users
  */
@@ -72,15 +87,15 @@ declare module '@azure/functions-new' {
     /**
      * Just a thought: To simplify the callback, what if only the triggerInput gets passed as an arg, and all other input bindings have to be accessed on `context`
      */
-    export type FunctionCallback = ((context: FunctionContext, triggerInput: unknown) => unknown);
+    export type FunctionCallback = ((context: InvocationContext, triggerInput: unknown) => unknown);
 
-    export type HttpCallback = (context: FunctionContext, request: HttpRequest) => FunctionResult;
-    export type TimerCallback = (context: FunctionContext, myTimer: Timer) => FunctionResult;
+    export type HttpCallback = (context: InvocationContext, request: HttpRequest) => FunctionResult;
+    export type TimerCallback = (context: InvocationContext, myTimer: Timer) => FunctionResult;
     export type QueueCallback = FunctionCallback; // todo
 
-    export type HookCallback = (context: HookContext) => FunctionResult;
-    export type PreInvocationCallback = (context: PreInvocationContext) => Promise<void>;
-    export type PostInvocationCallback = (context: PostInvocationContext) => Promise<void>;
+    export type HookCallback = (context: HookContext) => void | Promise<void>;
+    export type PreInvocationCallback = (context: PreInvocationContext) => void | Promise<void>;
+    export type PostInvocationCallback = (context: PostInvocationContext) => void | Promise<void>;
 
     export type FunctionResult = Promise<any>; // todo
 
@@ -96,21 +111,60 @@ declare module '@azure/functions-new' {
         [key: string]: any; // todo
     }
 
-    export interface FunctionContext {
+    export interface InvocationContext {
         [key: string]: any; // todo
 
         inputs: any[]; // I chose "inputs" to be consistent with "inputbinding", but this could be args instead
     }
 
+    export type HookData = { [key: string]: any };
+
+    /**
+     * Base interface for all hook context objects
+     */
     export interface HookContext {
-        [key: string]: any; // todo
+        /**
+         * The recommended place to share data between hooks
+         */
+        hookData: HookData;
     }
 
-    export interface PreInvocationContext extends HookContext, FunctionContext {
+    /**
+     * Context on a function that is about to be executed
+     * This object will be passed to all pre invocation hooks
+     */
+    export interface PreInvocationContext extends HookContext {
+        /**
+         * The context object passed to the function
+         */
+        invocationContext: InvocationContext;
+
+        /**
+         * The input values for this specific invocation. Changes to this array _will_ affect the inputs passed to your function
+         */
+        inputs: any[];
     }
 
-    export interface PostInvocationContext extends HookContext, FunctionContext {
-        output: any;
+    export interface PostInvocationContext extends HookContext {
+        /**
+         * The context object passed to the function
+         */
+        invocationContext: InvocationContext;
+
+        /**
+         * The input values for this specific invocation
+         */
+        inputs: any[];
+
+        /**
+         * The result of the function, or null if there is no result. Changes to this value _will_ affect the overall result of the function
+         */
+        result: any;
+
+        /**
+         * The error for the function, or null if there is no error. Changes to this value _will_ affect the overall result of the function
+         */
+        error: any;
     }
 
     // #region bindings

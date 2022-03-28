@@ -1,6 +1,6 @@
-import { FunctionContext, HttpCallback, HttpRequest, HttpResponse } from "@azure/functions-new";
+import { HttpCallback, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-new";
 
-export const httpTrigger1: HttpCallback = async function (context: FunctionContext, req: HttpRequest): Promise<HttpResponse> {
+export const httpTrigger1: HttpCallback = async function (context: InvocationContext, req: HttpRequest): Promise<HttpResponse> {
     context.log('HTTP trigger function processed a request.');
     const name = req.query.name || req.body?.name;
     const responseMessage = name

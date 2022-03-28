@@ -20,9 +20,9 @@ The first and most important thing I propose is we split the worker up into two 
 
 ### Package differences
 
-|Worker package ("@azure/functions-worker")|Programming model package ("@azure/functions")|
+|Core worker package ("@azure/functions-core")|Programming model package ("@azure/functions")|
 |---|---|
-|Required - we _have_ to create this package no matter what|Optional - we do not _need_ this package. Instead, we could put everything in the worker package|
+|Required - we _have_ to create an API in some form no matter what|Optional - we do not _need_ this package. Instead, we could put everything in the worker api|
 |built-in module shipped with the worker - _not_ listed in user's package.json|shipped with the user's app - listed in their package.json dependencies|
 |slow to update because it relies on the host release cycle|fast to update - just publishing an npm package|
 |forced on the user when it does update|user decides when to take the update|
@@ -31,7 +31,7 @@ The first and most important thing I propose is we split the worker up into two 
 
 ### A few technical details
 
-I propose the worker should be stripped down to just setting up and managing the gRPC channel used to communicate with the host. It would provide a very limited API in the form the worker package. This API would prioritize flexiblity over usability (i.e. Intellisense) to avoid the need for any breaking changes in the future. We can provide a types package for it (ideally as a part of [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) named `@types/azure_functions-worker`), but most users should never interact with this API directly and thus we don't need detailed types or intellisense. The main consumer of this API is the programming model package. The programming model package should include anything that makes our user's lives easier, for example anything that parses/converts/handles data from the host (`Context`, `HttpRequest`, etc.).
+I propose the worker should be stripped down to just setting up and managing the gRPC channel used to communicate with the host. It would provide a very limited API in the form the worker package. This API would prioritize flexiblity over usability (i.e. Intellisense) to avoid the need for any breaking changes in the future. We can provide a types package for it (ideally as a part of [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) named `@types/azure_functions-core`), but most users should never interact with this API directly and thus we don't need detailed types or intellisense. The main consumer of this API is the programming model package. The programming model package should include anything that makes our user's lives easier, for example anything that parses/converts/handles data from the host (`Context`, `HttpRequest`, etc.).
 
 ### Benefits
 
