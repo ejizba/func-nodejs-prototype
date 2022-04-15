@@ -1,6 +1,6 @@
-import { HttpCallback, HttpRequest, InvocationContext, OutputBindingValue } from "@azure/functions-new1";
+import { HttpRequest, InvocationContext } from "@azure/functions-new1";
 
-export const httpMultipleOutputs: HttpCallback = async function (context: InvocationContext, req: HttpRequest): Promise<OutputBindingValue> {
+export async function httpMultipleOutputs(context: InvocationContext, req: HttpRequest): Promise<any> {
     let retMsg = 'Hello, world!';
     return {
         httpResponse: {
