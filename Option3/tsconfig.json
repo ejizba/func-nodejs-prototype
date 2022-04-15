@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "outDir": "dist",
+    "rootDir": ".",
+    "sourceMap": true,
+    "strict": false,
+    "baseUrl": "./",
+    "paths": {
+      "@azure/functions-new3": [
+        "types"
+      ],
+      "@azure/functions-core": [
+        "../types-core"
+      ]
+    }
+  }
+}

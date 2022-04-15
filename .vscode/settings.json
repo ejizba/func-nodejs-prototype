@@ -9,5 +9,6 @@
         "source.organizeImports",
         "source.fixAll"
     ],
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "azureFunctions.projectSubpath": "Option1"
 }

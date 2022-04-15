@@ -8,8 +8,11 @@
     "strict": false,
     "baseUrl": "./",
     "paths": {
-      "@azure/functions-new": [
+      "@azure/functions-new1": [
         "types"
+      ],
+      "@azure/functions-core": [
+        "../types-core"
       ]
     }
   }

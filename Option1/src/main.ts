@@ -1,4 +1,4 @@
-import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-new";
+import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-new1";
 import { httpMultipleOutputs } from "./functions/httpMultipleOutputs";
 import { httpTrigger1 } from "./functions/httpTrigger1";
 import { timerTrigger1 } from "./functions/timerTrigger1";
