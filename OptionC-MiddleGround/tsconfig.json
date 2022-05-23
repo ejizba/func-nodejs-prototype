@@ -8,7 +8,7 @@
     "strict": false,
     "baseUrl": "./",
     "paths": {
-      "@azure/functions-new4": [
+      "@azure/functions-newC": [
         "types"
       ],
       "@azure/functions-core": [

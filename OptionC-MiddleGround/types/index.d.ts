@@ -1,4 +1,4 @@
-declare module '@azure/functions-new1' {
+declare module '@azure/functions-newC' {
     export namespace app {
         export function registerHttpFunction(name: string, inputBinding: HttpInputBinding, callback: HttpCallback): Function;
         export function registerTimerFunction(name: string, inputBinding: TimerInputBinding, callback: TimerCallback): Function;

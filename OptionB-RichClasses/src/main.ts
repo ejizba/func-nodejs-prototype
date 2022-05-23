@@ -1,4 +1,4 @@
-import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "@azure/functions-new2";
+import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "name@azure/functions-newB";
 
 const reqBinding = new HttpInputBinding('req', {
     authLevel: "anonymous",

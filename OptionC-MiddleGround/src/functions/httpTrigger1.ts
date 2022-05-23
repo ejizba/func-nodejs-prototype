@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-new1";
+import { HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-newC";
 
 export async function httpTrigger1(context: InvocationContext, req: HttpRequest): Promise<HttpResponse> {
     context.log('HTTP trigger function processed a request.');

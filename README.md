@@ -6,7 +6,13 @@ See [this rollup issue](https://github.com/Azure/azure-functions-nodejs-worker/i
 
 This repo has several different options, each following this general format:
 
-- `Option#/src/main.ts`: The main entrypoint for a sample TypeScript app
-- `Option#/types/index.d.ts`: Types for a new [programming model package](https://github.com/Azure/azure-functions-nodejs-worker/issues/568)
+- `Option<>/src/main.ts`: The main entrypoint for a sample TypeScript app
+- `Option<>/types/index.d.ts`: Types for a new [programming model package](https://github.com/Azure/azure-functions-nodejs-worker/issues/568)
 
-The README in each "Option" folder has more details about each option
+Here's a quick rundown of each option, but check the README in each "Option" folder for more details:
+
+- OldOption: The existing programming model with no changes. Purely here for the sake of comparison.
+- OptionA: The simplest programming model we can provide that still lets users define binding data in code.
+- OptionB: Rich classes for bindings
+- OptionC: A middle ground between A and B
+- OptionD: Decorators
