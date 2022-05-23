@@ -1,4 +1,4 @@
-declare module 'name@azure/functions-newB' {
+declare module '@azure/functions-newB' {
     export namespace app {
         export function registerFunction(name: string, bindings: Binding[], callback: FunctionCallback): Function;
     }
