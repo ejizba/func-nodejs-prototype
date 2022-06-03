@@ -21,6 +21,10 @@ app.registerHttpFunction("SimpleHttpFunction", (context: HttpFunctionContext) =>
     // context.res.setHeader("Content-Type", "text/plain");
 });
 
+app.registerHttpFunction("HttpConfigOverride", { route: "/foo", methods: ["get"] }, (context: HttpFunctionContext) => {
+    context.send("Hello, world!");
+});
+
 type TodoItem = {
     description: string
     id: number
@@ -45,8 +49,22 @@ app.registerHttpFunction("HttpAdditionalBindings", [{
     }
 });
 
-app.registerHttpFunction("HttpConfigOverride", { route: "/foo", methods: ["get"] }, (context: HttpFunctionContext) => {
-    context.send("Hello, world!");
+app.registerHttpFunction("HttpAdditionalBindingsPlusOverrides", { route: "/todo/{partitionKey}/{id}", methods: ["get"] }, [{
+    type: "cosmosDB",
+    name: "toDoItem",
+    databaseName: "ToDoItems",
+    collectionName: "Items",
+    connectionStringSetting: "CosmosDBConnection",
+    direction: "in",
+    Id: "{id}",
+    PartitionKey: "{partitionKey}"
+  }
+], (context: HttpFunctionContext, todo: TodoItem) => {
+    if (!todo) {
+        context.status(404);
+    } else {
+        context.json(todo);
+    }
 });
 
 app.registerFunction('TimerTrigger1', timerTrigger1Metadata, timerTrigger1);
