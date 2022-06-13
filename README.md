@@ -11,8 +11,17 @@ This repo has several different options, each following this general format:
 
 Here's a quick rundown of each option, but check the README in each "Option" folder for more details:
 
-- OldOption: The existing programming model with no changes. Purely here for the sake of comparison.
-- OptionA: The simplest programming model we can provide that still lets users define binding data in code.
+### In cosideration
+
 - OptionB: Rich classes for bindings
 - OptionC: A middle ground between A and B
-- OptionD: Decorators
+- OptionE: A merge of the A and C samples, and also applying some opinions on how it could be written.
+
+### Special case
+
+- OptionD: Decorators: This option is still under consideration, but cannot be the GA option. See its README for more info.
+
+### Deprecated
+
+- OldOption: The existing programming model with no changes. Purely here for the sake of comparison.
+- OptionA: The simplest programming model we can provide that still lets users define binding data in code.
