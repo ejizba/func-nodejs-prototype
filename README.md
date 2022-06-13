@@ -15,7 +15,7 @@ Here's a quick rundown of each option, but check the README in each "Option" fol
 
 - OptionB: Rich classes for bindings. You get the best intellisense, but there's a decent overheard for our team to maintain the classes and for users to understand the classes.
 - OptionC: Simple objects for bindings. We'll give intellisense where we can, but you won't instantiate a class at any point
-- OptionE: The "Most Node.js" and "Least Azure Functions" option. We can always add this as an optional piece instead of doing it on its own
+- OptionE: The "Most Node.js" and "Least Azure Functions" option. We can always add this as an optional piece on top of the other options
 
 ### Experimental
 
