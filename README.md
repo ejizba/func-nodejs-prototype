@@ -11,7 +11,7 @@ This repo has several different options, each following this general format:
 
 Here's a quick rundown of each option, but check the README in each "Option" folder for more details:
 
-### In cosideration
+### In consideration
 
 - OptionB: Rich classes for bindings
 - OptionC: A middle ground between A and B
