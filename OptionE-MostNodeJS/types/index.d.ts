@@ -1,5 +1,18 @@
 declare module "@azure/functions-newE" {
   export namespace app {
+    // Per the express docs, "get", "put", "post", and "delete" are "the most popular HTTP methods"
+    // https://expressjs.com/en/4x/api.html#app.METHOD
+    export function get(route: string, callback: HttpCallback): void;
+    export function put(route: string, callback: HttpCallback): void;
+    export function post(route: string, callback: HttpCallback): void;
+    // todo: 'delete' is a reserved word. What should we name this?
+    // export function delete(name: string, callback: HttpCallback): void;
+
+    // todo decide on name
+    export function setInterval(schedule: string, callback: TimerCallback): void;
+    export function schedule(schedule: string, callback: TimerCallback): void;
+    export function timer(schedule: string, callback: TimerCallback): void;
+
     export function registerHttpFunction(
       name: string,
       callback: HttpCallback
@@ -34,6 +47,10 @@ declare module "@azure/functions-newE" {
    */
   export type HttpCallback = (context: HttpFunctionContext, ...args: any) => FunctionResult;
 
+  export type TimerCallback = (context: InvocationContext, ...args: any) => FunctionResult;
+
+  export type Timer = any; // todo
+
   export type FunctionResult = Promise<any> | void; // todo
 
   export class HttpResponse {
@@ -56,7 +73,7 @@ declare module "@azure/functions-newE" {
     name: string;
   }
 
-  export interface InputBinding extends Binding {}
+  export interface InputBinding extends Binding { }
 
   export interface OutputBinding extends Binding {
     name: "$return" | string; // todo does adding '$return' actually help with Intellisense?
