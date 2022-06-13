@@ -1,4 +1,3 @@
 # Option 1
 
-VS Code inspired
-Method chaining
+Simple objects for bindings. We'll give intellisense where we can, but you won't instantiate a class at any point
