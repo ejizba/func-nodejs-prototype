@@ -4,10 +4,6 @@ This option is a merge of the A and C samples, and also applying some opinions o
 
 The main design points:
 
-- Uses an `app` root object for all function registrations
-  - I like this approach as it mirrors the kind of thing we find with Express, Fastify, and other web frameworks
-  - It also makes for a clear ordering to the Functions that are defined, so if you've got multiple HTTP triggers that work off _similar_ routes, you should have a clear order of precedence
-  - It would also make it easier to have discovery, rather than having to know what you can import, you import one thing and intellisense will tell you want it can do
 - In addition to have the most primitive method for registering (which the A design has), this provides some opinionated wrappers on the built-in triggers:
 
 ```ts
