@@ -17,7 +17,7 @@ Here's a quick rundown of each option, but check the README in each "Option" fol
 - OptionC: A middle ground between A and B
 - OptionE: A merge of the A and C samples, and also applying some opinions on how it could be written.
 
-### Special case
+### Experimental
 
 - OptionD: Decorators: This option is still under consideration, but cannot be the GA option. See its README for more info.
 
