@@ -1,13 +1,13 @@
 import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "@azure/functions-newB";
 
-const reqBinding = new HttpInputBinding('req', {
+const reqBinding = new HttpInputBinding({
     authLevel: "anonymous",
     methods: [
         "get",
         "post"
     ]
 });
-const resBinding = new HttpOutputBinding('res');
+const resBinding = new HttpOutputBinding();
 
 app.registerFunction('HttpTriggerInline', [reqBinding, resBinding], async function (context: InvocationContext): Promise<void> {
     context.log('HTTP trigger function processed a request.');

@@ -18,12 +18,12 @@ declare module '@azure/functions-newB' {
     }
 
     export class HttpInputBinding extends HttpBinding {
-        constructor(name: string, options?: {});
+        constructor(options?: {});
         get(context: InvocationContext): HttpRequest;
     }
 
     export class HttpOutputBinding extends HttpBinding {
-        constructor(name: string, options?: {});
+        constructor(options?: {});
         set(context: InvocationContext, response: HttpResponse): void;
     }
 
