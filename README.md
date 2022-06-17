@@ -6,8 +6,18 @@ See [this rollup issue](https://github.com/Azure/azure-functions-nodejs-worker/i
 
 This repo has several different options, each following this general format:
 
-- `Option<>/src/main.ts`: The main entrypoint for a sample TypeScript app
-- `Option<>/types/index.d.ts`: Types for a new [programming model package](https://github.com/Azure/azure-functions-nodejs-worker/issues/568)
+- `Option<>/src/main.ts`: The main entrypoint for a sample TypeScript app. The file name/path can be configured by the user by changing the `main` field in `package.json`.
+- `Option<>/src/functions/`: The source code for each function. This is purely an example and users can put code wherever they want.
+- `Option<>/types/index.d.ts`: Types for a new [programming model package](https://github.com/Azure/azure-functions-nodejs-worker/issues/568). This file will eventually ship as a part of our npm package and will not be controlled by the user.
+
+Each option will have these example functions:
+- `HttpTrigger1`: A simple http trigger
+- `TimerTrigger1`: A simple timer trigger
+- `HttpMultipleOutputs`: A simple http trigger, with an extra storage queue output
+- `QueueTrigger1`: A simple storage queue trigger (triggered by the output of `HttpMultipleOutputs`)
+- `HttpTriggerInline`: A simple http trigger, except the code is put directly in `main.ts`
+
+## Options
 
 Here's a quick rundown of each option, but check the README in each "Option" folder for more details:
 

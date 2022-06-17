@@ -1,4 +1,4 @@
-# Option B
+# Option B - Rich Classes
 
 Basically, you create a new binding class before registering the function which means a bit more overhead, but you get better intellisense.
 

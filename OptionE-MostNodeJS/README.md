@@ -1,4 +1,4 @@
-# Option E
+# Option E - Most Node.js
 
 The main design points:
 - Opinionated wrappers on the built-in triggers to provide the "most Node.js" feeling. You don't provide any configuration to it, instead we provide a default configuration for the HTTP trigger and output binding, using whatever we deem to be best practice.
