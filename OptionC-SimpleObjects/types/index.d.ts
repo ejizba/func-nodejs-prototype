@@ -36,7 +36,7 @@ declare module '@azure/functions-newC' {
     }
 
     export interface Timer {
-        [key: string]: any; // todo
+        isPastDue: boolean;
     }
 
     export interface InvocationContext {
