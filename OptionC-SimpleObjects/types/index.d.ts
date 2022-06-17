@@ -1,19 +1,19 @@
 declare module '@azure/functions-newC' {
     export namespace app {
-        export function registerHttpFunction(name: string, inputBinding: HttpInputBinding, callback: HttpCallback): Function;
-        export function registerTimerFunction(name: string, inputBinding: TimerInputBinding, callback: TimerCallback): Function;
-        export function registerQueueFunction(name: string, inputBinding: QueueInputBinding, callback: QueueCallback): Function;
-        export function registerFunction(type: string, name: string, inputBinding: InputBinding, callback: FunctionCallback): Function; // generic fallback method
+        export function addHttpFunction(name: string, inputBinding: HttpInputBinding, callback: HttpCallback): Function;
+        export function addTimerFunction(name: string, inputBinding: TimerInputBinding, callback: TimerCallback): Function;
+        export function addQueueFunction(name: string, inputBinding: QueueInputBinding, callback: QueueCallback): Function;
+        export function addFunction(type: string, name: string, inputBinding: InputBinding, callback: FunctionCallback): Function; // generic fallback method
     }
 
     export class Function {
-        registerHttpInput(binding: HttpInputBinding): Function;
-        registerQueueInput(binding: QueueInputBinding): Function;
-        registerInput(type: string, binding: InputBinding): Function;
+        addHttpInput(binding: HttpInputBinding): Function;
+        addQueueInput(binding: QueueInputBinding): Function;
+        addInput(type: string, binding: InputBinding): Function;
 
-        registerHttpOutput(binding: HttpOutputBinding): Function;
-        registerQueueOutput(binding: QueueOutputBinding): Function;
-        registerOutput(type: string, binding: InputBinding): Function;
+        addHttpOutput(binding: HttpOutputBinding): Function;
+        addQueueOutput(binding: QueueOutputBinding): Function;
+        addOutput(type: string, binding: InputBinding): Function;
     }
 
     /**
