@@ -1,23 +1,23 @@
 declare module '@azure/functions-newC' {
     export namespace app {
-        export function addHttpFunction(name: string, inputBinding: HttpInputBinding, callback: HttpCallback): Function;
-        export function addTimerFunction(name: string, inputBinding: TimerInputBinding, callback: TimerCallback): Function;
-        export function addQueueFunction(name: string, inputBinding: QueueInputBinding, callback: QueueCallback): Function;
-        export function addFunction(type: string, name: string, inputBinding: InputBinding, callback: FunctionCallback): Function; // generic fallback method
+        export function addHttpFunction(name: string, options: HttpTriggerOptions, callback: HttpCallback): Function;
+        export function addTimerFunction(name: string, options: TimerTriggerOptions, callback: TimerCallback): Function;
+        export function addQueueFunction(name: string, options: QueueTriggerOptions, callback: QueueCallback): Function;
+        export function addFunction(triggerType: string, name: string, options: InputOptions, callback: FunctionCallback): Function; // generic fallback method
     }
 
     export class Function {
-        addHttpInput(binding: HttpInputBinding): Function;
-        addQueueInput(binding: QueueInputBinding): Function;
-        addInput(type: string, binding: InputBinding): Function;
+        addHttpInput(options: HttpInputOptions): Function;
+        addQueueInput(options: QueueInputOptions): Function;
+        addInput(inputType: string, options: InputOptions): Function;
 
-        addHttpOutput(binding: HttpOutputBinding): Function;
-        addQueueOutput(binding: QueueOutputBinding): Function;
-        addOutput(type: string, binding: InputBinding): Function;
+        addHttpOutput(options: HttpOutputOptions): Function;
+        addQueueOutput(options: QueueOutputOptions): Function;
+        addOutput(outputType: string, options: InputOptions): Function;
     }
 
     /**
-     * Just a thought: To simplify the callback, what if only the triggerInput gets passed as an arg, and all other input bindings have to be accessed on `context`
+     * Only the trigger input is passed as an arg, and all other inputs have to be accessed from `context`
      */
     export type FunctionCallback = ((context: InvocationContext, triggerInput: unknown) => unknown);
 
@@ -40,24 +40,22 @@ declare module '@azure/functions-newC' {
     }
 
     export interface InvocationContext {
-        [key: string]: any; // todo
+        log(...args: any[]): void;
 
-        inputs: any[]; // I chose "inputs" to be consistent with "inputbinding", but this could be args instead
+        inputs: { [name: string]: any };
     }
 
-    // #region bindings
+    // #region input/output options
 
-    export interface Binding {
+    export interface InputOptions {
         name: string;
     }
 
-    export interface InputBinding extends Binding { }
-
-    export interface OutputBinding extends Binding {
-        name: '$return' | string; // todo does adding '$return' actually help with Intellisense?
+    export interface OutputOptions {
+        name: string;
     }
 
-    export interface HttpInputBinding extends InputBinding {
+    export interface HttpTriggerOptions {
         /**
          * The function HTTP authorization level.
          */
@@ -66,9 +64,11 @@ declare module '@azure/functions-newC' {
         methods?: ('get' | 'post' | 'delete' | 'head' | 'patch' | 'put' | 'options' | 'trace')[]; // todo is this optional?
     }
 
-    export interface HttpOutputBinding extends OutputBinding { }
+    export interface HttpInputOptions extends HttpTriggerOptions, InputOptions { }
 
-    export interface TimerInputBinding extends Binding {
+    export interface HttpOutputOptions extends OutputOptions { }
+
+    export interface TimerTriggerOptions {
         /**
          * A cron expression of the format '{second} {minute} {hour} {day} {month} {day of week}' to specify the schedule.
          */
@@ -85,20 +85,22 @@ declare module '@azure/functions-newC' {
         useMonitor?: boolean;
     }
 
-    export interface QueueBinding extends Binding {
+    export interface QueueOptions {
         queueName: string;
 
         /**
-         * An app setting (or environment variable) with the storage connection string to be used by this binding.
+         * An app setting (or environment variable) with the storage connection string to be used
          */
         connection: string;
     }
 
-    export interface QueueInputBinding extends QueueBinding, InputBinding { }
+    export interface QueueTriggerOptions extends QueueOptions { }
 
-    export interface QueueOutputBinding extends QueueBinding, OutputBinding { }
+    export interface QueueInputOptions extends QueueOptions, InputOptions { }
 
-    // #endregion bindings
+    export interface QueueOutputOptions extends QueueOptions, OutputOptions { }
+
+    // #endregion input/output options
 }
 
 

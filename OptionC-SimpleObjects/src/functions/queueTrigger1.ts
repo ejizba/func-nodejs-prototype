@@ -1,8 +1,7 @@
-import { InvocationContext, QueueInputBinding } from "@azure/functions-newC";
+import { InvocationContext, QueueTriggerOptions } from "@azure/functions-newC";
 import { MyQueueItem } from "../models/MyQueueItem";
 
-export const queueTrigger1Input: QueueInputBinding = {
-    name: 'myQueueItem',
+export const queueTrigger1Options: QueueTriggerOptions = {
     queueName: 'testQueue',
     connection: 'storage_APPSETTING'
 }
