@@ -1,5 +1,5 @@
 import { InvocationContext, QueueOptions } from "@azure/functions-newE";
-import { MyQueueItem } from "src/models/MyQueueItem";
+import { MyQueueItem } from "../models/MyQueueItem";
 
 export const queueTrigger1Options: QueueOptions = {
     trigger: {
