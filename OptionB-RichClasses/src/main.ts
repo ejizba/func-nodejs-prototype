@@ -5,12 +5,12 @@ import { queueTrigger1, queueTrigger1Bindings } from "./functions/queueTrigger1"
 import { timerTrigger1, timerTrigger1Bindings } from "./functions/timerTrigger1";
 
 /**
- * The most basic http trigger, where all the config and callback is in a separate file
+ * The most basic http trigger
  */
 app.registerFunction('HttpTrigger1', httpTrigger1Bindings, httpTrigger1);
 
 /**
- * The most basic timer trigger, where all the config and callback is in a separate file
+ * The most basic timer trigger
  */
 app.registerFunction('TimerTrigger1', timerTrigger1Bindings, timerTrigger1);
 
@@ -20,7 +20,7 @@ app.registerFunction('TimerTrigger1', timerTrigger1Bindings, timerTrigger1);
 app.registerFunction('HttpMultipleOutputs', httpMultipleOutputsBindings, httpMultipleOutputs);
 
 /**
- * The most basic queue trigger, where all the config and callback is in a separate file
+ * The most basic queue trigger
  */
 app.registerFunction('QueueTrigger1', queueTrigger1Bindings, queueTrigger1);
 

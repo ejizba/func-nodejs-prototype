@@ -25,7 +25,7 @@ app.timer('0 */5 * * * *', timerTrigger1);
 app.registerHttpFunction("HttpMultipleOutputs", httpMultipleOutputOptions, httpMultipleOutputs);
 
 /**
- * The most basic queue trigger, where all the config and callback is in a separate file
+ * The most basic queue trigger
  */
 app.registerQueueFunction("QueueTrigger1", queueTrigger1Options, queueTrigger1);
 
