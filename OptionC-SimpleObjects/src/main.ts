@@ -25,14 +25,11 @@ app.registerHttpFunction('HttpMultipleOutputs', { name: 'req', authLevel: 'anony
  * The most basic http trigger, except all code is put directly in this file
  */
 app.registerHttpFunction('HttpTriggerInline', { name: 'req', authLevel: 'anonymous', }, async function (context: InvocationContext, req: HttpRequest): Promise<HttpResponse> {
-    context.log('HTTP trigger function processed a request.');
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
+    context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
 
+    const name = req.query.name || req.body?.name || 'world';
     return {
         // status: 200, /* Defaults to 200 */
-        body: responseMessage
+        body: `Hello, ${name}!`
     };
 }).registerHttpOutput({ name: 'res' });

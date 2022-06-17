@@ -12,16 +12,13 @@ const resBinding = new HttpOutputBinding();
 export const httpTrigger1Bindings: Binding[] = [reqBinding, resBinding];
 
 export async function httpTrigger1(context: InvocationContext): Promise<HttpResponse> {
-    context.log('HTTP trigger function processed a request.');
     const req = reqBinding.get(context);
 
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
+    context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
 
+    const name = req.query.name || req.body?.name || 'world';
     resBinding.set(context, {
         // status: 200, /* Defaults to 200 */
-        body: responseMessage
+        body: `Hello, ${name}!`
     });
 };

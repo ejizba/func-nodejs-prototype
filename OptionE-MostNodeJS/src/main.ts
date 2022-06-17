@@ -4,14 +4,10 @@ import { app, HttpRequest, HttpResponse, InvocationContext, Timer } from '@azure
  * The simplest, most-opionated example for an http trigger
  */
 app.get("/helloWorld", (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
-    context.log('Node.js HTTP trigger function processed a request. RequestUri=%s', req.url);
+    context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
 
-    if (req.query.name || (req.body && req.body.name)) {
-        res.send("Hello " + (req.query.name || req.body.name))
-    } else {
-        res.status(400);
-        res.send("Please pass a name on the query string or in the request body");
-    }
+    const name = req.query.name || req.body?.name || 'world';
+    res.send(`Hello, ${name}!`);
 });
 
 /**
@@ -30,7 +26,10 @@ app.timer('0 */5 * * * *', (context: InvocationContext, myTimer: Timer) => {
  * This user-provided input configuration is merged over the default, overriding what the developer sets but leaving defaults.
  */
 app.registerHttpFunction("HttpConfigOverride", { trigger: { route: "/foo", methods: ["get"] } }, (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
-    res.send("Hello, world!");
+    context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
+
+    const name = req.query.name || req.body?.name || 'world';
+    res.send(`Hello, ${name}!`);
 });
 
 type TodoItem = {

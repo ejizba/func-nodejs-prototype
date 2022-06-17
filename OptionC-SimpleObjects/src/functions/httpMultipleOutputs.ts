@@ -1,11 +1,14 @@
 import { HttpRequest, InvocationContext } from "@azure/functions-newC";
 
 export async function httpMultipleOutputs(context: InvocationContext, req: HttpRequest): Promise<any> {
-    let retMsg = 'Hello, world!';
+    context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
+
+    const name = req.query.name || req.body?.name || 'world';
+    const responseMessage = `Hello, ${name}!`;
     return {
         httpResponse: {
-            body: retMsg
+            body: responseMessage
         },
-        queueOutput: retMsg
+        queueOutput: responseMessage
     };
 };
