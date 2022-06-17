@@ -1,84 +1,40 @@
-import { app, HttpRequest, HttpResponse, InvocationContext, Timer } from '@azure/functions-newE';
+import { app, HttpRequest, HttpResponse, InvocationContext } from '@azure/functions-newE';
+import { httpMultipleOutputOptions, httpMultipleOutputs } from './functions/httpMultipleOutputs';
+import { httpTrigger1 } from './functions/httpTrigger1';
+import { queueTrigger1, queueTrigger1Options } from './functions/queueTrigger1';
+import { timerTrigger1 } from './functions/timerTrigger1';
 
 /**
  * The simplest, most-opionated example for an http trigger
  */
-app.get("/helloWorld", (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
-    context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
+app.get("/HttpTrigger1", httpTrigger1);
 
-    const name = req.query.name || req.body?.name || 'world';
-    res.send(`Hello, ${name}!`);
-});
+/**
+ * A variation on the above http trigger where you override the default configuration
+ */
+app.registerHttpFunction("HttpConfigOverride", { trigger: { route: "/foo", methods: ["get"] } }, httpTrigger1);
 
 /**
  * The simplest, most-opionated example for a timer trigger
  */
-app.timer('0 */5 * * * *', (context: InvocationContext, myTimer: Timer) => {
-    var timeStamp = new Date().toISOString();
-    if (myTimer.isPastDue) {
-        context.log('Timer function is running late!');
-    }
-    context.log('Timer trigger function ran!', timeStamp);
-});
+app.timer('0 */5 * * * *', timerTrigger1);
 
 /**
- * If you want to override any of the trigger binding configuration, you can pass that in as a second argument
- * This user-provided input configuration is merged over the default, overriding what the developer sets but leaving defaults.
+ * An http trigger with an extra output queue binding
  */
-app.registerHttpFunction("HttpConfigOverride", { trigger: { route: "/foo", methods: ["get"] } }, (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
+app.registerHttpFunction("HttpMultipleOutputs", httpMultipleOutputOptions, httpMultipleOutputs);
+
+/**
+ * The most basic queue trigger, where all the config and callback is in a separate file
+ */
+app.registerQueueFunction("QueueTrigger1", queueTrigger1Options, queueTrigger1);
+
+/**
+ * The most basic http trigger, except all code is put directly in this file
+ */
+app.get("/HttpTriggerInline", (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
     context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body?.name || 'world';
     res.send(`Hello, ${name}!`);
 });
-
-type TodoItem = {
-    description: string
-    id: number
-    partitionKey: string
-};
-
-/**
- * When you want to have additional input bindings, they can be provided as well
- * Here the HTTP trigger/output are left using our conventions, but the second argument now adds a Cosmos input binding to the binding to the Function.
- */
-app.registerHttpFunction("HttpAdditionalBindings", {
-    inputBindings: [{
-        type: "cosmosDB",
-        name: "toDoItem",
-        databaseName: "ToDoItems",
-        collectionName: "Items",
-        connectionStringSetting: "CosmosDBConnection",
-        Id: "{Query.id}",
-        PartitionKey: "{Query.partitionKeyValue}"
-    }]
-}, (context: InvocationContext, req: HttpRequest, res: HttpResponse, todo: TodoItem) => {
-    if (!todo) {
-        res.status(404);
-    } else {
-        res.json(todo);
-    }
-});
-
-/**
- * Lastly, you can combine it all
- */
-app.registerHttpFunction("HttpAdditionalBindingsPlusOverrides", {
-    trigger: { route: "/todo/{partitionKey}/{id}", methods: ["get"] },
-    inputBindings: [{
-        type: "cosmosDB",
-        name: "toDoItem",
-        databaseName: "ToDoItems",
-        collectionName: "Items",
-        connectionStringSetting: "CosmosDBConnection",
-        Id: "{id}",
-        PartitionKey: "{partitionKey}"
-    }]
-}, (context: InvocationContext, req: HttpRequest, res: HttpResponse, todo: TodoItem) => {
-    if (!todo) {
-        res.status(404);
-    } else {
-        res.json(todo);
-    }
-});
-
