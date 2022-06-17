@@ -9,52 +9,35 @@ declare module "@azure/functions-newE" {
     // export function delete(name: string, callback: HttpCallback): void;
 
     // todo decide on name
+    export function timer(schedule: string, callback: TimerCallback): void;
     export function setInterval(schedule: string, callback: TimerCallback): void;
     export function schedule(schedule: string, callback: TimerCallback): void;
-    export function timer(schedule: string, callback: TimerCallback): void;
 
-    export function registerHttpFunction(
-      name: string,
-      callback: HttpCallback
-    ): void;
-    export function registerHttpFunction(
-      name: string,
-      triggerOverrides: Partial<HttpTriggerBinding>,
-      callback: HttpCallback
-    ): void;
-    export function registerHttpFunction(
-      name: string,
-      additionalInputBindings: GenericBinding[],
-      callback: HttpCallback
-    ): void;
-    export function registerHttpFunction(
-      name: string,
-      triggerOverrides: Partial<HttpTriggerBinding>,
-      bindings: GenericBinding[],
-      callback: HttpCallback
-    ): void;
+    // long-hand for `app.get` methods
+    export function registerHttpFunction(name: string, callback: HttpCallback): void;
+    export function registerHttpFunction(name: string, options: HttpOptions, callback: HttpCallback): void;
   }
 
-  export type HttpFunctionContext = InvocationContext & {
-    req: HttpRequest;
-    send: (body: string) => void;
-    status: (statusCode: number) => void;
-    json: (body: any) => void;
-  };
+  export type HttpCallback = (context: InvocationContext, req: HttpRequest, res: HttpResponse, ...inputs: any) => FunctionResult;
 
-  /**
-   * Just a thought: To simplify the callback, what if only the triggerInput gets passed as an arg, and all other input bindings have to be accessed on `context`
-   */
-  export type HttpCallback = (context: HttpFunctionContext, ...args: any) => FunctionResult;
+  export interface HttpOptions {
+    trigger?: Partial<HttpTriggerBinding>;
+    inputBindings?: GenericBinding[];
+    outputBindings?: GenericBinding[];
+  }
 
-  export type TimerCallback = (context: InvocationContext, ...args: any) => FunctionResult;
+  export type TimerCallback = (context: InvocationContext, myTimer: Timer, ...inputs: any) => FunctionResult;
 
-  export type Timer = any; // todo
+  export interface Timer {
+    isPastDue: boolean;
+  }
 
   export type FunctionResult = Promise<any> | void; // todo
 
   export class HttpResponse {
-    [key: string]: any; // todo
+    send: (body: string) => void;
+    status: (statusCode: number) => void;
+    json: (body: any) => void;
   }
 
   export class HttpRequest {
@@ -62,9 +45,9 @@ declare module "@azure/functions-newE" {
   }
 
   export interface InvocationContext {
-    [key: string]: any; // todo
+    invocationId: string;
 
-    inputs: any[]; // I chose "inputs" to be consistent with "inputbinding", but this could be args instead
+    log(...data: any[]): void;
   }
 
   // #region bindings
