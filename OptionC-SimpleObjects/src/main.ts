@@ -1,10 +1,10 @@
 import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-newC";
 import { httpMultipleOutputs } from "./functions/httpMultipleOutputs";
-import { httpTrigger1 } from "./functions/httpTrigger1";
+import { httpTrigger1, httpTrigger1Input, httpTrigger1Output } from "./functions/httpTrigger1";
 import { timerTrigger1 } from "./functions/timerTrigger1";
 
-app.registerHttpFunction('HttpTrigger1', { name: 'req', authLevel: 'anonymous' }, httpTrigger1)
-    .registerHttpOutput({ name: 'res' });
+app.registerHttpFunction('HttpTrigger1', httpTrigger1Input, httpTrigger1)
+    .registerHttpOutput(httpTrigger1Output);
 
 app.registerTimerFunction('TimerTrigger1', { name: 'myTimer', schedule: '0 */5 * * * *', }, timerTrigger1);
 
