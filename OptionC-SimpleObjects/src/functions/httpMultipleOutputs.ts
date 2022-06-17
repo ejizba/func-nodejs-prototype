@@ -4,11 +4,10 @@ export async function httpMultipleOutputs(context: InvocationContext, req: HttpR
     context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body?.name || 'world';
-    const responseMessage = `Hello, ${name}!`;
     return {
         httpResponse: {
-            body: responseMessage
+            body: `Hello, ${name}!`
         },
-        queueOutput: responseMessage
+        queueOutput: { name }
     };
 };

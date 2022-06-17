@@ -1,6 +1,7 @@
 import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "@azure/functions-newB";
 import { httpMultipleOutputs, httpMultipleOutputsBindings } from "./functions/httpMultipleOutputs";
 import { httpTrigger1, httpTrigger1Bindings } from "./functions/httpTrigger1";
+import { queueTrigger1, queueTrigger1Bindings } from "./functions/queueTrigger1";
 import { timerTrigger1, timerTrigger1Bindings } from "./functions/timerTrigger1";
 
 /**
@@ -17,6 +18,11 @@ app.registerFunction('TimerTrigger1', timerTrigger1Bindings, timerTrigger1);
  * An http trigger with an extra output queue binding
  */
 app.registerFunction('HttpMultipleOutputs', httpMultipleOutputsBindings, httpMultipleOutputs);
+
+/**
+ * The most basic queue trigger, where all the config and callback is in a separate file
+ */
+app.registerFunction('QueueTrigger1', queueTrigger1Bindings, queueTrigger1);
 
 const reqBinding = new HttpInputBinding({
     authLevel: "anonymous",

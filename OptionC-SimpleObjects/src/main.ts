@@ -1,6 +1,7 @@
 import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-newC";
 import { httpMultipleOutputs } from "./functions/httpMultipleOutputs";
 import { httpTrigger1, httpTrigger1Input, httpTrigger1Output } from "./functions/httpTrigger1";
+import { queueTrigger1, queueTrigger1Input } from "./functions/queueTrigger1";
 import { timerTrigger1 } from "./functions/timerTrigger1";
 
 /**
@@ -19,7 +20,12 @@ app.registerTimerFunction('TimerTrigger1', { name: 'myTimer', schedule: '0 */5 *
  */
 app.registerHttpFunction('HttpMultipleOutputs', { name: 'req', authLevel: 'anonymous', }, httpMultipleOutputs)
     .registerHttpOutput({ name: 'httpResponse' })
-    .registerQueueOutput({ name: 'queueOutput', queueName: 'testQueue', connection: 'teststor_STORAGE' });
+    .registerQueueOutput({ name: 'queueOutput', queueName: 'testQueue', connection: 'storage_APPSETTING' });
+
+/**
+ * The most basic queue trigger, where all the config and callback is in a separate file
+ */
+app.registerQueueFunction('QueueTrigger1', queueTrigger1Input, queueTrigger1);
 
 /**
  * The most basic http trigger, except all code is put directly in this file

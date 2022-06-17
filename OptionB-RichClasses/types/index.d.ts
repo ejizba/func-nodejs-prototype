@@ -32,9 +32,14 @@ declare module '@azure/functions-newB' {
         set(context: InvocationContext, response: HttpResponse): void;
     }
 
+    export class QueueInputBinding extends Binding {
+        constructor(options: QueueBindingOptions);
+        get(context: InvocationContext): any;
+    }
+
     export class QueueOutputBinding extends Binding {
         constructor(options: QueueBindingOptions);
-        set(context: InvocationContext, response: any): void;
+        set(context: InvocationContext, queueItem: any): void;
     }
 
     export type HttpRequest = any;
