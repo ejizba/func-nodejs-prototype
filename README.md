@@ -39,9 +39,10 @@ Suppose you want to write a new row to Azure Table storage whenever a new messag
 
 Triggers and bindings let you avoid hardcoding access to other services. Your function receives data (for example, the content of a queue message) in function parameters. You send data (for example, to create a queue message) by using the return value of the function.
 
-# This study
+# Today's study
 The goal of this study is to compare different programming model options we have for writing Node.js functions. You'll be asked to read some code and describe what it's doing and to make small changes to the code. (You won't have to run the code though.) Feel free to use Intellisense to help you, whenever that is available.  
 
-First, study the file structure in Option1. All options have same structure. You can ignore the /types folder and funcignore file. What's your first impression? How is it similar/different from services you've used previously? How is it similar/different from your expectation?
+## Initial questions
+First, study the file structure in Option1. All options have same structure. What's your first impression? How is it similar/different from services you've used previously? How is it similar/different from your expectation?
 
-In each option folder, there's a main.ts file. You'll find questions that you need to answer there. Feel free to look at other files in the option folder if that will help you answer the questions. Please try to verbalize your thoughts as much as possble throughout the study. 
+Imagine each option is a Function App you're writing. Where would you start to understand what it's doing? 
