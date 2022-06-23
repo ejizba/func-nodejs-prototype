@@ -1,5 +1,5 @@
 import { app, HttpRequest, HttpResponse, InvocationContext } from '@azure/functions-newE';
-import { httpMultipleOutputOptions, httpMultipleOutputs } from './functions/httpMultipleOutputs';
+import { httpTrigger2, httpOutputOptions } from './functions/httpTrigger2';
 import { httpTrigger1 } from './functions/httpTrigger1';
 import { queueTrigger1, queueTrigger1Options } from './functions/queueTrigger1';
 import { timerTrigger1 } from './functions/timerTrigger1';
@@ -7,7 +7,7 @@ import { timerTrigger1 } from './functions/timerTrigger1';
 // Task 1a
 // Read the following code and answer the questions below
 
-app.get("/HttpTriggerInline", (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
+app.get("/HttpTrigger", (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
     context.log(`RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body?.name || 'world';
@@ -24,9 +24,9 @@ app.get("/HttpTriggerInline", (context: InvocationContext, req: HttpRequest, res
 
 app.get("/HttpTrigger1", httpTrigger1);
 
-app.registerHttpFunction("HttpMultipleOutputs", httpMultipleOutputOptions, httpMultipleOutputs);
+app.registerHttpFunction("HttpTrigger2", httpOutputOptions, httpTrigger2);
 
-app.registerHttpFunction("HttpConfigOverride", { trigger: { route: "/foo", methods: ["get"] } }, httpTrigger1);
+app.registerHttpFunction("HttpTrigger3", { trigger: { route: "/foo", methods: ["get"] } }, httpTrigger1);
 
 // Task 2
 // Explore the following functions one by one.

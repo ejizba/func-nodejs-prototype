@@ -1,5 +1,5 @@
 import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-newC";
-import { httpMultipleOutputs } from "./functions/httpMultipleOutputs";
+import { httpTrigger2 } from "./functions/httpTrigger2";
 import { httpTrigger1, httpTrigger1Options, httpTrigger1Output } from "./functions/httpTrigger1";
 import { queueTrigger1, queueTrigger1Options } from "./functions/queueTrigger1";
 import { timerTrigger1 } from "./functions/timerTrigger1";
@@ -29,7 +29,7 @@ app.addHttpFunction('HttpTriggerInline', { authLevel: 'anonymous', }, async func
 app.addHttpFunction('HttpTrigger1', httpTrigger1Options, httpTrigger1)
     .addHttpOutput(httpTrigger1Output);
 
-app.addHttpFunction('HttpMultipleOutputs', { authLevel: 'anonymous', }, httpMultipleOutputs)
+app.addHttpFunction('HttpTrigger2', { authLevel: 'anonymous', }, httpTrigger2)
     .addHttpOutput({ name: 'httpResponse' })
     .addQueueOutput({ name: 'queueOutput', queueName: 'testQueue', connection: 'storage_APPSETTING' });
 

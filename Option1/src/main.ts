@@ -1,6 +1,5 @@
-// [changed names of folders, probably affect imports]
 import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "@azure/functions-newB";
-import { httpMultipleOutputs, httpMultipleOutputsBindings } from "./functions/httpMultipleOutputs";
+import { httpTrigger2, httpOutputsBindings } from "./functions/httpTrigger2";
 import { queueTrigger1, queueTrigger1Bindings } from "./functions/queueTrigger1";
 import { timerTrigger1, timerTrigger1Bindings } from "./functions/timerTrigger1";
 
@@ -20,10 +19,10 @@ const reqBinding = new HttpInputBinding({
 const resBinding = new HttpOutputBinding();
 
 // [Can we add doc strings for InvocationContext (or just in general?)]
-app.registerFunction('HttpTriggerInline', [reqBinding, resBinding], async function (context: InvocationContext): Promise<void> {
+app.registerFunction('HttpTrigger1', [reqBinding, resBinding], async function (context: InvocationContext): Promise<void> {
     const req = reqBinding.get(context);
 
-    context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
+    context.log(`RequestUrl=${req.url}`);
 
     // [req methods/properties change depending on binding type right? Is there a way to expose what they are, like req. would show hints]
     const name = req.query.name || req.body?.name || 'world';
@@ -42,7 +41,8 @@ app.registerFunction('HttpTriggerInline', [reqBinding, resBinding], async functi
 // Task 2
 // Explore the following functions one by one.
 // What do they do? 
-app.registerFunction('HttpMultipleOutputs', httpMultipleOutputsBindings, httpMultipleOutputs);
+// [Is there anything we want them to change?]
+app.registerFunction('HttpTrigger2', httpOutputsBindings, httpTrigger2);
 
 app.registerFunction('TimerTrigger1', timerTrigger1Bindings, timerTrigger1);
 

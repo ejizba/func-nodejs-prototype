@@ -1,7 +1,5 @@
 import { Binding, HttpInputBinding, HttpOutputBinding, HttpResponse, InvocationContext, QueueOutputBinding } from "@azure/functions-newB";
 
-// Is there anything we want them to set? 
-
 const reqBinding = new HttpInputBinding({
     authLevel: "anonymous",
     methods: [
@@ -15,12 +13,12 @@ const queueBinding = new QueueOutputBinding({
     connection: 'storage_APPSETTING'
 });
 
-export const httpMultipleOutputsBindings: Binding[] = [reqBinding, resBinding, queueBinding];
+export const httpOutputsBindings: Binding[] = [reqBinding, resBinding, queueBinding];
 
-export async function httpMultipleOutputs(context: InvocationContext): Promise<HttpResponse> {
+export async function httpTrigger2(context: InvocationContext): Promise<HttpResponse> {
     const req = reqBinding.get(context);
 
-    context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
+    context.log(`RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body?.name || 'world';
     resBinding.set(context, {
