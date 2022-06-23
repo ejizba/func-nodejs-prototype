@@ -7,5 +7,5 @@ export const queueTrigger1Options: QueueTriggerOptions = {
 }
 
 export async function queueTrigger1(context: InvocationContext, myQueueItem: MyQueueItem): Promise<void> {
-    context.log('Queue trigger function processed work item', myQueueItem);
+    context.log('Function processed work item', myQueueItem);
 };

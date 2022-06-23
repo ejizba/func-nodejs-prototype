@@ -1,37 +1,47 @@
-# ✨ New ✨ programming model for Node.js Azure Functions
+# Azure Functions 
 
-See [this rollup issue](https://github.com/Azure/azure-functions-nodejs-worker/issues/480) for more information on our general goals and plan of action. This repo specifically contains prototypes for the last bullet point in the "plan of action".
+Azure Functions is a serverless solution that allows you to write less code, maintain less infrastructure, and save on costs. Instead of worrying about deploying and maintaining servers, the cloud infrastructure provides all the up-to-date resources needed to keep your applications running.
 
-## Code in this repo
+You focus on the pieces of code that matter most to you, and Azure Functions handles the rest.
 
-This repo has several different options, each following this general format:
+We often build systems to react to a series of critical events. Whether you're building a web API, responding to database changes, processing IoT data streams, or even managing message queues - every application needs a way to run some code as these events occur.
 
-- `Option<>/src/main.ts`: The main entrypoint for a sample TypeScript app. The file name/path can be configured by the user by changing the `main` field in `package.json`.
-- `Option<>/src/functions/`: The source code for each function. This is purely an example and users can put code wherever they want.
-- `Option<>/types/index.d.ts`: Types for a new [programming model package](https://github.com/Azure/azure-functions-nodejs-worker/issues/568). This file will eventually ship as a part of our npm package and will not be controlled by the user.
+To meet this need, Azure Functions provides "compute on-demand" in two significant ways.
 
-Each option will have these example functions:
-- `HttpTrigger1`: A simple http trigger
-- `TimerTrigger1`: A simple timer trigger
-- `HttpMultipleOutputs`: A simple http trigger, with an extra storage queue output
-- `QueueTrigger1`: A simple storage queue trigger (triggered by the output of `HttpMultipleOutputs`)
-- `HttpTriggerInline`: A simple http trigger, except the code is put directly in `main.ts`
+First, Azure Functions allows you to implement your system's logic into readily available blocks of code. These code blocks are called "functions". Different functions can run anytime you need to respond to critical events.
 
-## Options
+Second, as requests increase, Azure Functions meets the demand with as many resources and function instances as necessary - but only while needed. As requests fall, any extra resources and application instances drop off automatically.
 
-Here's a quick rundown of each option, but check the README in each "Option" folder for more details:
+Where do all the compute resources come from? Azure Functions provides as many or as few compute resources as needed to meet your application's demand.
 
-### In consideration
+## Scenarios
 
-- OptionB: Rich classes for bindings. You get the best intellisense, but there's a decent overheard for our team to maintain the classes and for users to understand the classes.
-- OptionC: Simple objects for bindings. We'll give intellisense where we can, but you won't instantiate a class at any point
-- OptionE: The "Most Node.js" and "Least Azure Functions" option. We can always add this as an optional piece on top of the other options
+In many cases, a function integrates with an array of cloud services to provide feature-rich implementations.
 
-### Experimental
+The following are a common (but not exhaustive) set of scenarios for Azure Functions.
 
-- OptionD: Decorators: This option is still under consideration, but cannot be the GA option. See its README for more info.
+| If you want to... | then... |
+| --- | --- |
+| **Build a web API** | Implement an endpoint for your web applications using the HTTP trigger|
+| **Process file uploads** | Run code when a file is uploaded or changed in blob storage
+| **Respond to database changes** | Run custom logic when a document is created or updated in Cosmos DB |
+| **Run scheduled tasks** | Execute code on pre-defined timed intervals |
+| **Create reliable message queue systems** | Process message queues using Queue Storage, Service Bus, or Event Hubs |
 
-### Deprecated
+## Triggers and bindings
+Triggers cause a function to run. A trigger defines how a function is invoked and a function must have **exactly one** trigger. Triggers have associated data, which is often provided as the payload of the function.
 
-- OldOption: The existing programming model with no changes. Purely here for the sake of comparison.
-- OptionA: The simplest programming model we can provide that still lets users define binding data in code.
+Binding to a function is a way of declaratively connecting another resource to the function; bindings may be connected as input bindings, output bindings, or both. Data from bindings is provided to the function as parameters.
+
+You can mix and match different bindings. Bindings are optional and a function might have one or multiple input and/or output bindings.
+
+Suppose you want to write a new row to Azure Table storage whenever a new message appears in Azure Queue storage. This scenario can be implemented using an Azure Queue storage trigger and an Azure Table storage output binding.
+
+Triggers and bindings let you avoid hardcoding access to other services. Your function receives data (for example, the content of a queue message) in function parameters. You send data (for example, to create a queue message) by using the return value of the function.
+
+# This study
+The goal of this study is to compare different programming model options we have for writing Node.js functions. You'll be asked to read some code and describe what it's doing and to make small changes to the code. (You won't have to run the code though.) Feel free to use Intellisense to help you, whenever that is available.  
+
+First, study the file structure in Option1. All options have same structure. You can ignore the /types folder and funcignore file. What's your first impression? How is it similar/different from services you've used previously? How is it similar/different from your expectation?
+
+In each option folder, there's a main.ts file. You'll find questions that you need to answer there. Feel free to look at other files in the option folder if that will help you answer the questions. Please try to verbalize your thoughts as much as possble throughout the study. 

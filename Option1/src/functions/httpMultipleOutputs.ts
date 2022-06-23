@@ -1,5 +1,7 @@
 import { Binding, HttpInputBinding, HttpOutputBinding, HttpResponse, InvocationContext, QueueOutputBinding } from "@azure/functions-newB";
 
+// Is there anything we want them to set? 
+
 const reqBinding = new HttpInputBinding({
     authLevel: "anonymous",
     methods: [
