@@ -1,4 +1,4 @@
-import { Binding, HttpInputBinding, HttpOutputBinding, HttpResponse, InvocationContext, QueueOutputBinding } from "@azure/functions-newB";
+import { Binding, HttpInputBinding, HttpOutputBinding, InvocationContext, QueueOutputBinding } from "@azure/functions-newB";
 
 const reqBinding = new HttpInputBinding({
     authLevel: "anonymous",
@@ -15,12 +15,12 @@ const queueBinding = new QueueOutputBinding({
 
 export const httpTriggerBindings: Binding[] = [reqBinding, resBinding, queueBinding];
 
-export async function httpTrigger2(context: InvocationContext): Promise<HttpResponse> {
+export async function httpTrigger2(context: InvocationContext): Promise<void> {
     const req = reqBinding.get(context);
 
     context.log(`RequestUrl=${req.url}`);
 
-    const name = req.query.name || req.body?.name || 'world';
+    const name = req.query.name || req.body || 'world';
     resBinding.set(context, {
         body: `Hello, ${name}!`
     });

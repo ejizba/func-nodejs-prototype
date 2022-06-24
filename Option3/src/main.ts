@@ -10,7 +10,7 @@ import { timerTrigger1 } from './functions/timerTrigger1';
 app.get("/HttpTrigger", (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
     context.log(`RequestUrl=${req.url}`);
 
-    const name = req.query.name || req.body?.name || 'world';
+    const name = req.query.name || req.body || 'world';
     res.send(`Hello, ${name}!`);
 });
 

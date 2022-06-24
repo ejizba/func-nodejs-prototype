@@ -21,7 +21,7 @@ app.registerFunction('HttpTrigger1', [reqBinding, resBinding], async function (c
 
     context.log(`RequestUrl=${req.url}`);
 
-    const name = req.query.name || req.body?.name || 'world';
+    const name = req.query.name || req.body || 'world';
 
     resBinding.set(context, {
         body: `Hello, ${name}!`

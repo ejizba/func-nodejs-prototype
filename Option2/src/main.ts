@@ -10,7 +10,7 @@ import { timerTrigger1 } from "./functions/timerTrigger1";
 app.addHttpFunction('HttpTriggerInline', { authLevel: 'anonymous', }, async function (context: InvocationContext, req: HttpRequest): Promise<HttpResponse> {
     context.log(`RequestUrl=${req.url}`);
 
-    const name = req.query.name || req.body?.name || 'world';
+    const name = req.query.name || req.body || 'world';
     return {
         body: `Hello, ${name}!`
     };
