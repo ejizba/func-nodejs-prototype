@@ -13,7 +13,7 @@ const queueBinding = new QueueOutputBinding({
     connection: 'storage_APPSETTING'
 });
 
-export const httpOutputsBindings: Binding[] = [reqBinding, resBinding, queueBinding];
+export const httpTriggerBindings: Binding[] = [reqBinding, resBinding, queueBinding];
 
 export async function httpTrigger2(context: InvocationContext): Promise<HttpResponse> {
     const req = reqBinding.get(context);

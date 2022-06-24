@@ -31,7 +31,6 @@ app.registerHttpFunction("HttpTrigger3", { trigger: { route: "/foo", methods: ["
 // Task 2
 // Explore the following functions one by one.
 // What do they do? 
-// How would you add an Http output binding to the timer trigger that returns the string "It is time!"?
 app.timer('0 */5 * * * *', timerTrigger1);
 
 app.registerQueueFunction("QueueTrigger1", queueTrigger1Options, queueTrigger1);
@@ -40,5 +39,8 @@ app.registerQueueFunction("QueueTrigger1", queueTrigger1Options, queueTrigger1);
 // How would you organize the code?
 // What's intuitive/not?
 // What do you like/dislike? What would you change?
+
+// Bonus: Imagine the timer trigger is used to track the status of a system. 
+// Every time it triggers, you want it to send the status to a storage queue. How would you do this?
 
 

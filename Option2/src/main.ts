@@ -34,7 +34,6 @@ app.addHttpFunction('HttpTrigger2', { authLevel: 'anonymous', }, httpTrigger2)
 // Task 2
 // Explore the following functions.
 // What do they do? 
-// How would you add an Http output binding to the timer trigger that returns the string "It is time!"?
 app.addTimerFunction('TimerTrigger1', { schedule: '0 */5 * * * *', }, timerTrigger1);
 
 app.addQueueFunction('QueueTrigger1', queueTrigger1Options, queueTrigger1);
@@ -44,3 +43,5 @@ app.addQueueFunction('QueueTrigger1', queueTrigger1Options, queueTrigger1);
 // What's intuitive/not?
 // What do you like/dislike? What would you change?
 
+// Bonus: Imagine the timer trigger is used to track the status of a system. 
+// Every time it triggers, you want it to send the status to a storage queue. How would you do this?
