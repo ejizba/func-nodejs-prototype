@@ -44,9 +44,6 @@ app.registerFunction('TimerTrigger1', timerTrigger1Bindings, timerTrigger1);
 
 app.registerFunction('QueueTrigger1', queueTrigger1Bindings, queueTrigger1);
 
-// Imagine that the timer trigger is used to track the status of an app. Every time it triggers,
-// you want it to send the status to a storage queue. How would you do this?
-
 // Discussion: 
 // How would you organize the code?
 // What's intuitive/not?
