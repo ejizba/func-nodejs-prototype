@@ -1,6 +1,6 @@
 import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-newC";
-import { httpTrigger2 } from "./functions/httpTrigger2";
 import { httpTrigger1, httpTrigger1Options, httpTrigger1Output } from "./functions/httpTrigger1";
+import { httpTrigger2 } from "./functions/httpTrigger2";
 import { queueTrigger1, queueTrigger1Options } from "./functions/queueTrigger1";
 import { timerTrigger1 } from "./functions/timerTrigger1";
 
@@ -12,7 +12,6 @@ app.addHttpFunction('HttpTriggerInline', { authLevel: 'anonymous', }, async func
 
     const name = req.query.name || req.body?.name || 'world';
     return {
-        // status: 200, /* Defaults to 200 */
         body: `Hello, ${name}!`
     };
 }).addHttpOutput({ name: 'res' });
@@ -22,10 +21,8 @@ app.addHttpFunction('HttpTriggerInline', { authLevel: 'anonymous', }, async func
 
 // Task 1b
 // Explore the following functions
-// What do they do?
-// How do they compare with each other and to the one in Task 1a?
-// [any code changes here? Ex change the name of queueOutput]
-
+// What do they do? How do they compare with each other and to the one in 1a?
+// How would you change the URL endpoint of the first Http trigger below?
 app.addHttpFunction('HttpTrigger1', httpTrigger1Options, httpTrigger1)
     .addHttpOutput(httpTrigger1Output);
 
@@ -35,9 +32,15 @@ app.addHttpFunction('HttpTrigger2', { authLevel: 'anonymous', }, httpTrigger2)
 
 
 // Task 2
-// Explore the following functions one by one.
+// Explore the following functions.
 // What do they do? 
+// How would you add an Http output binding to the timer trigger that returns the string "It is time!"?
 app.addTimerFunction('TimerTrigger1', { schedule: '0 */5 * * * *', }, timerTrigger1);
 
 app.addQueueFunction('QueueTrigger1', queueTrigger1Options, queueTrigger1);
+
+// Discussion: 
+// How would you organize the code?
+// What's intuitive/not?
+// What do you like/dislike? What would you change?
 

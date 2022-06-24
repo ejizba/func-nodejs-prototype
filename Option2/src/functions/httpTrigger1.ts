@@ -8,7 +8,6 @@ export async function httpTrigger1(context: InvocationContext, req: HttpRequest)
 
     const name = req.query.name || req.body?.name || 'world';
     return {
-        // status: 200, /* Defaults to 200 */
         body: `Hello, ${name}!`
     };
 };

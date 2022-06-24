@@ -22,7 +22,6 @@ export async function httpTrigger2(context: InvocationContext): Promise<HttpResp
 
     const name = req.query.name || req.body?.name || 'world';
     resBinding.set(context, {
-        // status: 200, /* Defaults to 200 */
         body: `Hello, ${name}!`
     });
     queueBinding.set(context, { name });
