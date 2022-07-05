@@ -3,9 +3,7 @@ import { httpTrigger2, httpTriggerBindings } from "./functions/httpTrigger2";
 import { queueTrigger1, queueTrigger1Bindings } from "./functions/queueTrigger1";
 import { timerTrigger1, timerTrigger1Bindings } from "./functions/timerTrigger1";
 
-// Task 1a
-// Read the following code and answer the questions below
-
+// 1a
 const reqBinding = new HttpInputBinding({
     authLevel: "anonymous",
     methods: [
@@ -27,27 +25,15 @@ app.registerFunction('HttpTrigger1', [reqBinding, resBinding], async function (c
         body: `Hello, ${name}!`
     });
 })
-// How would you describe what the code is doing? 
-// What is the function triggered by? What does the function do? 
-// What do you think `registerFunction` does?
 
-// Task 1b
-// Explore the following function.
-// What does it do? How does it compare to the one in 1a?
-// How would you change the URL endpoint of this Http trigger?
+
+// 1b
 app.registerFunction('HttpTrigger2', httpTriggerBindings, httpTrigger2);
 
-// Task 2
-// Explore the following functions.
-// What do they do? 
+
+// 1c
 app.registerFunction('TimerTrigger1', timerTrigger1Bindings, timerTrigger1);
 
 app.registerFunction('QueueTrigger1', queueTrigger1Bindings, queueTrigger1);
 
-// Discussion: 
-// How would you organize the code?
-// What's intuitive/not?
-// What do you like/dislike? What would you change?
 
-// Bonus: Imagine the timer trigger is used to track the status of a system. 
-// Every time it triggers, you want it to send the status to a storage queue. How would you do this?
