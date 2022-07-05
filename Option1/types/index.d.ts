@@ -1,8 +1,12 @@
 declare module '@azure/functions-newB' {
+    /**
+     * The root namespace for performing operations on your Azure Function App
+     * This is a work-in-progress prototype and only essential/noteworthy pieces were included at this time
+     */
     export namespace app {
         /**
          * Registers a function in your app. This must be done during app startup
-         * @param name The name of the function. For an http trigger, this will be the route unless a route is explicitly configured
+         * @param name The name of the function. For an http trigger, this will be the route unless a route is explicitly configured on the `HttpInputBinding`
          * @param bindings An array of bindings configuring the inputs and outputs of this function
          * @param callback The callback to use when the function is triggered
          */
@@ -48,7 +52,7 @@ declare module '@azure/functions-newB' {
 
     export class HttpInputBinding extends HttpBinding {
         /**
-         * Configure an http input binding before registering a function
+         * Configure an http input binding, to be passed in when registering a function
          */
         constructor(options?: HttpInputBindingOptions);
 
@@ -60,7 +64,7 @@ declare module '@azure/functions-newB' {
 
     export class TimerInputBinding extends Binding {
         /**
-         * Configure a timer input binding before registering a function
+         * Configure a timer input binding, to be passed in when registering a function
          */
         constructor(options: TimerInputBindingOptions);
 
@@ -72,7 +76,7 @@ declare module '@azure/functions-newB' {
 
     export class HttpOutputBinding extends HttpBinding {
         /**
-         * Configure an http output binding before registering a function
+         * Configure an http output binding, to be passed in when registering a function
          */
         constructor(options?: HttpOutputBindingOptions);
 
@@ -84,7 +88,7 @@ declare module '@azure/functions-newB' {
 
     export class QueueInputBinding extends Binding {
         /**
-         * Configure a queue input binding before registering a function
+         * Configure a queue input binding, to be passed in when registering a function
          */
         constructor(options: QueueBindingOptions);
 
@@ -96,7 +100,7 @@ declare module '@azure/functions-newB' {
 
     export class QueueOutputBinding extends Binding {
         /**
-         * Configure a queue output binding before registering a function
+         * Configure a queue output binding, to be passed in when registering a function
          */
         constructor(options: QueueBindingOptions);
 
@@ -183,6 +187,8 @@ declare module '@azure/functions-newB' {
 
     /**
      * Metadata about a timer invocation
+     * 
+     * Work in progress: There are other options on a timer object that have not been listed out yet
      */
     export interface Timer {
         /**
@@ -215,6 +221,9 @@ declare module '@azure/functions-newB' {
          */
         authLevel: "anonymous" | "function" | "admin";
 
+        /**
+         * Defaults to ["get", "post"] if not specified
+         */
         methods?: (
             | "get"
             | "post"

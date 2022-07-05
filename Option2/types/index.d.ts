@@ -1,7 +1,31 @@
 declare module '@azure/functions-newC' {
+    /**
+     * The root namespace for performing operations on your Azure Function App
+     * This is a work-in-progress prototype and only essential/noteworthy pieces were included at this time
+     */
     export namespace app {
+        /**
+         * Registers an http function in your app that will be triggered by making a request to the function url
+         * @param name The name of the function. This will be the route unless a route is explicitly configured in the `HttpTriggerOptions`
+         * @param options Configuration options describing the http trigger
+         * @param callback The callback to use when the function is triggered
+         */
         export function addHttpFunction(name: string, options: HttpTriggerOptions, callback: HttpCallback): RegisteredFunction;
+
+        /**
+         * Registers a timer function in your app that will be triggered on a schedule
+         * @param name The name of the function. The name must be unique within your app and will mostly be used for your own tracking purposes
+         * @param options Configuration options describing the timer trigger
+         * @param callback The callback to use when the function is triggered
+         */
         export function addTimerFunction(name: string, options: TimerTriggerOptions, callback: TimerCallback): RegisteredFunction;
+
+        /**
+         * Registers a queue function in your app that will be triggered whenever an item is added to a storage queue
+         * @param name The name of the function. The name must be unique within your app and will mostly be used for your own tracking purposes
+         * @param options Configuration options describing the queue trigger
+         * @param callback The callback to use when the function is triggered
+         */
         export function addQueueFunction(name: string, options: QueueTriggerOptions, callback: QueueCallback): RegisteredFunction;
 
         /**
@@ -140,6 +164,8 @@ declare module '@azure/functions-newC' {
 
     /**
      * Metadata about a timer invocation
+     * 
+     * Work in progress: There are other options on a timer object that have not been listed out yet
      */
     export interface Timer {
         /**
@@ -202,6 +228,9 @@ declare module '@azure/functions-newC' {
          */
         authLevel: "anonymous" | "function" | "admin";
 
+        /**
+         * Defaults to ["get", "post"] if not specified
+         */
         methods?: ('get' | 'post' | 'delete' | 'head' | 'patch' | 'put' | 'options' | 'trace')[];
 
         /**

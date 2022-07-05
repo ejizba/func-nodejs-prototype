@@ -1,4 +1,8 @@
 declare module "@azure/functions-newE" {
+    /**
+     * The root namespace for performing operations on your Azure Function App
+     * This is a work-in-progress prototype and only essential/noteworthy pieces were included at this time
+     */
     export namespace app {
         /**
          * Shorthand for `registerHttpFunction`, with several defaults chosen for the user
@@ -16,15 +20,51 @@ declare module "@azure/functions-newE" {
          * Shorthand for `registerTimerFunction`, with several defaults chosen for the user
          */
         export function timer(schedule: string, callback: TimerCallback): void;
+        /**
+         * Another option for the `timer` shorthand name
+         */
         export function setInterval(schedule: string, callback: TimerCallback): void;
+        /**
+         * Another option for the `timer` shorthand name
+         */
         export function schedule(schedule: string, callback: TimerCallback): void;
 
+        /**
+         * Registers an http function in your app that will be triggered by making a request to the function url
+         * @param name The name of the function. This will be the route unless a route is explicitly configured in the `HttpOptions`
+         * @param callback The callback to use when the function is triggered
+         */
         export function registerHttpFunction(name: string, callback: HttpCallback): void;
+
+        /**
+         * Registers an http function in your app that will be triggered by making a request to the function url
+         * @param name The name of the function. This will be the route unless a route is explicitly configured in the `HttpOptions`
+         * @param options Configuration options describing the function's trigger, inputs, and outputs
+         * @param callback The callback to use when the function is triggered
+         */
         export function registerHttpFunction(name: string, options: HttpOptions, callback: HttpCallback): void;
 
+        /**
+         * Registers a timer function in your app that will be triggered on a schedule
+         * @param name The name of the function. The name must be unique within your app and will mostly be used for your own tracking purposes
+         * @param callback The callback to use when the function is triggered
+         */
         export function registerTimerFunction(name: string, callback: TimerCallback): void;
+
+        /**
+         * Registers a timer function in your app that will be triggered on a schedule
+         * @param name The name of the function. The name must be unique within your app and will mostly be used for your own tracking purposes
+         * @param options Configuration options describing the function's trigger, inputs, and outputs
+         * @param callback The callback to use when the function is triggered
+         */
         export function registerTimerFunction(name: string, options: TimerOptions, callback: TimerCallback): void;
 
+        /**
+         * Registers a queue function in your app that will be triggered whenever an item is added to a storage queue
+         * @param name The name of the function. The name must be unique within your app and will mostly be used for your own tracking purposes
+         * @param options Configuration options describing the function's trigger, inputs, and outputs
+         * @param callback The callback to use when the function is triggered
+         */
         export function registerQueueFunction(name: string, options: QueueOptions, callback: QueueCallback): void;
     }
 
@@ -33,26 +73,70 @@ declare module "@azure/functions-newE" {
     export type QueueCallback = (context: InvocationContext, queueItem: any, ...inputs: any) => FunctionResult;
 
     export interface HttpOptions {
+        /**
+         * The trigger for your function
+         * Defaults to a ["get", "post"] request if not specified
+         */
         trigger?: Partial<HttpInputBinding>;
+
+        /**
+         * Additional inputs to your function other than the trigger
+         * There are no default inputs if not specified
+         */
         inputBindings?: GenericBinding[];
+
+        /**
+         * The outputs of your function
+         * Defaults to an http response output if not specified
+         */
         outputBindings?: GenericBinding[];
     }
 
     export interface TimerOptions {
+        /**
+         * The trigger for your function
+         * Defaults to a timer running every 5 minutes if not specified
+         */
         trigger?: Partial<TimerInputBinding>;
+
+        /**
+         * Additional inputs to your function other than the trigger
+         * There are no default inputs if not specified
+         */
         inputBindings?: GenericBinding[];
+
+        /**
+         * The outputs of your function
+         * There are no default outputs if not specified
+         */
         outputBindings?: GenericBinding[];
     }
 
     export interface QueueOptions {
-        trigger?: Partial<QueueInputBinding>;
+        /**
+         * The trigger for your function
+         * This is required for a queue input
+         */
+        trigger: QueueInputBinding;
+
+        /**
+         * Additional inputs to your function other than the trigger
+         * There are no default inputs if not specified
+         */
         inputBindings?: GenericBinding[];
+
+        /**
+         * The outputs of your function
+         * There are no default outputs if not specified
+         */
         outputBindings?: GenericBinding[];
     }
 
 
     /**
      * Metadata about a timer invocation
+     * 
+     * Work in progress: There are other options on a timer object that have not been listed out yet
      */
     export interface Timer {
         /**
@@ -204,6 +288,9 @@ declare module "@azure/functions-newE" {
          */
         authLevel: "anonymous" | "function" | "admin";
 
+        /**
+         * Defaults to ["get", "post"] if not specified
+         */
         methods?: (
             | "get"
             | "post"
