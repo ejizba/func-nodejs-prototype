@@ -1,0 +1,12 @@
+{
+    // NOTE: This file is necessary to get intellisense working during the prototype phase
+    // However, it will _not_ need to be included in projects once we support this "for real"
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@azure/functions-option1": [
+                "types"
+            ]
+        }
+    }
+}

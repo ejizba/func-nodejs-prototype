@@ -1,6 +1,4 @@
-import { HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-newE";
-
-export async function httpTrigger1(context: InvocationContext, req: HttpRequest, res: HttpResponse): Promise<void> {
+module.exports.callback = async function (context, req, res) {
     context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body || 'world';

@@ -1,11 +1,11 @@
-import { app, HttpRequest, HttpResponse, InvocationContext } from '@azure/functions-newE';
-import { httpTrigger1 } from './functions/httpTrigger1';
-import { httpOutputOptions, httpTrigger2 } from './functions/httpTrigger2';
-import { queueTrigger1, queueTrigger1Options } from './functions/queueTrigger1';
-import { timerTrigger1 } from './functions/timerTrigger1';
+const httpTrigger1 = require('./functions/httpTrigger1');
+const httpTrigger2 = require('./functions/httpTrigger2');
+const queueTrigger1 = require('./functions/queueTrigger1');
+const timerTrigger1 = require('./functions/timerTrigger1');
+const func = require('@azure/functions-option3');
 
 // 1a
-app.get("/HttpTrigger", (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
+func.app.get("/HttpTrigger", (context, req, res) => {
     context.log(`RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body || 'world';
@@ -14,17 +14,17 @@ app.get("/HttpTrigger", (context: InvocationContext, req: HttpRequest, res: Http
 
 
 // 1b
-app.get("/HttpTrigger1", httpTrigger1);
+func.app.get("/HttpTrigger1", httpTrigger1.callback);
 
-app.registerHttpFunction("HttpTrigger2", httpOutputOptions, httpTrigger2);
+func.app.registerHttpFunction("HttpTrigger2", httpTrigger2.options, httpTrigger2.callback);
 
-app.registerHttpFunction("HttpTrigger3", { trigger: { route: "/foo", methods: ["get"] } }, httpTrigger1);
+func.app.registerHttpFunction("HttpTrigger3", { trigger: { route: "/foo", methods: ["get"] } }, httpTrigger1.callback);
 
 
 // 1c
-app.timer('0 */5 * * * *', timerTrigger1);
+func.app.timer('0 */5 * * * *', timerTrigger1.callback);
 
-app.registerQueueFunction("QueueTrigger1", queueTrigger1Options, queueTrigger1);
+func.app.registerQueueFunction("QueueTrigger1", queueTrigger1.options, queueTrigger1.callback);
 
 
 

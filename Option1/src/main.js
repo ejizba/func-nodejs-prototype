@@ -1,10 +1,10 @@
-import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "@azure/functions-newB";
-import { httpTrigger2, httpTriggerBindings } from "./functions/httpTrigger2";
-import { queueTrigger1, queueTrigger1Bindings } from "./functions/queueTrigger1";
-import { timerTrigger1, timerTrigger1Bindings } from "./functions/timerTrigger1";
+const httpTrigger2 = require('./functions/httpTrigger2');
+const queueTrigger1 = require('./functions/queueTrigger1');
+const timerTrigger1 = require('./functions/timerTrigger1');
+const func = require('@azure/functions-option1');
 
 // 1a
-const reqBinding = new HttpInputBinding({
+const reqBinding = new func.HttpInputBinding({
     authLevel: "anonymous",
     methods: [
         "get",
@@ -12,9 +12,9 @@ const reqBinding = new HttpInputBinding({
     ]
 });
 
-const resBinding = new HttpOutputBinding();
+const resBinding = new func.HttpOutputBinding();
 
-app.registerFunction('HttpTrigger1', [reqBinding, resBinding], async function (context: InvocationContext): Promise<void> {
+func.app.registerFunction('HttpTrigger1', [reqBinding, resBinding], async function (context) {
     const req = reqBinding.get(context);
 
     context.log(`RequestUrl=${req.url}`);
@@ -28,12 +28,10 @@ app.registerFunction('HttpTrigger1', [reqBinding, resBinding], async function (c
 
 
 // 1b
-app.registerFunction('HttpTrigger2', httpTriggerBindings, httpTrigger2);
+func.app.registerFunction('HttpTrigger2', httpTrigger2.bindings, httpTrigger2.callback);
 
 
 // 1c
-app.registerFunction('TimerTrigger1', timerTrigger1Bindings, timerTrigger1);
+func.app.registerFunction('TimerTrigger1', timerTrigger1.bindings, timerTrigger1.callback);
 
-app.registerFunction('QueueTrigger1', queueTrigger1Bindings, queueTrigger1);
-
-
+func.app.registerFunction('QueueTrigger1', queueTrigger1.bindings, queueTrigger1.callback);

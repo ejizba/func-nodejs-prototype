@@ -1,21 +1,21 @@
-import { Binding, HttpInputBinding, HttpOutputBinding, InvocationContext, QueueOutputBinding } from "@azure/functions-newB";
+const func = require('@azure/functions-option1');
 
-const reqBinding = new HttpInputBinding({
+const reqBinding = new func.HttpInputBinding({
     authLevel: "anonymous",
     methods: [
         "get",
         "post"
     ]
 });
-const resBinding = new HttpOutputBinding();
-const queueBinding = new QueueOutputBinding({
+const resBinding = new func.HttpOutputBinding();
+const queueBinding = new func.QueueOutputBinding({
     queueName: 'testQueue',
     connection: 'storage_APPSETTING'
 });
 
-export const httpTriggerBindings: Binding[] = [reqBinding, resBinding, queueBinding];
+module.exports.bindings = [reqBinding, resBinding, queueBinding];
 
-export async function httpTrigger2(context: InvocationContext): Promise<void> {
+module.exports.callback = async function (context) {
     const req = reqBinding.get(context);
 
     context.log(`RequestUrl=${req.url}`);

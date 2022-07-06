@@ -1,14 +1,13 @@
-import { Binding, InvocationContext, QueueInputBinding } from "@azure/functions-newB";
-import { MyQueueItem } from "../models/MyQueueItem";
+const func = require('@azure/functions-option1');
 
-const queueBinding = new QueueInputBinding({
+const queueBinding = new func.QueueInputBinding({
     queueName: 'testQueue',
     connection: 'storage_APPSETTING'
 });
 
-export const queueTrigger1Bindings: Binding[] = [queueBinding];
+module.exports.bindings = [queueBinding];
 
-export async function queueTrigger1(context: InvocationContext): Promise<void> {
-    const myQueueItem: MyQueueItem = queueBinding.get(context);
+module.exports.callback = async function (context) {
+    const myQueueItem = queueBinding.get(context);
     context.log('Queue trigger function processed work item', myQueueItem);
 };

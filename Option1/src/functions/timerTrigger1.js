@@ -1,12 +1,12 @@
-import { Binding, InvocationContext, TimerInputBinding } from "@azure/functions-newB";
+const func = require('@azure/functions-option1');
 
-const myTimerBinding = new TimerInputBinding({
+const myTimerBinding = new func.TimerInputBinding({
     schedule: '0 */5 * * * *'
 });
 
-export const timerTrigger1Bindings: Binding[] = [myTimerBinding];
+module.exports.bindings = [myTimerBinding];
 
-export async function timerTrigger1(context: InvocationContext): Promise<void> {
+module.exports.callback = async function (context) {
     const myTimer = myTimerBinding.get(context);
 
     var timeStamp = new Date().toISOString();

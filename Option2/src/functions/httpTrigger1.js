@@ -1,9 +1,7 @@
-import { HttpOutputOptions, HttpRequest, HttpResponse, HttpTriggerOptions, InvocationContext } from "@azure/functions-newC";
+module.exports.triggerOptions = { authLevel: 'anonymous' };
+module.exports.outputOptions = { name: 'res' };
 
-export const httpTrigger1Options: HttpTriggerOptions = { authLevel: 'anonymous' };
-export const httpTrigger1Output: HttpOutputOptions = { name: 'res' };
-
-export async function httpTrigger1(context: InvocationContext, req: HttpRequest): Promise<HttpResponse> {
+module.exports.callback = async function (context, req) {
     context.log(`RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body || 'world';

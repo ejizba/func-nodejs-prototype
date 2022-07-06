@@ -1,7 +1,4 @@
-import { InvocationContext, QueueOptions } from "@azure/functions-newE";
-import { MyQueueItem } from "../models/MyQueueItem";
-
-export const queueTrigger1Options: QueueOptions = {
+module.exports.options = {
     trigger: {
         name: 'myQueueItem',
         queueName: 'testQueue',
@@ -9,6 +6,6 @@ export const queueTrigger1Options: QueueOptions = {
     }
 }
 
-export async function queueTrigger1(context: InvocationContext, myQueueItem: MyQueueItem): Promise<void> {
+module.exports.callback = async function (context, myQueueItem) {
     context.log('Queue trigger function processed work item', myQueueItem);
 };

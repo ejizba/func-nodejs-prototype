@@ -1,11 +1,11 @@
-import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-newC";
-import { httpTrigger1, httpTrigger1Options, httpTrigger1Output } from "./functions/httpTrigger1";
-import { httpTrigger2 } from "./functions/httpTrigger2";
-import { queueTrigger1, queueTrigger1Options } from "./functions/queueTrigger1";
-import { timerTrigger1 } from "./functions/timerTrigger1";
+const httpTrigger1 = require('./functions/httpTrigger1');
+const httpTrigger2 = require('./functions/httpTrigger2');
+const queueTrigger1 = require('./functions/queueTrigger1');
+const timerTrigger1 = require('./functions/timerTrigger1');
+const func = require('@azure/functions-option2');
 
 // 1a
-app.addHttpFunction('HttpTriggerInline', { authLevel: 'anonymous', }, async function (context: InvocationContext, req: HttpRequest): Promise<HttpResponse> {
+func.app.addHttpFunction('HttpTriggerInline', { authLevel: 'anonymous', }, async function (context, req) {
     context.log(`RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body || 'world';
@@ -16,15 +16,15 @@ app.addHttpFunction('HttpTriggerInline', { authLevel: 'anonymous', }, async func
 
 
 // 1b
-app.addHttpFunction('HttpTrigger1', httpTrigger1Options, httpTrigger1)
-    .addHttpOutput(httpTrigger1Output);
+func.app.addHttpFunction('HttpTrigger1', httpTrigger1.triggerOptions, httpTrigger1.callback)
+    .addHttpOutput(httpTrigger1.outputOptions);
 
-app.addHttpFunction('HttpTrigger2', { authLevel: 'anonymous', }, httpTrigger2)
+func.app.addHttpFunction('HttpTrigger2', { authLevel: 'anonymous', }, httpTrigger2.callback)
     .addHttpOutput({ name: 'httpResponse' })
     .addQueueOutput({ name: 'queueOutput', queueName: 'testQueue', connection: 'storage_APPSETTING' });
 
 
 // 1c
-app.addTimerFunction('TimerTrigger1', { schedule: '0 */5 * * * *', }, timerTrigger1);
+func.app.addTimerFunction('TimerTrigger1', { schedule: '0 */5 * * * *', }, timerTrigger1.callback);
 
-app.addQueueFunction('QueueTrigger1', queueTrigger1Options, queueTrigger1);
+func.app.addQueueFunction('QueueTrigger1', queueTrigger1.triggerOptions, queueTrigger1.callback);

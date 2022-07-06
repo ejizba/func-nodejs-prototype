@@ -1,12 +1,10 @@
-import { HttpOptions, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-newE";
-
-export const httpOutputOptions: HttpOptions = {
+module.exports.options = {
     outputBindings: [
         { name: 'queueOutput', queueName: 'testQueue', connection: 'storage_APPSETTING' }
     ]
 }
 
-export async function httpTrigger2(context: InvocationContext, req: HttpRequest, res: HttpResponse): Promise<any> {
+module.exports.callback = async function (context, req, res) {
     context.log(`HTTP trigger function processed a request. RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body || 'world';
