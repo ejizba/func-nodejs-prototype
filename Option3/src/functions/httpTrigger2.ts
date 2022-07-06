@@ -1,4 +1,4 @@
-import { HttpOptions, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-newE";
+import { HttpOptions, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-option3";
 
 export const httpOutputOptions: HttpOptions = {
     outputBindings: [

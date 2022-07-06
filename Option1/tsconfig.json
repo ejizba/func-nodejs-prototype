@@ -1,19 +1,16 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
-    "outDir": "dist",
-    "rootDir": ".",
-    "sourceMap": true,
-    "strict": false,
-    "baseUrl": "./",
-    "paths": {
-      "@azure/functions-newB": [
-        "types"
-      ],
-      "@azure/functions-core": [
-        "../types-core"
-      ]
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "outDir": "dist",
+        "rootDir": ".",
+        "sourceMap": true,
+        "strict": false,
+        "baseUrl": "./",
+        "paths": {
+            "@azure/functions-option1": [
+                "types"
+            ]
+        }
     }
-  }
 }

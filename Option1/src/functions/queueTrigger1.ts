@@ -1,4 +1,4 @@
-import { Binding, InvocationContext, QueueInputBinding } from "@azure/functions-newB";
+import { Binding, InvocationContext, QueueInputBinding } from "@azure/functions-option1";
 import { MyQueueItem } from "../models/MyQueueItem";
 
 const queueBinding = new QueueInputBinding({

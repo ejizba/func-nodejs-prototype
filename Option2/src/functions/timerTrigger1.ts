@@ -1,4 +1,4 @@
-import { InvocationContext, Timer } from "@azure/functions-newC";
+import { InvocationContext, Timer } from "@azure/functions-option2";
 
 export async function timerTrigger1(context: InvocationContext, myTimer: Timer): Promise<void> {
     var timeStamp = new Date().toISOString();

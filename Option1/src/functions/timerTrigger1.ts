@@ -1,4 +1,4 @@
-import { Binding, InvocationContext, TimerInputBinding } from "@azure/functions-newB";
+import { Binding, InvocationContext, TimerInputBinding } from "@azure/functions-option1";
 
 const myTimerBinding = new TimerInputBinding({
     schedule: '0 */5 * * * *'

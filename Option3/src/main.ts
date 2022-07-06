@@ -1,4 +1,4 @@
-import { app, HttpRequest, HttpResponse, InvocationContext } from '@azure/functions-newE';
+import { app, HttpRequest, HttpResponse, InvocationContext } from '@azure/functions-option3';
 import { httpTrigger1 } from './functions/httpTrigger1';
 import { httpOutputOptions, httpTrigger2 } from './functions/httpTrigger2';
 import { queueTrigger1, queueTrigger1Options } from './functions/queueTrigger1';

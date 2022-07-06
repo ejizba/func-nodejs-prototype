@@ -1,4 +1,4 @@
-import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "@azure/functions-newB";
+import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "@azure/functions-option1";
 import { httpTrigger2, httpTriggerBindings } from "./functions/httpTrigger2";
 import { queueTrigger1, queueTrigger1Bindings } from "./functions/queueTrigger1";
 import { timerTrigger1, timerTrigger1Bindings } from "./functions/timerTrigger1";

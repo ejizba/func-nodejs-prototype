@@ -1,4 +1,4 @@
-import { InvocationContext, QueueOptions } from "@azure/functions-newE";
+import { InvocationContext, QueueOptions } from "@azure/functions-option3";
 import { MyQueueItem } from "../models/MyQueueItem";
 
 export const queueTrigger1Options: QueueOptions = {

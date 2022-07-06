@@ -1,4 +1,4 @@
-import { HttpOutputOptions, HttpRequest, HttpResponse, HttpTriggerOptions, InvocationContext } from "@azure/functions-newC";
+import { HttpOutputOptions, HttpRequest, HttpResponse, HttpTriggerOptions, InvocationContext } from "@azure/functions-option2";
 
 export const httpTrigger1Options: HttpTriggerOptions = { authLevel: 'anonymous' };
 export const httpTrigger1Output: HttpOutputOptions = { name: 'res' };

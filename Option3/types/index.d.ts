@@ -1,4 +1,12 @@
-declare module "@azure/functions-newE" {
+/**
+ * NOTE: This file is necessary to get intellisense working during the prototype phase
+ * Eventually, this file will be included in an npm package instead of in the project directly
+ */
+
+/**
+ * Azure Functions Option 3
+ */
+declare module "@azure/functions-option3" {
     /**
      * The root namespace for performing operations on your Azure Function App
      * This is a work-in-progress prototype and only essential/noteworthy pieces were included at this time
