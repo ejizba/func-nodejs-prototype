@@ -3,7 +3,7 @@ const queueTrigger1 = require('./functions/queueTrigger1');
 const timerTrigger1 = require('./functions/timerTrigger1');
 const func = require('@azure/functions-option1');
 
-// 1a
+// Section A
 const reqBinding = new func.HttpInputBinding({
     authLevel: "anonymous",
     methods: [
@@ -27,11 +27,11 @@ func.app.registerFunction('HttpTrigger1', [reqBinding, resBinding], async functi
 })
 
 
-// 1b
+// Section B
 func.app.registerFunction('HttpTrigger2', httpTrigger2.bindings, httpTrigger2.callback);
 
 
-// 1c
+// Section C
 func.app.registerFunction('TimerTrigger1', timerTrigger1.bindings, timerTrigger1.callback);
 
 func.app.registerFunction('QueueTrigger1', queueTrigger1.bindings, queueTrigger1.callback);
