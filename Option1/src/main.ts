@@ -3,7 +3,7 @@ import { httpTrigger2, httpTriggerBindings } from "./functions/httpTrigger2";
 import { queueTrigger1, queueTrigger1Bindings } from "./functions/queueTrigger1";
 import { timerTrigger1, timerTrigger1Bindings } from "./functions/timerTrigger1";
 
-// 1a
+// Section A
 const reqBinding = new HttpInputBinding({
     authLevel: "anonymous",
     methods: [
@@ -27,11 +27,11 @@ app.registerFunction('HttpTrigger1', [reqBinding, resBinding], async function (c
 })
 
 
-// 1b
+// Section B
 app.registerFunction('HttpTrigger2', httpTriggerBindings, httpTrigger2);
 
 
-// 1c
+// Section C
 app.registerFunction('TimerTrigger1', timerTrigger1Bindings, timerTrigger1);
 
 app.registerFunction('QueueTrigger1', queueTrigger1Bindings, queueTrigger1);

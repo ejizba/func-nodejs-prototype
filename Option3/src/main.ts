@@ -4,7 +4,7 @@ import { httpOutputOptions, httpTrigger2 } from './functions/httpTrigger2';
 import { queueTrigger1, queueTrigger1Options } from './functions/queueTrigger1';
 import { timerTrigger1 } from './functions/timerTrigger1';
 
-// 1a
+// Section A
 app.get("/HttpTrigger", (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
     context.log(`RequestUrl=${req.url}`);
 
@@ -13,7 +13,7 @@ app.get("/HttpTrigger", (context: InvocationContext, req: HttpRequest, res: Http
 });
 
 
-// 1b
+// Section B
 app.get("/HttpTrigger1", httpTrigger1);
 
 app.registerHttpFunction("HttpTrigger2", httpOutputOptions, httpTrigger2);
@@ -21,7 +21,7 @@ app.registerHttpFunction("HttpTrigger2", httpOutputOptions, httpTrigger2);
 app.registerHttpFunction("HttpTrigger3", { trigger: { route: "/foo", methods: ["get"] } }, httpTrigger1);
 
 
-// 1c
+// Section C
 app.timer('0 */5 * * * *', timerTrigger1);
 
 app.registerQueueFunction("QueueTrigger1", queueTrigger1Options, queueTrigger1);
