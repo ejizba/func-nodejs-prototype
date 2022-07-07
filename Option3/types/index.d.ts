@@ -13,10 +13,24 @@ declare module "@azure/functions-option3" {
      */
     export namespace app {
         /**
-         * Shorthand for `registerHttpFunction`, with several defaults chosen for the user
+         * Registers an http function in your app that will be triggered by making a "get" request to the function url
+         *
+         * Shorthand for `registerHttpFunction`, with several defaults already chosen
          */
         export function get(route: string, callback: HttpCallback): void;
+
+        /**
+         * Registers an http function in your app that will be triggered by making a "put" request to the function url
+         *
+         * Shorthand for `registerHttpFunction`, with several defaults already chosen
+         */
         export function put(route: string, callback: HttpCallback): void;
+
+        /**
+         * Registers an http function in your app that will be triggered by making a "post" request to the function url
+         *
+         * Shorthand for `registerHttpFunction`, with several defaults already chosen
+         */
         export function post(route: string, callback: HttpCallback): void;
 
         // Per the express docs, "get", "put", "post", and "delete" are "the most popular HTTP methods"
@@ -25,7 +39,9 @@ declare module "@azure/functions-option3" {
         // export function delete(name: string, callback: HttpCallback): void;
 
         /**
-         * Shorthand for `registerTimerFunction`, with several defaults chosen for the user
+         * Registers a timer function in your app that will be triggered on a schedule
+         *
+         * Shorthand for `registerTimerFunction`, with several defaults already chosen
          */
         export function timer(schedule: string, callback: TimerCallback): void;
         /**
