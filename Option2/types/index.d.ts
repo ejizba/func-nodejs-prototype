@@ -53,8 +53,16 @@ declare module '@azure/functions-option2' {
          */
         addInput(inputType: string, options: InputOptions): RegisteredFunction;
 
+        /**
+         * Registers the output of your function as an http response
+         */
         addHttpOutput(options: HttpOutputOptions): RegisteredFunction;
+
+        /**
+         * Registers the output of your function as an Azure Storage queue item
+         */
         addQueueOutput(options: QueueOutputOptions): RegisteredFunction;
+
         /**
          * A generic method for adding an output if the output type is not supported with its own method
          */
