@@ -1,11 +1,11 @@
 import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-option2";
-import { httpTrigger1, httpTrigger1Options, httpTrigger1Output } from "./functions/httpTrigger1";
-import { httpTrigger2 } from "./functions/httpTrigger2";
-import { queueTrigger1, queueTrigger1Options } from "./functions/queueTrigger1";
-import { timerTrigger1 } from "./functions/timerTrigger1";
+import { helloWorld, helloWorldOptions, helloWorldOutput } from "./functions/helloWorld";
+import { helloWorldQueue } from "./functions/helloWorldQueue";
+import { processQueueMessage, processQueueMessageOptions } from "./functions/processQueueMessage";
+import { reminder } from "./functions/reminder";
 
 // Section A
-app.addHttpFunction('HttpTriggerInline', { authLevel: 'anonymous', }, async function (context: InvocationContext, req: HttpRequest): Promise<HttpResponse> {
+app.addHttpFunction('helloWorld', { authLevel: 'anonymous', }, async function (context: InvocationContext, req: HttpRequest): Promise<HttpResponse> {
     context.log(`RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body || 'world';
@@ -16,15 +16,15 @@ app.addHttpFunction('HttpTriggerInline', { authLevel: 'anonymous', }, async func
 
 
 // Section B
-app.addHttpFunction('HttpTrigger1', httpTrigger1Options, httpTrigger1)
-    .addHttpOutput(httpTrigger1Output);
+app.addHttpFunction('helloWorld2', helloWorldOptions, helloWorld)
+    .addHttpOutput(helloWorldOutput);
 
-app.addHttpFunction('HttpTrigger2', { authLevel: 'anonymous', }, httpTrigger2)
+app.addHttpFunction('helloWorldQueue', { authLevel: 'anonymous', }, helloWorldQueue)
     .addHttpOutput({ name: 'httpResponse' })
     .addQueueOutput({ name: 'queueOutput', queueName: 'testQueue', connection: 'storage_APPSETTING' });
 
 
 // Section C
-app.addTimerFunction('TimerTrigger1', { schedule: '0 */5 * * * *', }, timerTrigger1);
+app.addTimerFunction('reminder', { schedule: '0 */5 * * * *', }, reminder);
 
-app.addQueueFunction('QueueTrigger1', queueTrigger1Options, queueTrigger1);
+app.addQueueFunction('processQueueMessage', processQueueMessageOptions, processQueueMessage);
