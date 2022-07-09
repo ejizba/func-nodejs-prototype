@@ -1,7 +1,7 @@
 import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "@azure/functions-option1";
-import { httpTrigger2, httpTriggerBindings } from "./functions/httpTrigger2";
-import { queueTrigger1, queueTrigger1Bindings } from "./functions/queueTrigger1";
-import { timerTrigger1, timerTrigger1Bindings } from "./functions/timerTrigger1";
+import { helloWorldQueue, helloWorldQueueBindings } from "./functions/helloWorldQueue";
+import { processQueueMessage, processQueueMessageBindings } from "./functions/processQueueMessage";
+import { reminder, reminderBindings } from "./functions/reminder";
 
 // Section A
 const reqBinding = new HttpInputBinding({
@@ -14,7 +14,7 @@ const reqBinding = new HttpInputBinding({
 
 const resBinding = new HttpOutputBinding();
 
-app.registerFunction('HttpTrigger1', [reqBinding, resBinding], async function (context: InvocationContext): Promise<void> {
+app.registerFunction('helloWorld', [reqBinding, resBinding], async function (context: InvocationContext): Promise<void> {
     const req = reqBinding.get(context);
 
     context.log(`RequestUrl=${req.url}`);
@@ -28,12 +28,12 @@ app.registerFunction('HttpTrigger1', [reqBinding, resBinding], async function (c
 
 
 // Section B
-app.registerFunction('HttpTrigger2', httpTriggerBindings, httpTrigger2);
+app.registerFunction('helloWorldQueue', helloWorldQueueBindings, helloWorldQueue);
 
 
 // Section C
-app.registerFunction('TimerTrigger1', timerTrigger1Bindings, timerTrigger1);
+app.registerFunction('reminder', reminderBindings, reminder);
 
-app.registerFunction('QueueTrigger1', queueTrigger1Bindings, queueTrigger1);
+app.registerFunction('processQueueMessage', processQueueMessageBindings, processQueueMessage);
 
 

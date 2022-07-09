@@ -6,9 +6,9 @@ const queueBinding = new QueueInputBinding({
     connection: 'storage_APPSETTING'
 });
 
-export const queueTrigger1Bindings: Binding[] = [queueBinding];
+export const processQueueMessageBindings: Binding[] = [queueBinding];
 
-export async function queueTrigger1(context: InvocationContext): Promise<void> {
+export async function processQueueMessage(context: InvocationContext): Promise<void> {
     const myQueueItem: MyQueueItem = queueBinding.get(context);
     context.log('Queue trigger function processed work item', myQueueItem);
 };

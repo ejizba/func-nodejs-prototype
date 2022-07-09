@@ -13,9 +13,9 @@ const queueBinding = new QueueOutputBinding({
     connection: 'storage_APPSETTING'
 });
 
-export const httpTriggerBindings: Binding[] = [reqBinding, resBinding, queueBinding];
+export const helloWorldQueueBindings: Binding[] = [reqBinding, resBinding, queueBinding];
 
-export async function httpTrigger2(context: InvocationContext): Promise<void> {
+export async function helloWorldQueue(context: InvocationContext): Promise<void> {
     const req = reqBinding.get(context);
 
     context.log(`RequestUrl=${req.url}`);
