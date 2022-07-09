@@ -1,11 +1,11 @@
-const httpTrigger1 = require('./functions/httpTrigger1');
-const httpTrigger2 = require('./functions/httpTrigger2');
-const queueTrigger1 = require('./functions/queueTrigger1');
-const timerTrigger1 = require('./functions/timerTrigger1');
+const helloWorld = require('./functions/helloWorld');
+const helloWorldQueue = require('./functions/helloWorldQueue');
+const processQueueMessage = require('./functions/processQueueMessage');
+const reminder = require('./functions/reminder');
 const func = require('@azure/functions-option3');
 
 // Section A
-func.app.get("/HttpTrigger", (context, req, res) => {
+func.app.get("/helloWorld", (context, req, res) => {
     context.log(`RequestUrl=${req.url}`);
 
     const name = req.query.name || req.body || 'world';
@@ -14,17 +14,17 @@ func.app.get("/HttpTrigger", (context, req, res) => {
 
 
 // Section B
-func.app.get("/HttpTrigger1", httpTrigger1.callback);
+func.app.get("/helloWorld2", helloWorld.callback);
 
-func.app.registerHttpFunction("HttpTrigger2", httpTrigger2.options, httpTrigger2.callback);
+func.app.registerHttpFunction("helloWorldQueue", helloWorldQueue.options, helloWorldQueue.callback);
 
-func.app.registerHttpFunction("HttpTrigger3", { trigger: { route: "/foo", methods: ["get"] } }, httpTrigger1.callback);
+func.app.registerHttpFunction("helloWorld3", { trigger: { route: "/foo", methods: ["get"] } }, helloWorld.callback);
 
 
 // Section C
-func.app.timer('0 */5 * * * *', timerTrigger1.callback);
+func.app.timer('0 */5 * * * *', reminder.callback);
 
-func.app.registerQueueFunction("QueueTrigger1", queueTrigger1.options, queueTrigger1.callback);
+func.app.registerQueueFunction("processQueueMessage", processQueueMessage.options, processQueueMessage.callback);
 
 
 
