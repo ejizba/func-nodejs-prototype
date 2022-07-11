@@ -4,14 +4,14 @@ const myTimerBinding = new TimerInputBinding({
     schedule: '0 */5 * * * *'
 });
 
-export const reminderBindings: Binding[] = [myTimerBinding];
+export const snoozeBindings: Binding[] = [myTimerBinding];
 
-export async function reminder(context: InvocationContext): Promise<void> {
+export async function snooze(context: InvocationContext): Promise<void> {
     const myTimer = myTimerBinding.get(context);
 
     var timeStamp = new Date().toISOString();
     if (myTimer.isPastDue) {
         context.log('Timer function is running late!');
     }
-    context.log('The current time is: ', timeStamp);
+    context.log('Snoozed! The current time is: ', timeStamp);
 };

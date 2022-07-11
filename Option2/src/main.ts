@@ -2,7 +2,7 @@ import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functi
 import { helloWorld, helloWorldOptions, helloWorldOutput } from "./functions/helloWorld";
 import { helloWorldQueue } from "./functions/helloWorldQueue";
 import { processQueueMessage, processQueueMessageOptions } from "./functions/processQueueMessage";
-import { reminder } from "./functions/reminder";
+import { snooze } from "./functions/snooze";
 
 // Section A
 app.addHttpFunction('helloWorld', { authLevel: 'anonymous', }, async function (context: InvocationContext, req: HttpRequest): Promise<HttpResponse> {
@@ -25,6 +25,6 @@ app.addHttpFunction('helloWorldQueue', { authLevel: 'anonymous', }, helloWorldQu
 
 
 // Section C
-app.addTimerFunction('reminder', { schedule: '0 */5 * * * *', }, reminder);
+app.addTimerFunction('snooze', { schedule: '0 */5 * * * *', }, snooze);
 
 app.addQueueFunction('processQueueMessage', processQueueMessageOptions, processQueueMessage);

@@ -1,7 +1,7 @@
 import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "@azure/functions-option1";
 import { helloWorldQueue, helloWorldQueueBindings } from "./functions/helloWorldQueue";
 import { processQueueMessage, processQueueMessageBindings } from "./functions/processQueueMessage";
-import { reminder, reminderBindings } from "./functions/reminder";
+import { snooze, snoozeBindings } from "./functions/snooze";
 
 // Section A
 const reqBinding = new HttpInputBinding({
@@ -32,7 +32,7 @@ app.registerFunction('helloWorldQueue', helloWorldQueueBindings, helloWorldQueue
 
 
 // Section C
-app.registerFunction('reminder', reminderBindings, reminder);
+app.registerFunction('snooze', snoozeBindings, snooze);
 
 app.registerFunction('processQueueMessage', processQueueMessageBindings, processQueueMessage);
 

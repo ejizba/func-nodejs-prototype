@@ -2,7 +2,7 @@ import { app, HttpRequest, HttpResponse, InvocationContext } from '@azure/functi
 import { helloWorld } from './functions/helloWorld';
 import { helloWorldQueue, httpOutputOptions } from './functions/helloWorldQueue';
 import { processQueueMessage, processQueueMessageOptions } from './functions/processQueueMessage';
-import { reminder } from './functions/reminder';
+import { snooze } from './functions/snooze';
 
 // Section A
 app.get("/helloWorld", (context: InvocationContext, req: HttpRequest, res: HttpResponse) => {
@@ -22,7 +22,7 @@ app.registerHttpFunction("helloWorld3", { trigger: { route: "/foo", methods: ["g
 
 
 // Section C
-app.timer('0 */5 * * * *', reminder);
+app.timer('0 */5 * * * *', snooze);
 
 app.registerQueueFunction("processQueueMessage", processQueueMessageOptions, processQueueMessage);
 
