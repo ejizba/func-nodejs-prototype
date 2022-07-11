@@ -1,7 +1,7 @@
 const helloWorld = require('./functions/helloWorld');
 const helloWorldQueue = require('./functions/helloWorldQueue');
 const processQueueMessage = require('./functions/processQueueMessage');
-const reminder = require('./functions/reminder');
+const snooze = require('./functions/snooze');
 const func = require('@azure/functions-option2');
 
 // Section A
@@ -25,6 +25,6 @@ func.app.addHttpFunction('helloWorldQueue', { authLevel: 'anonymous', }, helloWo
 
 
 // Section C
-func.app.addTimerFunction('reminder', { schedule: '0 */5 * * * *', }, reminder.callback);
+func.app.addTimerFunction('snooze', { schedule: '0 */5 * * * *', }, snooze.callback);
 
 func.app.addQueueFunction('processQueueMessage', processQueueMessage.triggerOptions, processQueueMessage.callback);

@@ -1,6 +1,6 @@
 const helloWorldQueue = require('./functions/helloWorldQueue');
 const processQueueMessage = require('./functions/processQueueMessage');
-const reminder = require('./functions/reminder');
+const snooze = require('./functions/snooze');
 const func = require('@azure/functions-option1');
 
 // Section A
@@ -32,6 +32,6 @@ func.app.registerFunction('helloWorldQueue', helloWorldQueue.bindings, helloWorl
 
 
 // Section C
-func.app.registerFunction('reminder', reminder.bindings, reminder.callback);
+func.app.registerFunction('snooze', snooze.bindings, snooze.callback);
 
 func.app.registerFunction('processQueueMessage', processQueueMessage.bindings, processQueueMessage.callback);
