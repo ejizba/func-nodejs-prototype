@@ -8,7 +8,7 @@
         "strict": false,
         "baseUrl": "./",
         "paths": {
-            "@azure/functions-option1": [
+            "@azure/functions-prototype": [
                 "types"
             ]
         }

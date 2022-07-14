@@ -1,14 +1,10 @@
-import { Binding, InvocationContext, QueueInputBinding } from "@azure/functions-option1";
+import { InvocationContext, QueueFunctionOptions, QueueInput } from "@azure/functions-prototype";
 import { MyQueueItem } from "../models/MyQueueItem";
 
-const queueBinding = new QueueInputBinding({
-    queueName: 'testQueue',
-    connection: 'storage_APPSETTING'
-});
+export const processQueueMessageOptions: QueueFunctionOptions = {
+    trigger: new QueueInput({ queueName: 'testQueue', connection: 'storage_APPSETTING' })
+}
 
-export const processQueueMessageBindings: Binding[] = [queueBinding];
-
-export async function processQueueMessage(context: InvocationContext): Promise<void> {
-    const myQueueItem: MyQueueItem = queueBinding.get(context);
+export async function processQueueMessage(context: InvocationContext, myQueueItem: MyQueueItem): Promise<void> {
     context.log('Queue trigger function processed work item', myQueueItem);
 };

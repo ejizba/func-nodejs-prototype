@@ -1,17 +1,10 @@
-import { Binding, InvocationContext, TimerInputBinding } from "@azure/functions-option1";
+import { InvocationContext, Timer, TimerFunctionOptions, TimerInput } from "@azure/functions-prototype";
 
-const myTimerBinding = new TimerInputBinding({
-    schedule: '0 */5 * * * *'
-});
+export const snoozeOptions: TimerFunctionOptions = {
+    trigger: new TimerInput({ schedule: '0 */5 * * * *' })
+}
 
-export const snoozeBindings: Binding[] = [myTimerBinding];
-
-export async function snooze(context: InvocationContext): Promise<void> {
-    const myTimer = myTimerBinding.get(context);
-
+export async function snooze(context: InvocationContext, myTimer: Timer): Promise<void> {
     var timeStamp = new Date().toISOString();
-    if (myTimer.isPastDue) {
-        context.log('Timer function is running late!');
-    }
-    context.log('Snoozed! The current time is: ', timeStamp);
+    context.log('The current time is: ', timeStamp);
 };

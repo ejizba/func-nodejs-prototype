@@ -1,39 +1,25 @@
-import { app, HttpInputBinding, HttpOutputBinding, InvocationContext } from "@azure/functions-option1";
-import { helloWorldQueue, helloWorldQueueBindings } from "./functions/helloWorldQueue";
-import { processQueueMessage, processQueueMessageBindings } from "./functions/processQueueMessage";
-import { snooze, snoozeBindings } from "./functions/snooze";
+import { app, HttpFunctionOptions, HttpInput, HttpRequest, InvocationContext } from "@azure/functions-prototype";
+import { helloWorld, helloWorldOptions } from "./functions/helloWorld";
+import { helloWorldQueue, helloWorldQueueOptions } from "./functions/helloWorldQueue";
+import { processQueueMessage, processQueueMessageOptions } from "./functions/processQueueMessage";
+import { snooze, snoozeOptions } from "./functions/snooze";
 
-// Section A
-const reqBinding = new HttpInputBinding({
-    authLevel: "anonymous",
-    methods: [
-        "get",
-        "post"
-    ]
-});
+app.addHttpFunction('helloWorld', helloWorldOptions, helloWorld);
 
-const resBinding = new HttpOutputBinding();
+app.addHttpFunction('helloWorldQueue', helloWorldQueueOptions, helloWorldQueue);
 
-app.registerFunction('helloWorld', [reqBinding, resBinding], async function (context: InvocationContext): Promise<void> {
-    const req = reqBinding.get(context);
+app.addQueueFunction('processQueueMessage', processQueueMessageOptions, processQueueMessage);
 
-    context.log(`RequestUrl=${req.url}`);
+app.addTimerFunction('snooze', snoozeOptions, snooze);
 
-    const name = req.query.name || req.body || 'world';
+const helloWorldInlineOptions: HttpFunctionOptions = {
+    trigger: new HttpInput({ authLevel: "anonymous", methods: ["get", "post"] })
+}
 
-    resBinding.set(context, {
-        body: `Hello, ${name}!`
-    });
+app.addHttpFunction('helloWorldInline', helloWorldInlineOptions, async (context: InvocationContext, request: HttpRequest) => {
+    context.log(`RequestUrl=${request.url}`);
+
+    const name = request.query.name || request.body || 'world';
+
+    return { body: `Hello, ${name}!` };
 })
-
-
-// Section B
-app.registerFunction('helloWorldQueue', helloWorldQueueBindings, helloWorldQueue);
-
-
-// Section C
-app.registerFunction('snooze', snoozeBindings, snooze);
-
-app.registerFunction('processQueueMessage', processQueueMessageBindings, processQueueMessage);
-
-

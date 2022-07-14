@@ -1,28 +1,18 @@
-import { Binding, HttpInputBinding, HttpOutputBinding, InvocationContext, QueueOutputBinding } from "@azure/functions-option1";
+import { HttpFunctionOptions, HttpInput, HttpRequest, HttpResponse, InvocationContext, QueueOutput } from "@azure/functions-prototype";
 
-const reqBinding = new HttpInputBinding({
-    authLevel: "anonymous",
-    methods: [
-        "get",
-        "post"
-    ]
-});
-const resBinding = new HttpOutputBinding();
-const queueBinding = new QueueOutputBinding({
-    queueName: 'testQueue',
-    connection: 'storage_APPSETTING'
-});
+const queueOutput = new QueueOutput({ queueName: 'testQueue', connection: 'storage_APPSETTING' });
 
-export const helloWorldQueueBindings: Binding[] = [reqBinding, resBinding, queueBinding];
+export const helloWorldQueueOptions: HttpFunctionOptions = {
+    trigger: new HttpInput({ authLevel: "anonymous", methods: ["get", "post"] }),
+    extraOutputs: [queueOutput]
+}
 
-export async function helloWorldQueue(context: InvocationContext): Promise<void> {
-    const req = reqBinding.get(context);
+export async function helloWorldQueue(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
+    context.log(`RequestUrl=${request.url}`);
 
-    context.log(`RequestUrl=${req.url}`);
+    const name = request.query.name || request.body || 'world';
 
-    const name = req.query.name || req.body || 'world';
-    resBinding.set(context, {
-        body: `Hello, ${name}!`
-    });
-    queueBinding.set(context, { name });
+    context.extraOutputs.set(queueOutput, { name });
+
+    return { body: `Hello, ${name}!` };
 };
