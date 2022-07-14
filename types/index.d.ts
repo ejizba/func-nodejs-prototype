@@ -123,7 +123,13 @@ declare module '@azure/functions-prototype' {
     /**
      * Contains metadata and helper methods specific to this invocation
      */
-    export interface InvocationContext {
+    export class InvocationContext {
+        /**
+         * TODO: I added a constructor so that this could be used in tests
+         * Still need to investigate if that will be possible or if users will need to mock their own InvocationContext
+         */
+        constructor();
+
         /**
          * A unique guid specific to this invocation
          */
