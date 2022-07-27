@@ -1,4 +1,4 @@
-import { InvocationContext, Timer, TimerFunctionOptions, TimerInput } from "@azure/functions-prototype";
+import { InvocationContext, Timer, TimerFunctionOptions, TimerInput } from "@azure/functions";
 
 export const snoozeOptions: TimerFunctionOptions = {
     trigger: new TimerInput({ schedule: '0 */5 * * * *' })

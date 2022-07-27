@@ -1,4 +1,4 @@
-import { app, HttpFunctionOptions, HttpInput, HttpRequest, InvocationContext } from "@azure/functions-prototype";
+import { app, HttpFunctionOptions, HttpInput } from "@azure/functions";
 import { helloWorld, helloWorldOptions } from "./functions/helloWorld";
 import { helloWorldQueue, helloWorldQueueOptions } from "./functions/helloWorldQueue";
 import { processQueueMessage, processQueueMessageOptions } from "./functions/processQueueMessage";
@@ -16,7 +16,7 @@ const helloWorldInlineOptions: HttpFunctionOptions = {
     trigger: new HttpInput({ authLevel: "anonymous", methods: ["get", "post"] })
 }
 
-app.addHttpFunction('helloWorldInline', helloWorldInlineOptions, async (context: InvocationContext, request: HttpRequest) => {
+app.addHttpFunction('helloWorldInline', helloWorldInlineOptions, async (context, request) => {
     context.log(`RequestUrl=${request.url}`);
 
     const name = request.query.name || request.body || 'world';

@@ -1,4 +1,4 @@
-import { HttpRequest, InvocationContext } from '@azure/functions-prototype';
+import { HttpRequest, InvocationContext } from '@azure/functions';
 import { expect } from 'chai';
 import 'mocha';
 import { helloWorld } from '../../src/functions/helloWorld';

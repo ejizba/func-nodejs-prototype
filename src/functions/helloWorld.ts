@@ -1,4 +1,4 @@
-import { HttpFunctionOptions, HttpInput, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions-prototype";
+import { HttpFunctionOptions, HttpInput, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions";
 
 export const helloWorldOptions: HttpFunctionOptions = {
     trigger: new HttpInput({ authLevel: "anonymous", methods: ["get", "post"] })

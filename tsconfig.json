@@ -6,11 +6,6 @@
         "rootDir": ".",
         "sourceMap": true,
         "strict": false,
-        "baseUrl": "./",
-        "paths": {
-            "@azure/functions-prototype": [
-                "types"
-            ]
-        }
+        "baseUrl": "./"
     }
 }
