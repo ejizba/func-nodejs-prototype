@@ -1,8 +1,8 @@
-import { InvocationContext, QueueFunctionOptions, QueueInput } from "@azure/functions";
+import { input, InvocationContext, QueueFunctionOptions } from "@azure/functions";
 import { MyQueueItem } from "../models/MyQueueItem";
 
 export const processQueueMessageOptions: QueueFunctionOptions = {
-    trigger: new QueueInput({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' })
+    trigger: input.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' })
 }
 
 export async function processQueueMessage(context: InvocationContext, myQueueItem: MyQueueItem): Promise<void> {

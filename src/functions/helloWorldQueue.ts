@@ -1,9 +1,9 @@
-import { HttpFunctionOptions, HttpInput, HttpRequest, HttpResponse, InvocationContext, QueueOutput } from "@azure/functions";
+import { HttpFunctionOptions, HttpRequest, HttpResponse, input, InvocationContext, output } from "@azure/functions";
 
-const queueOutput = new QueueOutput({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
+const queueOutput = output.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
 
 export const helloWorldQueueOptions: HttpFunctionOptions = {
-    trigger: new HttpInput({ authLevel: "anonymous", methods: ["get", "post"] }),
+    trigger: input.http({ authLevel: "anonymous", methods: ["get", "post"] }),
     extraOutputs: [queueOutput]
 }
 

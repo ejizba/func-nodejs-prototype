@@ -1,4 +1,4 @@
-import { app, HttpFunctionOptions, HttpInput } from "@azure/functions";
+import { app, HttpFunctionOptions, input } from "@azure/functions";
 import { helloWorld, helloWorldOptions } from "./functions/helloWorld";
 import { helloWorldQueue, helloWorldQueueOptions } from "./functions/helloWorldQueue";
 import { processQueueMessage, processQueueMessageOptions } from "./functions/processQueueMessage";
@@ -13,7 +13,7 @@ app.addQueueFunction('processQueueMessage', processQueueMessageOptions, processQ
 app.addTimerFunction('snooze', snoozeOptions, snooze);
 
 const helloWorldInlineOptions: HttpFunctionOptions = {
-    trigger: new HttpInput({ authLevel: "anonymous", methods: ["get", "post"] })
+    trigger: input.http({ authLevel: "anonymous", methods: ["get", "post"] })
 }
 
 app.addHttpFunction('helloWorldInline', helloWorldInlineOptions, async (context, request) => {
