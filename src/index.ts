@@ -1,14 +1,6 @@
 import { app } from "@azure/functions";
-import { helloWorld } from "./functions/helloWorld";
-import { helloWorldQueue, helloWorldQueueOptions } from "./functions/helloWorldQueue";
-import { processQueueMessage, processQueueMessageOptions } from "./functions/processQueueMessage";
 import { snooze, snoozeOptions } from "./functions/snooze";
 
-app.get('helloWorld', helloWorld);
-
-app.get('helloWorldQueue', helloWorldQueue, helloWorldQueueOptions);
-
-app.queue('processQueueMessage', processQueueMessage, processQueueMessageOptions);
 
 app.timer('snooze', snooze, snoozeOptions);
 
