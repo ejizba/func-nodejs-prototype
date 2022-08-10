@@ -3,7 +3,7 @@ import { HttpFunctionOptions, HttpRequest, HttpResponse, input, InvocationContex
 const queueOutput = output.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
 
 export const helloWorldQueueOptions: HttpFunctionOptions = {
-    trigger: input.http({ authLevel: "anonymous", methods: ["get", "post"] }),
+    trigger: input.http({ authLevel: "function" }),
     extraOutputs: [queueOutput]
 }
 
