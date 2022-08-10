@@ -1,7 +1,7 @@
-const { HttpInput } = require('@azure/functions');
+const { input } = require('@azure/functions');
 
 const helloWorldOptions = {
-    trigger: new HttpInput({ authLevel: "anonymous", methods: ["get", "post"] })
+    trigger: input.http({ authLevel: "anonymous", methods: ["get", "post"] })
 }
 
 async function helloWorld(context, request) {

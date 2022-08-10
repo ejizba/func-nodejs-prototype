@@ -1,10 +1,10 @@
-const { app, HttpInput } = require('@azure/functions');
-const { helloWorld } = require('./functions/helloWorld');
+const { app, input } = require('@azure/functions');
+const { helloWorld, helloWorldOptions } = require('./functions/helloWorld');
 const { helloWorldQueue, helloWorldQueueOptions } = require('./functions/helloWorldQueue');
 const { processQueueMessage, processQueueMessageOptions } = require('./functions/processQueueMessage');
 const { snooze, snoozeOptions } = require('./functions/snooze');
 
-app.addHttpFunction('helloWorld', helloWorld.options, helloWorld.callback);
+app.addHttpFunction('helloWorld', helloWorldOptions, helloWorld);
 
 app.addHttpFunction('helloWorldQueue', helloWorldQueueOptions, helloWorldQueue);
 
@@ -13,7 +13,7 @@ app.addQueueFunction('processQueueMessage', processQueueMessageOptions, processQ
 app.addTimerFunction('snooze', snoozeOptions, snooze);
 
 const helloWorldInlineOptions = {
-    trigger: new HttpInput({ authLevel: "anonymous", methods: ["get", "post"] })
+    trigger: input.http({ authLevel: "anonymous", methods: ["get", "post"] })
 }
 
 app.addHttpFunction('helloWorldInline', helloWorldInlineOptions, async (context, request) => {

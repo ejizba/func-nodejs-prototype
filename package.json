@@ -9,7 +9,9 @@
         "start": "func start",
         "test": "mocha 'dist/test/**/*.test.js'"
     },
-    "dependencies": {},
+    "dependencies": {
+        "@azure/functions": "file:../../Repos/js-library/azure-functions-4.0.0-alpha.0.tgz"
+    },
     "devDependencies": {
         "@types/chai": "^4.0.0",
         "@types/mocha": "^9.0.0",
@@ -18,5 +20,5 @@
         "mocha": "^9.0.0",
         "typescript": "^4.0.0"
     },
-    "main": "src/app.js"
+    "main": "src/index.js"
 }

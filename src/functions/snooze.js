@@ -1,7 +1,7 @@
-const { TimerInput } = require('@azure/functions');
+const { input } = require('@azure/functions');
 
 const snoozeOptions = {
-    trigger: new TimerInput({ schedule: '0 */5 * * * *' })
+    trigger: input.timer({ schedule: '0 */5 * * * *' })
 }
 
 async function snooze(context, myTimer) {

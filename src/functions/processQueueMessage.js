@@ -1,7 +1,7 @@
-const { QueueInput } = require('@azure/functions');
+const { input } = require('@azure/functions');
 
 const processQueueMessageOptions = {
-    trigger: new QueueInput({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' })
+    trigger: input.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' })
 }
 
 async function processQueueMessage(context, myQueueItem) {
