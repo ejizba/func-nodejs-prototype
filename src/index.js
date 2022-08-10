@@ -4,19 +4,19 @@ const { helloWorldQueue, helloWorldQueueOptions } = require('./functions/helloWo
 const { processQueueMessage, processQueueMessageOptions } = require('./functions/processQueueMessage');
 const { snooze, snoozeOptions } = require('./functions/snooze');
 
-app.addHttpFunction('helloWorld', helloWorldOptions, helloWorld);
+app.http('helloWorld', helloWorldOptions, helloWorld);
 
-app.addHttpFunction('helloWorldQueue', helloWorldQueueOptions, helloWorldQueue);
+app.http('helloWorldQueue', helloWorldQueueOptions, helloWorldQueue);
 
-app.addQueueFunction('processQueueMessage', processQueueMessageOptions, processQueueMessage);
+app.queue('processQueueMessage', processQueueMessageOptions, processQueueMessage);
 
-app.addTimerFunction('snooze', snoozeOptions, snooze);
+app.timer('snooze', snoozeOptions, snooze);
 
 const helloWorldInlineOptions = {
     trigger: input.http({ authLevel: "anonymous", methods: ["get", "post"] })
 }
 
-app.addHttpFunction('helloWorldInline', helloWorldInlineOptions, async (context, request) => {
+app.http('helloWorldInline', helloWorldInlineOptions, async (context, request) => {
     context.log(`RequestUrl=${request.url}`);
 
     const name = request.query.name || request.body || 'world';
