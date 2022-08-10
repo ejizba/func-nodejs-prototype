@@ -3,7 +3,7 @@ const { input, output } = require('@azure/functions');
 const queueOutput = output.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
 
 const helloWorldQueueOptions = {
-    trigger: input.http({ authLevel: "anonymous", methods: ["get", "post"] }),
+    trigger: input.http({ authLevel: "function" }),
     extraOutputs: [queueOutput]
 }
 

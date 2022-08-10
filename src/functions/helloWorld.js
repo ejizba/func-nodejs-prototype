@@ -1,9 +1,3 @@
-const { input } = require('@azure/functions');
-
-const helloWorldOptions = {
-    trigger: input.http({ authLevel: "anonymous", methods: ["get", "post"] })
-}
-
 async function helloWorld(context, request) {
     context.log(`RequestUrl=${request.url}`);
 
@@ -12,4 +6,4 @@ async function helloWorld(context, request) {
     return { body: `Hello, ${name}!` };
 };
 
-module.exports = { helloWorldOptions, helloWorld };
+module.exports = { helloWorld };

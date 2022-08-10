@@ -1,25 +1,21 @@
-const { app, input } = require('@azure/functions');
-const { helloWorld, helloWorldOptions } = require('./functions/helloWorld');
+const { app } = require('@azure/functions');
+const { helloWorld } = require('./functions/helloWorld');
 const { helloWorldQueue, helloWorldQueueOptions } = require('./functions/helloWorldQueue');
 const { processQueueMessage, processQueueMessageOptions } = require('./functions/processQueueMessage');
 const { snooze, snoozeOptions } = require('./functions/snooze');
 
-app.http('helloWorld', helloWorldOptions, helloWorld);
+app.get('helloWorld', helloWorld);
 
-app.http('helloWorldQueue', helloWorldQueueOptions, helloWorldQueue);
+app.get('helloWorldQueue', helloWorldQueue, helloWorldQueueOptions);
 
-app.queue('processQueueMessage', processQueueMessageOptions, processQueueMessage);
+app.queue('processQueueMessage', processQueueMessage, processQueueMessageOptions);
 
-app.timer('snooze', snoozeOptions, snooze);
+app.timer('snooze', snooze, snoozeOptions);
 
-const helloWorldInlineOptions = {
-    trigger: input.http({ authLevel: "anonymous", methods: ["get", "post"] })
-}
-
-app.http('helloWorldInline', helloWorldInlineOptions, async (context, request) => {
+app.get('helloWorldInline', async (context, request) => {
     context.log(`RequestUrl=${request.url}`);
 
     const name = request.query.name || request.body || 'world';
 
     return { body: `Hello, ${name}!` };
-})
+});
