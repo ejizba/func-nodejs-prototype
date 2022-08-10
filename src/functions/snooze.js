@@ -1,10 +1,12 @@
-import { TimerInput } from "@azure/functions";
+const { TimerInput } = require('@azure/functions');
 
-export const snoozeOptions = {
+const snoozeOptions = {
     trigger: new TimerInput({ schedule: '0 */5 * * * *' })
 }
 
-export async function snooze(context, myTimer) {
+async function snooze(context, myTimer) {
     var timeStamp = new Date().toISOString();
     context.log('The current time is: ', timeStamp);
 };
+
+module.exports = { snoozeOptions, snooze };

@@ -1,8 +1,8 @@
-import { app, HttpInput } from '@azure/functions';
-import { helloWorld } from "./functions/helloWorld";
-import { helloWorldQueue, helloWorldQueueOptions } from "./functions/helloWorldQueue";
-import { processQueueMessage, processQueueMessageOptions } from "./functions/processQueueMessage";
-import { snooze, snoozeOptions } from "./functions/snooze";
+const { app, HttpInput } = require('@azure/functions');
+const { helloWorld } = require('./functions/helloWorld');
+const { helloWorldQueue, helloWorldQueueOptions } = require('./functions/helloWorldQueue');
+const { processQueueMessage, processQueueMessageOptions } = require('./functions/processQueueMessage');
+const { snooze, snoozeOptions } = require('./functions/snooze');
 
 app.addHttpFunction('helloWorld', helloWorld.options, helloWorld.callback);
 

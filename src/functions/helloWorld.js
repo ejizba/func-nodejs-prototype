@@ -1,13 +1,15 @@
-import { HttpInput } from '@azure/functions';
+const { HttpInput } = require('@azure/functions');
 
-export const helloWorldOptions = {
+const helloWorldOptions = {
     trigger: new HttpInput({ authLevel: "anonymous", methods: ["get", "post"] })
 }
 
-export async function helloWorld(context, request) {
+async function helloWorld(context, request) {
     context.log(`RequestUrl=${request.url}`);
 
     const name = request.query.name || request.body || 'world';
 
     return { body: `Hello, ${name}!` };
 };
+
+module.exports = { helloWorldOptions, helloWorld };

@@ -1,13 +1,13 @@
-import { HttpInput, QueueOutput } from "@azure/functions";
+const { HttpInput, QueueOutput } = require('@azure/functions');
 
 const queueOutput = new QueueOutput({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
 
-export const helloWorldQueueOptions = {
+const helloWorldQueueOptions = {
     trigger: new HttpInput({ authLevel: "anonymous", methods: ["get", "post"] }),
     extraOutputs: [queueOutput]
 }
 
-export async function helloWorldQueue(context, request) {
+async function helloWorldQueue(context, request) {
     context.log(`RequestUrl=${request.url}`);
 
     const name = request.query.name || request.body || 'world';
@@ -16,3 +16,5 @@ export async function helloWorldQueue(context, request) {
 
     return { body: `Hello, ${name}!` };
 };
+
+module.exports = { helloWorldQueueOptions, helloWorldQueue };
