@@ -1,11 +1,8 @@
-const { input } = require('@azure/functions');
+const { app } = require('@azure/functions');
 
-const processQueueMessageOptions = {
-    trigger: input.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' })
-}
-
-async function processQueueMessage(context, myQueueItem) {
-    context.log('Queue trigger function processed work item', myQueueItem);
-};
-
-module.exports = { processQueueMessageOptions, processQueueMessage };
+app.queue('processQueueMessage', {
+    trigger: { queueName: 'helloworldqueue', connection: 'storage_APPSETTING' },
+    handler: async (context, myQueueItem) => {
+        context.log('Queue trigger function processed work item', myQueueItem);
+    }
+});
