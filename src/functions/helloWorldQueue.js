@@ -1,7 +1,7 @@
 const { app, input, output } = require('@azure/functions');
 
 const queueOutput = output.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
-app.get('helloWorldQueue', {
+app.route('helloWorldQueue', {
     authLevel: "function",
     methods: ["get", "put"],
     extraOutputs: [queueOutput],

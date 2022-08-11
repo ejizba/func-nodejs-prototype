@@ -12,7 +12,7 @@ app.get('helloWorld', async (context, request) => {
 });
 
 const queueOutput = output.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
-app.get('helloWorldQueue', {
+app.route('helloWorldQueue', {
     authLevel: "function",
     methods: ["get", "put"],
     extraOutputs: [queueOutput],
