@@ -1,11 +1,6 @@
-import { app, HttpFunctionOptions, HttpRequest, HttpResponse, input, InvocationContext, output } from "@azure/functions";
+import { app, HttpRequest, HttpResponse, InvocationContext, output } from "@azure/functions";
 
 const queueOutput = output.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
-
-const helloWorldQueueOptions: HttpFunctionOptions = {
-    trigger: input.http({ authLevel: "function" }),
-    extraOutputs: [queueOutput]
-}
 
 async function helloWorldQueue(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
     context.log(`RequestUrl=${request.url}`);
@@ -17,4 +12,9 @@ async function helloWorldQueue(context: InvocationContext, request: HttpRequest)
     return { body: `Hello, ${name}!` };
 };
 
-app.get('helloWorldQueue', helloWorldQueue, helloWorldQueueOptions);
+app.route('helloWorldQueue', {
+    authLevel: "function",
+    methods: ['get', 'put'],
+    extraOutputs: [queueOutput],
+    handler: helloWorldQueue
+});
