@@ -18,7 +18,7 @@ app.get('helloWorld', async (context, request) => {
 const queueOutput = output.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
 app.route('helloWorldQueue', {
     authLevel: "function",
-    methods: ["get", "put"],
+    methods: ["get", "post"],
     extraOutputs: [queueOutput],
     handler: async (context, request) => {
         context.log(`RequestUrl=${request.url}`);
