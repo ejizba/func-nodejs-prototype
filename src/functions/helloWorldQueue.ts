@@ -14,7 +14,7 @@ async function helloWorldQueue(context: InvocationContext, request: HttpRequest)
 
 app.route('helloWorldQueue', {
     authLevel: "function",
-    methods: ['get', 'put'],
+    methods: ['get', 'post'],
     extraOutputs: [queueOutput],
     handler: helloWorldQueue
 });
