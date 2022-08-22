@@ -1,6 +1,6 @@
 const { app } = require('@azure/functions');
 
-app.queue('processQueueMessage', {
+app.storageQueue('processQueueMessage', {
     queueName: 'helloworldqueue',
     connection: 'storage_APPSETTING',
     handler: async (context, myQueueItem) => {

@@ -7,7 +7,7 @@ const { app, output } = require('@azure/functions');
 app.get('helloWorld', async (context, request) => {
     context.log(`RequestUrl=${request.url}`);
 
-    const name = request.query.name || request.body || 'world';
+    const name = request.query.get('name') || await request.text() || 'world';
 
     return { body: `Hello, ${name}!` };
 });
@@ -15,28 +15,19 @@ app.get('helloWorld', async (context, request) => {
 // A more complex http trigger showing configuration options like:
 // - How to change trigger settings (authLevel & methods)
 // - How to add a secondary output to a storage queue
-const queueOutput = output.queue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
-app.route('helloWorldQueue', {
+const queueOutput = output.storageQueue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
+app.http('helloWorldQueue', {
     authLevel: "function",
     methods: ["get", "post"],
     extraOutputs: [queueOutput],
     handler: async (context, request) => {
         context.log(`RequestUrl=${request.url}`);
 
-        const name = request.query.name || request.body || 'world';
+        const name = request.query.get('name') || await request.text() || 'world';
 
         context.extraOutputs.set(queueOutput, { name });
 
         return { body: `Hello, ${name}!` };
-    }
-});
-
-// A simple storage queue trigger, triggered by the secondary output of `helloWorldQueue`
-app.queue('processQueueMessage', {
-    queueName: 'helloworldqueue',
-    connection: 'storage_APPSETTING',
-    handler: async (context, myQueueItem) => {
-        context.log('Queue trigger function processed work item', myQueueItem);
     }
 });
 
@@ -46,5 +37,14 @@ app.timer('snooze', {
     handler: async (context, myTimer) => {
         var timeStamp = new Date().toISOString();
         context.log('The current time is: ', timeStamp);
+    }
+});
+
+// A simple storage queue trigger, triggered by the secondary output of `helloWorldQueue`
+app.storageQueue('processQueueMessage', {
+    queueName: 'helloworldqueue',
+    connection: 'storage_APPSETTING',
+    handler: async (context, myQueueItem) => {
+        context.log('Queue trigger function processed work item', myQueueItem);
     }
 });
