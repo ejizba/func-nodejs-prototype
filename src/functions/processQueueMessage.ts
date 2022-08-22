@@ -5,7 +5,7 @@ async function processQueueMessage(context: InvocationContext, myQueueItem: MyQu
     context.log('Queue trigger function processed work item', myQueueItem);
 }
 
-app.queue('processQueueMessage', {
+app.storageQueue('processQueueMessage', {
     queueName: 'helloworldqueue',
     connection: 'storage_APPSETTING',
     handler: processQueueMessage

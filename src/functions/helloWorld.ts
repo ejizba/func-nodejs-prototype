@@ -3,7 +3,7 @@ import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functi
 export async function helloWorld(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
     context.log(`RequestUrl=${request.url}`);
 
-    const name = request.query.name || request.body || 'world';
+    const name = request.query.get('name') || await request.text() || 'world';
 
     return { body: `Hello, ${name}!` };
 };
