@@ -1,6 +1,6 @@
 import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions";
 
-export async function helloWorld(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
+export async function helloWorld1(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
     context.log(`RequestUrl=${request.url}`);
 
     const name = request.query.get('name') || await request.text() || 'world';
@@ -8,4 +8,4 @@ export async function helloWorld(context: InvocationContext, request: HttpReques
     return { body: `Hello, ${name}!` };
 };
 
-app.get('helloWorld', helloWorld);
+app.get('helloWorld1', helloWorld1);

@@ -1,11 +1,11 @@
 import { app, InvocationContext, Timer } from "@azure/functions";
 
-async function snooze(context: InvocationContext, myTimer: Timer): Promise<void> {
+export async function timerTrigger1(context: InvocationContext, myTimer: Timer): Promise<void> {
     var timeStamp = new Date().toISOString();
     context.log('The current time is: ', timeStamp);
 }
 
-app.timer('snooze', {
+app.timer('timerTrigger1', {
     schedule: '0 */5 * * * *',
-    handler: snooze
+    handler: timerTrigger1
 });

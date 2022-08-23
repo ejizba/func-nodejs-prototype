@@ -1,19 +1,14 @@
 # ✨ New ✨ programming model for Node.js Azure Functions
 
-See [this rollup issue](https://github.com/Azure/azure-functions-nodejs-worker/issues/480) for more information on our general goals and plan of action. This repo specifically contains prototypes for the last bullet point in the "plan of action".
+See [this rollup issue](https://github.com/Azure/azure-functions-nodejs-worker/issues/480) for more information on our general goals and plan of action.
 
-## In This Repo
+## Code In This Repo
 
-### Code
+This repo has two sample function apps. You can choose which app to run by switching the `main` field in `package.json`
 
-- `src/main.ts`: The main entrypoint for a sample TypeScript app. The file name/path can be configured by the user by changing the `main` field in `package.json`.
-- `src/functions/`: The source code for each function. This is purely an example and users can put code wherever they want.
-- `types/index.d.ts`: Types for a new [programming model package](https://github.com/Azure/azure-functions-nodejs-worker/issues/568). This file will eventually ship as a part of our npm package and will not be controlled by the user.
+- Simple app: Set `main` to `dist/src/index.js`. This is a very simple app with just an http and timer trigger all in one file.
+- Complex app: Set `main` to `dist/src/functions/*.js`. This is a more complex app meant to demonstrate several different triggers where each function is in its own file.
 
-### Functions
+## How to run
 
-- `helloWorld`: The most basic http function
-- `helloWorldQueue`: An http function with an additional queue output
-- `processQueueMessage`: The most basic queue function, triggered by the output of `helloWorldQueue`
-- `snooze`: The most basic timer function
-- `helloWorldInline`: The same as `helloWorld`, except all the code is in `main.ts` to show you can put the code wherever
+Details to be shared soon...
