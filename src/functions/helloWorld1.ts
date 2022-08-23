@@ -8,4 +8,7 @@ export async function helloWorld1(context: InvocationContext, request: HttpReque
     return { body: `Hello, ${name}!` };
 };
 
-app.get('helloWorld1', helloWorld1);
+app.http('helloWorld1', {
+    methods: ['GET', 'POST'],
+    handler: helloWorld1
+});
