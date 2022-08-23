@@ -23,7 +23,7 @@ const serviceBusTopicOutput = output.serviceBusTopic({
     topicName: 'helloWorldTopic'
 })
 async function helloWorldWithExtraOutputs(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
-    context.log(`RequestUrl=${request.url}`);
+    context.log(`Http function processed request for url "${request.url}"`);
 
     const name = request.query.get('name') || await request.text() || 'world';
 
