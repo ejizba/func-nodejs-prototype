@@ -1,5 +1,7 @@
 # Azure Functions Node.js Framework v4 - Sample App
 
+This repository contains a sample app for the [new Node.js framework for Azure Functions](https://aka.ms/AzFuncNodeV4). The default "main" branch uses TypeScript, but you may switch to the "main-js" branch for the same app using just JavaScript.
+
 ## Prerequisites
 
 - Node.js v18+
