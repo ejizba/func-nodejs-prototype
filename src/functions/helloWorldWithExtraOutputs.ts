@@ -15,13 +15,17 @@ const cosmosDBOutput = output.cosmosDB({
     partitionKey: '/id',
 });
 const serviceBusQueueOutput = output.serviceBusQueue({
-    connection: 'servicebus_APPSETTING',
+    connection: 'serviceBus_APPSETTING',
     queueName: 'helloWorldQueue'
 });
 const serviceBusTopicOutput = output.serviceBusTopic({
-    connection: 'servicebus_APPSETTING',
+    connection: 'serviceBus_APPSETTING',
     topicName: 'helloWorldTopic'
-})
+});
+const eventHubOutput = output.eventHub({
+    connection: 'eventHub_APPSETTING',
+    eventHubName: 'helloWorldHub'
+});
 async function helloWorldWithExtraOutputs(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
     context.log(`Http function processed request for url "${request.url}"`);
 
@@ -32,13 +36,14 @@ async function helloWorldWithExtraOutputs(context: InvocationContext, request: H
     context.extraOutputs.set(cosmosDBOutput, [{ name }]);
     context.extraOutputs.set(serviceBusQueueOutput, { name });
     context.extraOutputs.set(serviceBusTopicOutput, { name });
+    context.extraOutputs.set(eventHubOutput, { name });
 
     return { body: `Hello, ${name}!` };
 }
 
 app.http('helloWorldWithExtraOutputs', {
-    authLevel: "function",
+    authLevel: "anonymous",
     methods: ['GET', 'POST'],
-    extraOutputs: [queueOutput, blobOutput, cosmosDBOutput, serviceBusQueueOutput, serviceBusTopicOutput],
+    extraOutputs: [queueOutput, blobOutput, cosmosDBOutput, serviceBusQueueOutput, serviceBusTopicOutput, eventHubOutput],
     handler: helloWorldWithExtraOutputs
 });

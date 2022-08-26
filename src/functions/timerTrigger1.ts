@@ -1,8 +1,8 @@
 import { app, InvocationContext, Timer } from "@azure/functions";
 
 export async function timerTrigger1(context: InvocationContext, myTimer: Timer): Promise<void> {
-    var timeStamp = new Date().toISOString();
-    context.log('The current time is: ', timeStamp);
+    const timeStamp = new Date().toISOString();
+    context.log('Timer function processed request. The current time is:', timeStamp);
 }
 
 app.timer('timerTrigger1', {
