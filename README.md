@@ -1,19 +1,68 @@
-# ✨ New ✨ programming model for Node.js Azure Functions
+# Azure Functions Node.js Framework v4 - Sample App
 
-See [this rollup issue](https://github.com/Azure/azure-functions-nodejs-worker/issues/480) for more information on our general goals and plan of action. This repo specifically contains prototypes for the last bullet point in the "plan of action".
+## Prerequisites
 
-## In This Repo
+- Node.js v18+
 
-### Code
+## Setup
 
-- `src/main.ts`: The main entrypoint for a sample TypeScript app. The file name/path can be configured by the user by changing the `main` field in `package.json`.
-- `src/functions/`: The source code for each function. This is purely an example and users can put code wherever they want.
-- `types/index.d.ts`: Types for a new [programming model package](https://github.com/Azure/azure-functions-nodejs-worker/issues/568). This file will eventually ship as a part of our npm package and will not be controlled by the user.
+1. Clone this repository
+1. Add a `local.settings.json` file with the following contents:
 
-### Functions
+    ```json
+    {
+        "IsEncrypted": false,
+        "Values": {
+            "FUNCTIONS_WORKER_RUNTIME": "node",
+            "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+            "AzureWebJobsStorage": ""
+        }
+    }
+    ```
 
-- `helloWorld`: The most basic http function
-- `helloWorldQueue`: An http function with an additional queue output
-- `processQueueMessage`: The most basic queue function, triggered by the output of `helloWorldQueue`
-- `snooze`: The most basic timer function
-- `helloWorldInline`: The same as `helloWorld`, except all the code is in `main.ts` to show you can put the code wherever
+1. Run `npm install`
+1. Run `npm start`
+1. Voila ✨ you have a running function app!
+
+### Steps to enable more Azure triggers
+
+The default configuration in this repository only enables an http and timer trigger. Follow these steps to enable more functions:
+
+1. Change the `main` field in your `package.json` to `dist/src/functions/*.js`
+1. Add a `local.settings.json` file with the following contents:
+
+    ```json
+    {
+        "IsEncrypted": false,
+        "Values": {
+            "FUNCTIONS_WORKER_RUNTIME": "node",
+            "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+            "AzureWebJobsStorage": "",
+            "storage_APPSETTING": "",
+            "cosmosDB_APPSETTING": "",
+            "serviceBus_APPSETTING": "",
+            "eventHub_APPSETTING": ""
+        }
+    }
+    ```
+
+1. Fill in the value for a connection string in your `local.settings.json` for the specific type of resource you want to try out. You can skip any resource you do not want to use
+1. Add an "extensionBundle" entry to your `host.json` file. The resulting file will look like this:
+
+    ```json
+    {
+        "version": "2.0",
+        "extensionBundle": {
+            "id": "Microsoft.Azure.Functions.ExtensionBundle",
+            "version": "[2.*, 3.0.0)"
+        }
+    }
+    ```
+
+1. There is a bug in the current extension bundle resulting in the error `Microsoft.Azure.WebJobs.Script: _dispatcher.`. Until that is fixed you must remove the "NetheriteProviderStartup" entry in the following file: `~/.azure-functions-core-tools/Functions/ExtensionBundles/Microsoft.Azure.Functions.ExtensionBundle/2.13.0/bin/extensions.json`
+1. Run `npm start`!
+1. If you trigger the `helloWorldWithExtraOutputs` function, it will set an output binding which triggers the other azure resource functions
+
+## More details
+
+See here for more information: https://aka.ms/AzFuncNodeV4

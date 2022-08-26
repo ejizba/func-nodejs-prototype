@@ -1,50 +1,17 @@
-const { app, output } = require('@azure/functions');
+const { app } = require('@azure/functions');
 
-// NOTE: This file and the code in the "functions" folder is the exact same code, just demonstrating different ways of organization
-// You can switch which one is used by changing the "main" field in "package.json" to either "src/functions/*.js" or "src/index.js"
-
-// A simple http trigger
-app.get('helloWorld', async (context, request) => {
-    context.log(`RequestUrl=${request.url}`);
+app.get('helloWorld1', async (context, request) => {
+    context.log(`Http function processed request for url "${request.url}"`);
 
     const name = request.query.get('name') || await request.text() || 'world';
 
     return { body: `Hello, ${name}!` };
 });
 
-// A more complex http trigger showing configuration options like:
-// - How to change trigger settings (authLevel & methods)
-// - How to add a secondary output to a storage queue
-const queueOutput = output.storageQueue({ queueName: 'helloworldqueue', connection: 'storage_APPSETTING' });
-app.http('helloWorldQueue', {
-    authLevel: "function",
-    methods: ["get", "post"],
-    extraOutputs: [queueOutput],
-    handler: async (context, request) => {
-        context.log(`RequestUrl=${request.url}`);
-
-        const name = request.query.get('name') || await request.text() || 'world';
-
-        context.extraOutputs.set(queueOutput, { name });
-
-        return { body: `Hello, ${name}!` };
-    }
-});
-
-// A simple timer trigger
-app.timer('snooze', {
+app.timer('timerTrigger1', {
     schedule: '0 */5 * * * *',
-    handler: async (context, myTimer) => {
+    handler: (context, myTimer) => {
         var timeStamp = new Date().toISOString();
         context.log('The current time is: ', timeStamp);
-    }
-});
-
-// A simple storage queue trigger, triggered by the secondary output of `helloWorldQueue`
-app.storageQueue('processQueueMessage', {
-    queueName: 'helloworldqueue',
-    connection: 'storage_APPSETTING',
-    handler: async (context, myQueueItem) => {
-        context.log('Queue trigger function processed work item', myQueueItem);
     }
 });

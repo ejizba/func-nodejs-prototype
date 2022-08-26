@@ -1,0 +1,16 @@
+const { app } = require('@azure/functions');
+
+if (process.env.cosmosDB_APPSETTING) {
+    app.cosmosDB('cosmosDBTrigger1', {
+        connectionStringSetting: 'cosmosDB_APPSETTING',
+        databaseName: 'helloWorldDB',
+        collectionName: 'helloWorldCol',
+        partitionKey: '/id',
+        createLeaseCollectionIfNotExists: true,
+        handler: (context, documents) => {
+            context.log(`Cosmos DB function processed ${documents.length} documents`);
+        }
+    });
+} else {
+    console.warn('Skipping registration of "cosmosDBTrigger1" because "cosmosDB_APPSETTING" is not defined');
+}
