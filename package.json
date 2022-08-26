@@ -10,7 +10,7 @@
         "test": "mocha 'dist/test/**/*.test.js'"
     },
     "dependencies": {
-        "@azure/functions": "4.0.0-alpha.1"
+        "@azure/functions": "4.0.0-alpha.2"
     },
     "devDependencies": {
         "@types/chai": "^4.0.0",
