@@ -31,19 +31,43 @@ async function helloWorldWithExtraOutputs(context: InvocationContext, request: H
 
     const name = request.query.get('name') || await request.text() || 'world';
 
-    context.extraOutputs.set(queueOutput, { name });
-    context.extraOutputs.set(blobOutput, { name });
-    context.extraOutputs.set(cosmosDBOutput, [{ name }]);
-    context.extraOutputs.set(serviceBusQueueOutput, { name });
-    context.extraOutputs.set(serviceBusTopicOutput, { name });
-    context.extraOutputs.set(eventHubOutput, { name });
+    if (process.env.storage_APPSETTING) {
+        context.extraOutputs.set(queueOutput, { name });
+        context.extraOutputs.set(blobOutput, { name });
+    }
+    if (process.env.cosmosDB_APPSETTING) {
+        context.extraOutputs.set(cosmosDBOutput, [{ name }]);
+    }
+    if (process.env.serviceBus_APPSETTING) {
+        context.extraOutputs.set(serviceBusQueueOutput, { name });
+        context.extraOutputs.set(serviceBusTopicOutput, { name });
+    }
+    if (process.env.eventHub_APPSETTING) {
+        context.extraOutputs.set(eventHubOutput, { name });
+    }
 
     return { body: `Hello, ${name}!` };
+}
+
+const extraOutputs = [];
+if (process.env.storage_APPSETTING) {
+    extraOutputs.push(queueOutput);
+    extraOutputs.push(blobOutput);
+}
+if (process.env.cosmosDB_APPSETTING) {
+    extraOutputs.push(cosmosDBOutput);
+}
+if (process.env.serviceBus_APPSETTING) {
+    extraOutputs.push(serviceBusQueueOutput);
+    extraOutputs.push(serviceBusTopicOutput);
+}
+if (process.env.eventHub_APPSETTING) {
+    extraOutputs.push(eventHubOutput);
 }
 
 app.http('helloWorldWithExtraOutputs', {
     authLevel: "anonymous",
     methods: ['GET', 'POST'],
-    extraOutputs: [queueOutput, blobOutput, cosmosDBOutput, serviceBusQueueOutput, serviceBusTopicOutput, eventHubOutput],
+    extraOutputs,
     handler: helloWorldWithExtraOutputs
 });

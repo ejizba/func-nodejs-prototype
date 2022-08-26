@@ -4,9 +4,13 @@ export async function serviceBusTopicTrigger1(context: InvocationContext, messag
     context.log('Service bus topic function processed message:', message);
 }
 
-app.serviceBusTopic('serviceBusTopicTrigger1', {
-    connection: 'serviceBus_APPSETTING',
-    topicName: 'helloWorldTopic',
-    subscriptionName: 'helloWorldSub',
-    handler: serviceBusTopicTrigger1
-});
+if (process.env.serviceBus_APPSETTING) {
+    app.serviceBusTopic('serviceBusTopicTrigger1', {
+        connection: 'serviceBus_APPSETTING',
+        topicName: 'helloWorldTopic',
+        subscriptionName: 'helloWorldSub',
+        handler: serviceBusTopicTrigger1
+    });
+} else {
+    console.warn('Skipping registration of "serviceBusTopicTrigger1" because "serviceBus_APPSETTING" is not defined');
+}

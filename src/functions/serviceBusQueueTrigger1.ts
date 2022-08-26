@@ -4,8 +4,12 @@ export async function serviceBusQueueTrigger1(context: InvocationContext, messag
     context.log('Service bus queue function processed message:', message);
 }
 
-app.serviceBusQueue('serviceBusQueueTrigger1', {
-    connection: 'serviceBus_APPSETTING',
-    queueName: 'helloWorldQueue',
-    handler: serviceBusQueueTrigger1
-});
+if (process.env.serviceBus_APPSETTING) {
+    app.serviceBusQueue('serviceBusQueueTrigger1', {
+        connection: 'serviceBus_APPSETTING',
+        queueName: 'helloWorldQueue',
+        handler: serviceBusQueueTrigger1
+    });
+} else {
+    console.warn('Skipping registration of "serviceBusQueueTrigger1" because "serviceBus_APPSETTING" is not defined');
+}

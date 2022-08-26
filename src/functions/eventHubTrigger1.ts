@@ -11,9 +11,13 @@ export async function eventHubTrigger1(context: InvocationContext, messages: unk
     }
 }
 
-app.eventHub('eventHubTrigger1', {
-    connection: 'eventHub_APPSETTING',
-    eventHubName: 'helloWorldHub',
-    cardinality: 'many',
-    handler: eventHubTrigger1
-});
+if (process.env.eventHub_APPSETTING) {
+    app.eventHub('eventHubTrigger1', {
+        connection: 'eventHub_APPSETTING',
+        eventHubName: 'helloWorldHub',
+        cardinality: 'many',
+        handler: eventHubTrigger1
+    });
+} else {
+    console.warn('Skipping registration of "eventHubTrigger1" because "eventHub_APPSETTING" is not defined');
+}
