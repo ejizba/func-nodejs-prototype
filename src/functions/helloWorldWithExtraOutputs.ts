@@ -1,28 +1,34 @@
-import { app, HttpRequest, HttpResponse, InvocationContext, output } from "@azure/functions";
+import { app, HttpRequest, HttpResponse, InvocationContext, output, trigger } from "@azure/functions";
 
-const queueOutput = output.storageQueue({
+const queueOutput = output.generic({
+    type: 'queue',
     queueName: 'helloworldqueue',
     connection: 'storage_APPSETTING'
 });
-const blobOutput = output.storageBlob({
+const blobOutput = output.generic({
+    type: 'blob',
     connection: 'storage_APPSETTING',
     path: 'helloworldcontainer/hello-at-{DateTime}',
 })
-const cosmosDBOutput = output.cosmosDB({
+const cosmosDBOutput = output.generic({
+    type: 'cosmosDB',
     connectionStringSetting: 'cosmosDB_APPSETTING',
     databaseName: 'helloWorldDB',
     collectionName: 'helloWorldCol',
     partitionKey: '/id',
 });
-const serviceBusQueueOutput = output.serviceBusQueue({
+const serviceBusQueueOutput = output.generic({
+    type: 'serviceBus',
     connection: 'serviceBus_APPSETTING',
     queueName: 'helloWorldQueue'
 });
-const serviceBusTopicOutput = output.serviceBusTopic({
+const serviceBusTopicOutput = output.generic({
+    type: 'serviceBus',
     connection: 'serviceBus_APPSETTING',
     topicName: 'helloWorldTopic'
 });
-const eventHubOutput = output.eventHub({
+const eventHubOutput = output.generic({
+    type: 'eventHub',
     connection: 'eventHub_APPSETTING',
     eventHubName: 'helloWorldHub'
 });
@@ -65,9 +71,15 @@ if (process.env.eventHub_APPSETTING) {
     extraOutputs.push(eventHubOutput);
 }
 
-app.http('helloWorldWithExtraOutputs', {
-    authLevel: "anonymous",
-    methods: ['GET', 'POST'],
+app.generic('helloWorldWithExtraOutputs', {
+    trigger: trigger.generic({
+        type: 'httpTrigger',
+        authLevel: "anonymous",
+        methods: ['GET', 'POST'],
+    }),
+    return: output.generic({
+        type: 'http'
+    }),
     extraOutputs,
     handler: helloWorldWithExtraOutputs
 });

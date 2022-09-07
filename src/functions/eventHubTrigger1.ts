@@ -1,4 +1,4 @@
-import { app, InvocationContext } from "@azure/functions";
+import { app, InvocationContext, trigger } from "@azure/functions";
 
 export async function eventHubTrigger1(context: InvocationContext, messages: unknown): Promise<void> {
     if (Array.isArray(messages)) {
@@ -12,10 +12,13 @@ export async function eventHubTrigger1(context: InvocationContext, messages: unk
 }
 
 if (process.env.eventHub_APPSETTING) {
-    app.eventHub('eventHubTrigger1', {
-        connection: 'eventHub_APPSETTING',
-        eventHubName: 'helloWorldHub',
-        cardinality: 'many',
+    app.generic('eventHubTrigger1', {
+        trigger: trigger.generic({
+            type: 'eventHubTrigger',
+            connection: 'eventHub_APPSETTING',
+            eventHubName: 'helloWorldHub',
+            cardinality: 'many',
+        }),
         handler: eventHubTrigger1
     });
 } else {
