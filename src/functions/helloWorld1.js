@@ -10,6 +10,7 @@ async function helloWorld1(context, request) {
 
 app.http('helloWorld1', {
     methods: ['GET', 'POST'],
+    authLevel: 'anonymous',
     handler: helloWorld1
 });
 
