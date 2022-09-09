@@ -1,6 +1,6 @@
 import { app, HttpRequest, HttpResponse, InvocationContext } from "@azure/functions";
 
-export async function helloWorld1(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
+export async function httpTrigger1(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
     context.log(`Http function processed request for url "${request.url}"`);
 
     const name = request.query.get('name') || await request.text() || 'world';
@@ -8,7 +8,8 @@ export async function helloWorld1(context: InvocationContext, request: HttpReque
     return { body: `Hello, ${name}!` };
 };
 
-app.http('helloWorld1', {
+app.http('httpTrigger1', {
     methods: ['GET', 'POST'],
-    handler: helloWorld1
+    authLevel: 'anonymous',
+    handler: httpTrigger1
 });

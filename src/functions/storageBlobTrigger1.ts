@@ -1,7 +1,7 @@
 import { app, InvocationContext } from "@azure/functions";
 
 export async function storageBlobTrigger1(context: InvocationContext, blob: Buffer): Promise<void> {
-    context.log(`Storage blob function processed blob "${context.triggerMetadata.name}" with size "${blob.length}"`);
+    context.log(`Storage blob function processed blob "${context.triggerMetadata.name}" with size ${blob.length} bytes`);
 }
 
 if (process.env.storage_APPSETTING) {
