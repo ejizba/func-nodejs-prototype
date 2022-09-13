@@ -33,24 +33,16 @@ This repository contains a sample app for the [new Node.js framework for Azure F
 The default configuration in this repository only enables an http and timer trigger. Follow these steps to enable more functions:
 
 1. Change the `main` field in your `package.json` to `dist/src/functions/*.js`
-1. Add a `local.settings.json` file with the following contents:
+1. Add the following entries to the "Values" object in your `local.settings.json`:
 
     ```json
-    {
-        "IsEncrypted": false,
-        "Values": {
-            "FUNCTIONS_WORKER_RUNTIME": "node",
-            "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
-            "AzureWebJobsStorage": "",
-            "storage_APPSETTING": "",
-            "cosmosDB_APPSETTING": "",
-            "serviceBus_APPSETTING": "",
-            "eventHub_APPSETTING": ""
-        }
-    }
+    "storage_APPSETTING": "",
+    "cosmosDB_APPSETTING": "",
+    "serviceBus_APPSETTING": "",
+    "eventHub_APPSETTING": ""
     ```
 
-1. Fill in the value for a connection string in your `local.settings.json` for the specific type of resource you want to try out. You can skip any resource you do not want to use
+1. Fill in the value of the above entries with a connection string for the specific type of resource you want to try out. You can skip any resource you do not want to use
 1. Run `npm start`!
 1. If you trigger the `helloWorldWithExtraOutputs` function, it will set an output binding which triggers the other azure resource functions
 
