@@ -18,11 +18,12 @@ This repository contains a sample app for the [new Node.js framework for Azure F
         "Values": {
             "FUNCTIONS_WORKER_RUNTIME": "node",
             "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
-            "AzureWebJobsStorage": ""
+            "AzureWebJobsStorage": "<INSERT CONNECTION STRING HERE>"
         }
     }
     ```
 
+1. Add a connection string to the [`AzureWebJobsStorage`](https://docs.microsoft.com/azure/azure-functions/functions-app-settings#azurewebjobsstorage) setting in your `local.settings.json`. This is currently required for all triggers (even http) until [#8614](https://github.com/Azure/azure-functions-host/issues/8614) is fixed. You may set it to `UseDevelopmentStorage=true` to use the [local storage emulator](https://docs.microsoft.com/azure/storage/common/storage-use-azurite) or you may set it to a connection string for a storage account in Azure.
 1. Run `npm install`
 1. Run `npm start`
 1. Voila ✨ you have a running function app!
