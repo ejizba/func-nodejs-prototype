@@ -13,7 +13,5 @@ app.timer('timerTrigger1', {
     handler: (context: InvocationContext, myTimer: Timer) => {
         var timeStamp = new Date().toISOString();
         context.log('The current time is: ', timeStamp);
-    }
+    } 
 });
-
-
