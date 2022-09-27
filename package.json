@@ -1,25 +1,26 @@
 {
-    "name": "azure-functions-prototype",
-    "version": "1.0.0",
-    "description": "",
-    "scripts": {
-        "build": "tsc",
-        "watch": "tsc -w",
-        "prestart": "npm run build",
-        "start": "func start",
-        "test": "mocha 'dist/test/**/*.test.js'"
-    },
-    "dependencies": {
-        "@azure/functions": "^4.0.0-alpha.5"
-    },
-    "devDependencies": {
-        "@types/chai": "^4.0.0",
-        "@types/mocha": "^9.0.0",
-        "@types/node": "^18.0.0",
-        "chai": "^4.0.0",
-        "mocha": "^9.0.0",
-        "typescript": "^4.0.0",
-        "func-cli-nodejs-v4": "4.0.4764"
-    },
-    "main": "dist/src/index.js"
+  "name": "azure-functions-prototype",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "installExtensions": "func extensions install",
+    "start": "func start",
+    "test": "mocha 'dist/test/**/*.test.js'"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0-alpha.5"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.0",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^18.0.0",
+    "chai": "^4.0.0",
+    "func-cli-nodejs-v4": "4.0.4764",
+    "mocha": "^9.0.0",
+    "typescript": "^4.0.0"
+  },
+  "main": "dist/src/functions/*.js"
 }
