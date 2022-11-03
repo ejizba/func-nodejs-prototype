@@ -1,11 +1,17 @@
-import { HttpRequest, InvocationContext } from '@azure/functions';
+import { app, HttpRequest, InvocationContext, output, trigger } from '@azure/functions';
 import * as df from 'durable-functions';
-import { DurableOrchestrationClient, IEntityFunctionContext } from 'durable-functions/lib/src/classes';
+import { IEntityFunctionContext } from 'durable-functions/lib/src/ientityfunctioncontext';
 
-df.httpClient(
-    'DurableFunctionsEntityHTTPStart',
-    async (_context: InvocationContext, req: HttpRequest, client: DurableOrchestrationClient) => {
-        const id: string = req.query.get('id');
+const clientInput = df.input.client();
+app.generic('DurableFunctionsEntityHTTPStart', {
+    trigger: trigger.http({
+        route: 'Counter/{id}'
+    }),
+    extraInputs: [clientInput],
+    return: output.http({}),
+    handler: async function (context: InvocationContext, req: HttpRequest): Promise<any> {
+        const client = df.getClient(context, clientInput);
+        const id: string = req.params.id;
         const entityId = new df.EntityId('Counter', id);
 
         if (req.method === 'POST') {
@@ -19,17 +25,20 @@ df.httpClient(
             };
         }
     }
-);
+});
 
-df.entity('Counter', (context: IEntityFunctionContext<number>) => {
-    const currentValue: number = context.df.getState(() => 0);
-    switch (context.df.operationName) {
-        case 'add':
-            const amount: number = context.df.getInput();
-            context.df.setState(currentValue + amount);
-            break;
-        case 'reset':
-            context.df.setState(0);
-            break;
-    }
+app.generic('Counter', {
+    trigger: df.trigger.entity(),
+    handler: df.createEntityFunction(function (context: IEntityFunctionContext<number>) {
+        const currentValue: number = context.df.getState(() => 0);
+        switch (context.df.operationName) {
+            case 'add':
+                const amount: number = context.df.getInput();
+                context.df.setState(currentValue + amount);
+                break;
+            case 'reset':
+                context.df.setState(0);
+                break;
+        }
+    })
 });
