@@ -1,1 +1,1 @@
-GET http://localhost:7071/api/TestHttpNoReturn?name=Hossam
+GET http://localhost:7071/api/DurableFunctionsEntityHTTPStart?id=1
