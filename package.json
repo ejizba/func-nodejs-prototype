@@ -23,5 +23,5 @@
         "func-cli-nodejs-v4": "4.0.4764",
         "rimraf": "^3.0.2"
     },
-    "main": "dist/src/functions/*.js"
+    "main": "dist/src/index.js"
 }
