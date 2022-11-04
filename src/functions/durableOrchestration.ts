@@ -20,9 +20,9 @@ const helloActivity = (_context: InvocationContext, input: string) => {
 };
 df.activity(activityName, helloActivity);
 
-const clientHandler = async (context: InvocationContext, req: HttpRequest, client: DurableOrchestrationClient) => {
-    const instanceId = await client.startNew(req.query.get('functionName'), undefined, req.body);
+const clientHandler = async (context: InvocationContext, request: HttpRequest, client: DurableOrchestrationClient) => {
+    const instanceId = await client.startNew(request.query.get('functionName'), undefined, request.body);
     context.log(`Started orchestration with ID = '${instanceId}'.`);
-    return client.createCheckStatusResponse(req, instanceId);
+    return client.createCheckStatusResponse(request, instanceId);
 };
 df.httpClient('DurableFunctionsHttpStart', clientHandler);
