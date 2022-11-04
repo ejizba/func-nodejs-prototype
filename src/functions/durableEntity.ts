@@ -2,11 +2,14 @@ import { HttpRequest, InvocationContext } from '@azure/functions';
 import * as df from 'durable-functions';
 import { DurableOrchestrationClient, IEntityFunctionContext } from 'durable-functions/lib/src/classes';
 
+// Replace with your own Durable entity name
+const entityName = 'Counter';
+
 df.httpClient(
-    'DurableFunctionsEntityHTTPStart',
+    'durableEntityStart1',
     async (_context: InvocationContext, req: HttpRequest, client: DurableOrchestrationClient) => {
         const id: string = req.query.get('id');
-        const entityId = new df.EntityId('Counter', id);
+        const entityId = new df.EntityId(entityName, id);
 
         if (req.method === 'POST') {
             // increment value
@@ -21,7 +24,7 @@ df.httpClient(
     }
 );
 
-df.entity('Counter', (context: IEntityFunctionContext<number>) => {
+df.entity(entityName, (context: IEntityFunctionContext<number>) => {
     const currentValue: number = context.df.getState(() => 0);
     switch (context.df.operationName) {
         case 'add':

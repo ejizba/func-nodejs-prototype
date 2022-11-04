@@ -25,4 +25,4 @@ const clientHandler = async (context: InvocationContext, request: HttpRequest, c
     context.log(`Started orchestration with ID = '${instanceId}'.`);
     return client.createCheckStatusResponse(request, instanceId);
 };
-df.httpClient('DurableFunctionsHttpStart', clientHandler);
+df.httpClient('durableOrchestrationStart1', clientHandler);
