@@ -3,7 +3,7 @@ import * as df from 'durable-functions';
 import { DurableOrchestrationClient, IOrchestrationFunctionContext } from 'durable-functions/lib/src/classes';
 
 // Replace with the name of your Durable Functions Activity
-const activityName = 'Hello';
+const activityName = 'hello';
 
 const orchestrator = function* (context: IOrchestrationFunctionContext) {
     const outputs = [];
