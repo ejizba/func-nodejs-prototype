@@ -2,20 +2,23 @@ import { HttpRequest, InvocationContext } from '@azure/functions';
 import * as df from 'durable-functions';
 import { DurableOrchestrationClient, IOrchestrationFunctionContext } from 'durable-functions/lib/src/classes';
 
+// Replace with your own activity name
+const activityName = 'Hello';
+
 const orchestrator = function* (context: IOrchestrationFunctionContext) {
     const outputs = [];
-    outputs.push(yield context.df.callActivity('Hello', 'Tokyo'));
-    outputs.push(yield context.df.callActivity('Hello', 'Seattle'));
-    outputs.push(yield context.df.callActivity('Hello', 'Cairo'));
+    outputs.push(yield context.df.callActivity(activityName, 'Tokyo'));
+    outputs.push(yield context.df.callActivity(activityName, 'Seattle'));
+    outputs.push(yield context.df.callActivity(activityName, 'Cairo'));
 
     return outputs;
 };
-df.orchestration('DurableFunctionsOrchestratorJS', orchestrator);
+df.orchestration('durableOrchestrator1', orchestrator);
 
 const helloActivity = (_context: InvocationContext, name: string) => {
     return `Hello, ${name}`;
 };
-df.activity('Hello', helloActivity);
+df.activity(activityName, helloActivity);
 
 const clientHandler = async (context: InvocationContext, req: HttpRequest, client: DurableOrchestrationClient) => {
     const instanceId = await client.startNew(req.query.get('functionName'), undefined, req.body);
