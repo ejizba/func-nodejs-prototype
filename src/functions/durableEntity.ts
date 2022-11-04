@@ -1,30 +1,28 @@
-import { HttpRequest, InvocationContext } from '@azure/functions';
+import { HttpRequest, InvocationContext, output, trigger } from '@azure/functions';
 import * as df from 'durable-functions';
 import { DurableOrchestrationClient, IEntityFunctionContext } from 'durable-functions/lib/src/classes';
 
 // Replace with your own Durable entity name
 const entityName = 'Counter';
 
-df.httpClient(
-    'durableEntityStart1',
-    async (_context: InvocationContext, req: HttpRequest, client: DurableOrchestrationClient) => {
-        const id: string = req.query.get('id');
-        const entityId = new df.EntityId(entityName, id);
+const clientHandler = async (_context: InvocationContext, req: HttpRequest, client: DurableOrchestrationClient) => {
+    const id: string = req.params.id;
+    const entityId = new df.EntityId(entityName, id);
 
-        if (req.method === 'POST') {
-            // increment value
-            await client.signalEntity(entityId, 'add', 1);
-        } else {
-            // read current state of entity
-            const stateResponse = await client.readEntityState<number>(entityId);
-            return {
-                body: stateResponse.entityState
-            };
-        }
+    if (req.method === 'POST') {
+        // increment value
+        await client.signalEntity(entityId, 'add', 1);
+    } else {
+        // read current state of entity
+        const stateResponse = await client.readEntityState<number>(entityId);
+        return {
+            body: stateResponse.entityState
+        };
     }
-);
+};
+df.client('durableEntityStart1', trigger.http({ route: '/entity/{id}' }), output.http({}), clientHandler);
 
-df.entity(entityName, (context: IEntityFunctionContext<number>) => {
+const entityHanlder = (context: IEntityFunctionContext<number>) => {
     const currentValue: number = context.df.getState(() => 0);
     switch (context.df.operationName) {
         case 'add':
@@ -38,4 +36,5 @@ df.entity(entityName, (context: IEntityFunctionContext<number>) => {
             context.df.return(currentValue);
             break;
     }
-});
+};
+df.entity(entityName, entityHanlder);
