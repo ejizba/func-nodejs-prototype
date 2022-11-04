@@ -2,7 +2,7 @@ import { HttpRequest, InvocationContext } from '@azure/functions';
 import * as df from 'durable-functions';
 import { DurableOrchestrationClient, IOrchestrationFunctionContext } from 'durable-functions/lib/src/classes';
 
-// Replace with your own activity name
+// Replace with the name of your Durable Functions Activity
 const activityName = 'Hello';
 
 const orchestrator = function* (context: IOrchestrationFunctionContext) {
@@ -15,8 +15,8 @@ const orchestrator = function* (context: IOrchestrationFunctionContext) {
 };
 df.orchestration('durableOrchestrator1', orchestrator);
 
-const helloActivity = (_context: InvocationContext, name: string) => {
-    return `Hello, ${name}`;
+const helloActivity = (_context: InvocationContext, input: string) => {
+    return `Hello, ${input}`;
 };
 df.activity(activityName, helloActivity);
 
