@@ -31,5 +31,8 @@ df.entity('Counter', (context: IEntityFunctionContext<number>) => {
         case 'reset':
             context.df.setState(0);
             break;
+        case 'get':
+            context.df.return(currentValue);
+            break;
     }
 });
