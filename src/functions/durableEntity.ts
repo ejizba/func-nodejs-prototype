@@ -20,7 +20,7 @@ const clientHandler = async (_context: InvocationContext, req: HttpRequest, clie
         };
     }
 };
-df.client('durableEntityStart1', trigger.http({ route: '/entity/{id}' }), output.http({}), clientHandler);
+df.client('durableEntityStart1', trigger.http({ route: 'entity/{id}' }), output.http({}), clientHandler);
 
 const entityHanlder = (context: IEntityFunctionContext<number>) => {
     const currentValue: number = context.df.getState(() => 0);
