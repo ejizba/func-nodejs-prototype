@@ -21,7 +21,7 @@ const helloActivity = (_context: InvocationContext, input: string) => {
 df.activity(activityName, helloActivity);
 
 const clientHandler = async (context: InvocationContext, request: HttpRequest, client: DurableOrchestrationClient) => {
-    const instanceId = await client.startNew(request.query.get('functionName'), undefined, request.body);
+    const instanceId = await client.startNew(request.query.get('functionName'), undefined, request.text());
     context.log(`Started orchestration with ID = '${instanceId}'.`);
     return client.createCheckStatusResponse(request, instanceId);
 };
