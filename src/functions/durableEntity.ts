@@ -1,11 +1,11 @@
 import { HttpRequest, InvocationContext, output, trigger } from '@azure/functions';
 import * as df from 'durable-functions';
-import { DurableOrchestrationClient, IEntityFunctionContext } from 'durable-functions/lib/src/classes';
+import { DurableClientHandler, EntityHandler } from 'durable-functions';
 
 // Replace with your own Durable entity name
 const entityName = 'Counter';
 
-const clientHandler = async (_context: InvocationContext, req: HttpRequest, client: DurableOrchestrationClient) => {
+const clientHandler: DurableClientHandler = async (_context: InvocationContext, req: HttpRequest, client) => {
     const id: string = req.params.id;
     const entityId = new df.EntityId(entityName, id);
 
@@ -14,15 +14,15 @@ const clientHandler = async (_context: InvocationContext, req: HttpRequest, clie
         await client.signalEntity(entityId, 'add', 1);
     } else {
         // read current state of entity
-        const stateResponse = await client.readEntityState<number>(entityId);
+        const stateResponse = await client.readEntityState(entityId);
         return {
-            body: stateResponse.entityState
+            body: stateResponse.entityState,
         };
     }
 };
 df.client('durableEntityStart1', trigger.http({ route: 'entity/{id}' }), output.http({}), clientHandler);
 
-const entityHanlder = (context: IEntityFunctionContext<number>) => {
+const entityHandler: EntityHandler<number> = (context) => {
     const currentValue: number = context.df.getState(() => 0);
     switch (context.df.operationName) {
         case 'add':
@@ -37,4 +37,4 @@ const entityHanlder = (context: IEntityFunctionContext<number>) => {
             break;
     }
 };
-df.entity(entityName, entityHanlder);
+df.entity(entityName, entityHandler);
