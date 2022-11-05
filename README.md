@@ -4,8 +4,8 @@ This repository contains a sample app for the [new Node.js framework for Azure F
 
 ## Prerequisites
 
-- Node.js v18+
-- TypeScript v4+
+-   Node.js v18+
+-   TypeScript v4+
 
 ## Setup
 
