@@ -1,4 +1,4 @@
-import { app, InvocationContext, Timer } from "@azure/functions";
+import { app, InvocationContext, Timer } from '@azure/functions';
 
 export async function timerTrigger1(context: InvocationContext, myTimer: Timer): Promise<void> {
     context.log('Timer function processed request.');
@@ -6,5 +6,5 @@ export async function timerTrigger1(context: InvocationContext, myTimer: Timer):
 
 app.timer('timerTrigger1', {
     schedule: '0 */5 * * * *',
-    handler: timerTrigger1
+    handler: timerTrigger1,
 });
