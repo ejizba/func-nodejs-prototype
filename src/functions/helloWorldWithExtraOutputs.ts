@@ -1,13 +1,13 @@
-import { app, HttpRequest, HttpResponse, InvocationContext, output } from "@azure/functions";
+import { app, HttpRequest, HttpResponse, InvocationContext, output } from '@azure/functions';
 
 const queueOutput = output.storageQueue({
     queueName: 'helloworldqueue',
-    connection: 'storage_APPSETTING'
+    connection: 'storage_APPSETTING',
 });
 const blobOutput = output.storageBlob({
     connection: 'storage_APPSETTING',
     path: 'helloworldcontainer/hello-at-{DateTime}',
-})
+});
 const cosmosDBOutput = output.cosmosDB({
     connectionStringSetting: 'cosmosDB_APPSETTING',
     databaseName: 'helloWorldDB',
@@ -16,20 +16,20 @@ const cosmosDBOutput = output.cosmosDB({
 });
 const serviceBusQueueOutput = output.serviceBusQueue({
     connection: 'serviceBus_APPSETTING',
-    queueName: 'helloWorldQueue'
+    queueName: 'helloWorldQueue',
 });
 const serviceBusTopicOutput = output.serviceBusTopic({
     connection: 'serviceBus_APPSETTING',
-    topicName: 'helloWorldTopic'
+    topicName: 'helloWorldTopic',
 });
 const eventHubOutput = output.eventHub({
     connection: 'eventHub_APPSETTING',
-    eventHubName: 'helloWorldHub'
+    eventHubName: 'helloWorldHub',
 });
 async function helloWorldWithExtraOutputs(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
     context.log(`Http function processed request for url "${request.url}"`);
 
-    const name = request.query.get('name') || await request.text() || 'world';
+    const name = request.query.get('name') || (await request.text()) || 'world';
 
     if (process.env.storage_APPSETTING) {
         context.extraOutputs.set(queueOutput, { name });
@@ -66,8 +66,8 @@ if (process.env.eventHub_APPSETTING) {
 }
 
 app.http('helloWorldWithExtraOutputs', {
-    authLevel: "anonymous",
+    authLevel: 'anonymous',
     methods: ['GET', 'POST'],
     extraOutputs,
-    handler: helloWorldWithExtraOutputs
+    handler: helloWorldWithExtraOutputs,
 });

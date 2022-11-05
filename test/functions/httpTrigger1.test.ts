@@ -18,19 +18,18 @@ function createTestInvocationContext(): InvocationContext {
                 default:
                     console.log(...args);
             }
-        }
+        },
     });
 }
-
 
 describe('httpTrigger1', () => {
     it('should return message with name from query', async () => {
         const request = new HttpRequest({
             method: 'GET',
             query: {
-                name: 'Eric'
+                name: 'Eric',
             },
-            url: 'http://localhost:7071/api/httpTrigger1'
+            url: 'http://localhost:7071/api/httpTrigger1',
         });
         const response = await httpTrigger1(createTestInvocationContext(), request);
         expect(response.body).to.equal('Hello, Eric!');
@@ -41,8 +40,8 @@ describe('httpTrigger1', () => {
             method: 'POST',
             url: 'http://localhost:7071/api/httpTrigger1',
             body: {
-                string: 'Eric'
-            }
+                string: 'Eric',
+            },
         });
         const response = await httpTrigger1(createTestInvocationContext(), request);
         expect(response.body).to.equal('Hello, Eric!');
@@ -51,9 +50,9 @@ describe('httpTrigger1', () => {
     it('should return message with no name', async () => {
         const request = new HttpRequest({
             method: 'GET',
-            url: 'http://localhost:7071/api/httpTrigger1'
+            url: 'http://localhost:7071/api/httpTrigger1',
         });
         const response = await httpTrigger1(createTestInvocationContext(), request);
         expect(response.body).to.equal('Hello, world!');
     });
-})
+});

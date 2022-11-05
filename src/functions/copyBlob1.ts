@@ -1,13 +1,13 @@
-import { app, input, InvocationContext, output } from "@azure/functions";
+import { app, input, InvocationContext, output } from '@azure/functions';
 
 const blobInput = input.storageBlob({
     connection: 'storage_APPSETTING',
-    path: 'helloworld/{queueTrigger}'
+    path: 'helloworld/{queueTrigger}',
 });
 
 const blobOutput = output.storageBlob({
     connection: 'storage_APPSETTING',
-    path: 'helloworld/{queueTrigger}-copy'
+    path: 'helloworld/{queueTrigger}-copy',
 });
 
 export async function copyBlob1(context: InvocationContext, queueItem: unknown): Promise<void> {
@@ -23,7 +23,7 @@ if (process.env.storage_APPSETTING) {
         connection: 'storage_APPSETTING',
         extraInputs: [blobInput],
         extraOutputs: [blobOutput],
-        handler: copyBlob1
+        handler: copyBlob1,
     });
 } else {
     console.warn('Skipping registration of "copyBlob1" because "storage_APPSETTING" is not defined');

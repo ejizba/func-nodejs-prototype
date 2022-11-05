@@ -5,5 +5,5 @@ export async function eventGridTrigger1(context: InvocationContext, event: Event
 }
 
 app.eventGrid('eventGridTrigger1', {
-    handler: eventGridTrigger1
+    handler: eventGridTrigger1,
 });
