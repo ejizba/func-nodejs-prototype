@@ -5,6 +5,9 @@ This repository contains a sample app for the [new Node.js framework for Azure F
 ## Prerequisites
 
 - Node.js v18+
+- Azure Functions Host v4.14+
+- Azure Functions Core Tools v4.0.4915+ (if running locally)
+- Extension bundle v3.15+ (if using non-http triggers)
 
 ## Setup
 
