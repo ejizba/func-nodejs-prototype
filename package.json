@@ -19,7 +19,7 @@
         "chai": "^4.0.0",
         "mocha": "^9.0.0",
         "typescript": "^4.0.0",
-        "func-cli-nodejs-v4": "4.0.4764"
+        "azure-functions-core-tools": "^4.0.4915"
     },
     "main": "dist/src/index.js"
 }
