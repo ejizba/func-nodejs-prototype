@@ -1,13 +1,16 @@
-import { HttpRequest, InvocationContext, output, trigger } from '@azure/functions';
+import { app, HttpHandler, HttpRequest, HttpResponseBody, InvocationContext } from '@azure/functions';
 import * as df from 'durable-functions';
-import { DurableClientHandler, EntityHandler } from 'durable-functions';
+import { EntityHandler } from 'durable-functions';
 
 // Replace with your own Durable entity name
 const entityName = 'Counter';
 
-const clientHandler: DurableClientHandler = async (_context: InvocationContext, req: HttpRequest, client) => {
+const clientInput = df.input.client();
+
+const clientHandler: HttpHandler = async (context: InvocationContext, req: HttpRequest) => {
     const id: string = req.params.id;
     const entityId = new df.EntityId(entityName, id);
+    const client = df.getClient(context, clientInput);
 
     if (req.method === 'POST') {
         // increment value
@@ -16,13 +19,13 @@ const clientHandler: DurableClientHandler = async (_context: InvocationContext, 
         // read current state of entity
         const stateResponse = await client.readEntityState(entityId);
         return {
-            body: stateResponse.entityState,
+            body: stateResponse.entityState as HttpResponseBody,
         };
     }
 };
-df.client('durableEntityStart1', {
-    trigger: trigger.http({ route: `${entityName}/{id}` }),
-    return: output.http({}),
+app.http('durableEntityStart1', {
+    route: `${entityName}/{id}`,
+    extraInputs: [clientInput],
     handler: clientHandler,
 });
 
