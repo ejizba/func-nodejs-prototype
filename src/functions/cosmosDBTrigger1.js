@@ -7,7 +7,7 @@ if (process.env.cosmosDB_APPSETTING) {
         collectionName: 'helloWorldCol',
         partitionKey: '/id',
         createLeaseCollectionIfNotExists: true,
-        handler: (context, documents) => {
+        handler: (documents, context) => {
             context.log(`Cosmos DB function processed ${documents.length} documents`);
         }
     });

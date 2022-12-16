@@ -5,7 +5,7 @@ if (process.env.eventHub_APPSETTING) {
         connection: 'eventHub_APPSETTING',
         eventHubName: 'helloWorldHub',
         cardinality: 'many',
-        handler: (context, messages) => {
+        handler: (messages, context) => {
             if (Array.isArray(messages)) {
                 context.log(`Event hub function processed ${messages.length} messages`);
                 for (const message of messages) {

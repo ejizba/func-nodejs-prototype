@@ -4,7 +4,7 @@ if (process.env.storage_APPSETTING) {
     app.storageQueue('storageQueueTrigger1', {
         queueName: 'helloworldqueue',
         connection: 'storage_APPSETTING',
-        handler: (context, queueItem) => {
+        handler: (queueItem, context) => {
             context.log('Storage queue function processed work item:', queueItem);
         }
     });

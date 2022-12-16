@@ -4,7 +4,7 @@ if (process.env.serviceBus_APPSETTING) {
     app.serviceBusQueue('serviceBusQueueTrigger1', {
         connection: 'serviceBus_APPSETTING',
         queueName: 'helloWorldQueue',
-        handler: (context, message) => {
+        handler: (message, context) => {
             context.log('Service bus queue function processed message:', message);
         }
     });

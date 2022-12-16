@@ -4,7 +4,7 @@ if (process.env.storage_APPSETTING) {
     app.storageBlob('storageBlobTrigger1', {
         path: 'helloworldcontainer/{name}',
         connection: 'storage_APPSETTING',
-        handler: (context, blob) => {
+        handler: (blob, context) => {
             context.log(`Storage blob function processed blob "${context.triggerMetadata.name}" with size ${blob.length} bytes`);
         }
     });

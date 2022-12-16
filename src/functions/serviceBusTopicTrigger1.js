@@ -5,7 +5,7 @@ if (process.env.serviceBus_APPSETTING) {
         connection: 'serviceBus_APPSETTING',
         topicName: 'helloWorldTopic',
         subscriptionName: 'helloWorldSub',
-        handler: (context, message) => {
+        handler: (message, context) => {
             context.log('Service bus topic function processed message:', message);
         }
     });
