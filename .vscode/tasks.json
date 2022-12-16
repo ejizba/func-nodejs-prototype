@@ -17,6 +17,13 @@
 		},
 		{
 			"type": "shell",
+			"label": "npm watch (functions)",
+			"command": "npm run watch",
+			"problemMatcher": "$tsc-watch",
+			"group": "build"
+		},
+		{
+			"type": "shell",
 			"label": "npm install (functions)",
 			"command": "npm install"
 		},

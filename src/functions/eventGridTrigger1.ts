@@ -1,6 +1,6 @@
 import { app, EventGridEvent, InvocationContext } from '@azure/functions';
 
-export async function eventGridTrigger1(context: InvocationContext, event: EventGridEvent): Promise<void> {
+export async function eventGridTrigger1(event: EventGridEvent, context: InvocationContext): Promise<void> {
     context.log('Event grid function processed event:', event);
 }
 
