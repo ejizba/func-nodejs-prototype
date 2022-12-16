@@ -29,7 +29,7 @@ app.http('durableEntityStart1', {
     handler: httpStart,
 });
 
-const entityHandler: EntityHandler<number> = (context) => {
+const counterEntity: EntityHandler<number> = (context) => {
     const currentValue: number = context.df.getState(() => 0);
     switch (context.df.operationName) {
         case 'add':
@@ -44,4 +44,4 @@ const entityHandler: EntityHandler<number> = (context) => {
             break;
     }
 };
-df.app.entity(entityName, entityHandler);
+df.app.entity(entityName, counterEntity);
