@@ -1,4 +1,4 @@
-import { app, HttpRequest, HttpResponse, InvocationContext, output, trigger } from "@azure/functions";
+import { app, HttpRequest, HttpResponseInit, InvocationContext, output, trigger } from "@azure/functions";
 
 const queueOutput = output.generic({
     type: 'queue',
@@ -32,7 +32,7 @@ const eventHubOutput = output.generic({
     connection: 'eventHub_APPSETTING',
     eventHubName: 'helloWorldHub'
 });
-async function helloWorldWithExtraOutputs(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
+async function helloWorldWithExtraOutputs(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
 
     const name = request.query.get('name') || await request.text() || 'world';

@@ -32,7 +32,7 @@ describe('helloWorld', () => {
             },
             url: 'http://localhost:7071/api/helloWorld'
         });
-        const response = await helloWorld1(createTestInvocationContext(), request);
+        const response = await helloWorld1(request, createTestInvocationContext());
         expect(response.body).to.equal('Hello, Eric!');
     });
 
@@ -44,7 +44,7 @@ describe('helloWorld', () => {
                 string: 'Eric'
             }
         });
-        const response = await helloWorld1(createTestInvocationContext(), request);
+        const response = await helloWorld1(request, createTestInvocationContext());
         expect(response.body).to.equal('Hello, Eric!');
     });
 
@@ -53,7 +53,7 @@ describe('helloWorld', () => {
             method: 'GET',
             url: 'http://localhost:7071/api/helloWorld'
         });
-        const response = await helloWorld1(createTestInvocationContext(), request);
+        const response = await helloWorld1(request, createTestInvocationContext());
         expect(response.body).to.equal('Hello, world!');
     });
 })

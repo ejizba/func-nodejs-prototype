@@ -1,6 +1,6 @@
 import { app, InvocationContext, trigger } from "@azure/functions";
 
-export async function storageBlobTrigger1(context: InvocationContext, blob: Buffer): Promise<void> {
+export async function storageBlobTrigger1(blob: Buffer, context: InvocationContext): Promise<void> {
     context.log(`Storage blob function processed blob "${context.triggerMetadata.name}" with size "${blob.length}"`);
 }
 

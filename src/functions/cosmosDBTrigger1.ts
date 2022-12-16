@@ -1,6 +1,6 @@
 import { app, InvocationContext, trigger } from "@azure/functions";
 
-export async function cosmosDBTrigger1(context: InvocationContext, documents: unknown[]): Promise<void> {
+export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
     context.log(`Cosmos DB function processed ${documents.length} documents`);
 }
 

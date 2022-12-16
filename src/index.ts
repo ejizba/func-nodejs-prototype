@@ -8,7 +8,7 @@ app.generic('helloWorld1', {
     return: output.generic({
         type: 'http'
     }),
-    handler: async (context: InvocationContext, request: HttpRequest) => {
+    handler: async (request: HttpRequest, context: InvocationContext) => {
         context.log(`Http function processed request for url "${request.url}"`);
 
         const name = request.query.get('name') || await request.text() || 'world';
@@ -22,7 +22,7 @@ app.generic('timerTrigger1', {
         type: 'timerTrigger',
         schedule: '0 */5 * * * *',
     }),
-    handler: (context: InvocationContext, myTimer: Timer) => {
+    handler: (myTimer: Timer, context: InvocationContext) => {
         var timeStamp = new Date().toISOString();
         context.log('The current time is: ', timeStamp);
     }

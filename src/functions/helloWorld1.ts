@@ -1,6 +1,6 @@
-import { app, HttpRequest, HttpResponse, InvocationContext, output, trigger } from "@azure/functions";
+import { app, HttpRequest, HttpResponseInit, InvocationContext, output, trigger } from "@azure/functions";
 
-export async function helloWorld1(context: InvocationContext, request: HttpRequest): Promise<HttpResponse> {
+export async function helloWorld1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
 
     const name = request.query.get('name') || await request.text() || 'world';
