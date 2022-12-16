@@ -26,7 +26,7 @@ const httpStart: HttpHandler = async (request: HttpRequest, context: InvocationC
     const client = df.getClient(context, clientInput);
     const instanceId = await client.startNew(request.params.orchestratorName, undefined, request.text());
     context.log(`Started orchestration with ID = '${instanceId}'.`);
-    return new HttpResponse(client.createCheckStatusResponse(request, instanceId));
+    return client.createCheckStatusResponse(request, instanceId);
 };
 
 app.http('durableOrchestrationStart1', {

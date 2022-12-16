@@ -1,4 +1,4 @@
-import { app, HttpHandler, HttpRequest, HttpResponseBody, InvocationContext } from '@azure/functions';
+import { app, HttpHandler, HttpRequest, HttpResponse, InvocationContext } from '@azure/functions';
 import * as df from 'durable-functions';
 import { EntityHandler } from 'durable-functions';
 
@@ -18,9 +18,9 @@ const httpStart: HttpHandler = async (req: HttpRequest, context: InvocationConte
     } else {
         // read current state of entity
         const stateResponse = await client.readEntityState(entityId);
-        return {
-            body: stateResponse.entityState as HttpResponseBody,
-        };
+        return new HttpResponse({
+            jsonBody: stateResponse.entityState,
+        });
     }
 };
 app.http('durableEntityStart1', {
