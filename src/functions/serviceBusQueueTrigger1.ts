@@ -1,6 +1,6 @@
 import { app, InvocationContext } from '@azure/functions';
 
-export async function serviceBusQueueTrigger1(context: InvocationContext, message: unknown): Promise<void> {
+export async function serviceBusQueueTrigger1(message: unknown, context: InvocationContext): Promise<void> {
     context.log('Service bus queue function processed message:', message);
 }
 

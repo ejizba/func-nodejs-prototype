@@ -10,7 +10,7 @@ const blobOutput = output.storageBlob({
     path: 'helloworld/{queueTrigger}-copy',
 });
 
-export async function copyBlob1(context: InvocationContext, queueItem: unknown): Promise<void> {
+export async function copyBlob1(queueItem: unknown, context: InvocationContext): Promise<void> {
     context.log('Storage queue function processed work item:', queueItem);
 
     const blobInputValue = context.extraInputs.get(blobInput);

@@ -1,6 +1,6 @@
 import { app, InvocationContext } from '@azure/functions';
 
-export async function storageQueueTrigger1(context: InvocationContext, queueItem: unknown): Promise<void> {
+export async function storageQueueTrigger1(queueItem: unknown, context: InvocationContext): Promise<void> {
     context.log('Storage queue function processed work item:', queueItem);
 }
 

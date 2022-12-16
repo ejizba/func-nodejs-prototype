@@ -31,7 +31,7 @@ describe('httpTrigger1', () => {
             },
             url: 'http://localhost:7071/api/httpTrigger1',
         });
-        const response = await httpTrigger1(createTestInvocationContext(), request);
+        const response = await httpTrigger1(request, createTestInvocationContext());
         expect(response.body).to.equal('Hello, Eric!');
     });
 
@@ -43,7 +43,7 @@ describe('httpTrigger1', () => {
                 string: 'Eric',
             },
         });
-        const response = await httpTrigger1(createTestInvocationContext(), request);
+        const response = await httpTrigger1(request, createTestInvocationContext());
         expect(response.body).to.equal('Hello, Eric!');
     });
 
@@ -52,7 +52,7 @@ describe('httpTrigger1', () => {
             method: 'GET',
             url: 'http://localhost:7071/api/httpTrigger1',
         });
-        const response = await httpTrigger1(createTestInvocationContext(), request);
+        const response = await httpTrigger1(request, createTestInvocationContext());
         expect(response.body).to.equal('Hello, world!');
     });
 });
