@@ -22,7 +22,7 @@ df.activity<string>(activityName, { handler: helloActivity });
 
 const clientInput = df.input.client();
 
-const clientHandler: HttpHandler = async (context: InvocationContext, request: HttpRequest) => {
+const httpStart: HttpHandler = async (context: InvocationContext, request: HttpRequest) => {
     const client = df.getClient(context, clientInput);
     const instanceId = await client.startNew(request.params.orchestratorName, undefined, request.text());
     context.log(`Started orchestration with ID = '${instanceId}'.`);
@@ -32,5 +32,5 @@ const clientHandler: HttpHandler = async (context: InvocationContext, request: H
 app.http('durableOrchestrationStart1', {
     route: 'orchestrators/{orchestratorName}',
     extraInputs: [clientInput],
-    handler: clientHandler,
+    handler: httpStart,
 });
