@@ -20,7 +20,7 @@ const helloActivity: ActivityHandler<string> = (_context: InvocationContext, inp
 };
 df.activity<string>(activityName, { handler: helloActivity });
 
-const clientInput = df.input.client();
+const clientInput = df.input.durableClient();
 
 const httpStart: HttpHandler = async (context: InvocationContext, request: HttpRequest) => {
     const client = df.getClient(context, clientInput);

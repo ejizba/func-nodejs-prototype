@@ -5,7 +5,7 @@ import { EntityHandler } from 'durable-functions';
 // Replace with your own Durable entity name
 const entityName = 'Counter';
 
-const clientInput = df.input.client();
+const clientInput = df.input.durableClient();
 
 const clientHandler: HttpHandler = async (context: InvocationContext, req: HttpRequest) => {
     const id: string = req.params.id;
