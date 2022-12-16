@@ -44,4 +44,4 @@ const entityHandler: EntityHandler<number> = (context) => {
             break;
     }
 };
-df.entity(entityName, entityHandler);
+df.app.entity(entityName, entityHandler);
