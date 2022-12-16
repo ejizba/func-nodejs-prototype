@@ -15,10 +15,10 @@ const orchestrator: OrchestrationHandler = function* (context) {
 };
 df.app.orchestration('durableOrchestrator1', orchestrator);
 
-const helloActivity: ActivityHandler<string> = (_context: InvocationContext, input: string) => {
+const helloActivity: ActivityHandler = (_context: InvocationContext, input: string) => {
     return `Hello, ${input}`;
 };
-df.app.activity<string>(activityName, { handler: helloActivity });
+df.app.activity(activityName, { handler: helloActivity });
 
 const clientInput = df.input.durableClient();
 
