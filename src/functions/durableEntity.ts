@@ -7,7 +7,7 @@ const entityName = 'Counter';
 
 const clientInput = df.input.durableClient();
 
-const clientHandler: HttpHandler = async (context: InvocationContext, req: HttpRequest) => {
+const httpStart: HttpHandler = async (req: HttpRequest, context: InvocationContext) => {
     const id: string = req.params.id;
     const entityId = new df.EntityId(entityName, id);
     const client = df.getClient(context, clientInput);
@@ -26,7 +26,7 @@ const clientHandler: HttpHandler = async (context: InvocationContext, req: HttpR
 app.http('durableEntityStart1', {
     route: `${entityName}/{id}`,
     extraInputs: [clientInput],
-    handler: clientHandler,
+    handler: httpStart,
 });
 
 const entityHandler: EntityHandler<number> = (context) => {

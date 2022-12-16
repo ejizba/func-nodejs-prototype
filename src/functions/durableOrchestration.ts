@@ -1,4 +1,4 @@
-import { app, HttpHandler, HttpRequest, HttpResponse, InvocationContext } from '@azure/functions';
+import { app, HttpHandler, HttpRequest, InvocationContext } from '@azure/functions';
 import * as df from 'durable-functions';
 import { ActivityHandler, OrchestrationHandler } from 'durable-functions';
 
@@ -15,18 +15,18 @@ const orchestrator: OrchestrationHandler = function* (context) {
 };
 df.app.orchestration('durableOrchestrator1', orchestrator);
 
-const helloActivity: ActivityHandler = (_context: InvocationContext, input: string) => {
+const helloActivity: ActivityHandler = (input: string) => {
     return `Hello, ${input}`;
 };
 df.app.activity(activityName, { handler: helloActivity });
 
 const clientInput = df.input.durableClient();
 
-const httpStart: HttpHandler = async (context: InvocationContext, request: HttpRequest) => {
+const httpStart: HttpHandler = async (request: HttpRequest, context: InvocationContext) => {
     const client = df.getClient(context, clientInput);
     const instanceId = await client.startNew(request.params.orchestratorName, undefined, request.text());
     context.log(`Started orchestration with ID = '${instanceId}'.`);
-    return client.createCheckStatusResponse(request, instanceId) as HttpResponse;
+    return new HttpResponse(client.createCheckStatusResponse(request, instanceId));
 };
 
 app.http('durableOrchestrationStart1', {
