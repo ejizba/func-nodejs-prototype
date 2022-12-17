@@ -10,7 +10,8 @@
         "test": "mocha 'dist/test/**/*.test.js'"
     },
     "dependencies": {
-        "@azure/functions": "^4.0.0-alpha.6"
+        "@azure/functions": "^4.0.0-alpha.6",
+        "durable-functions": "file:../../../durable/js-sdk"
     },
     "devDependencies": {
         "@types/chai": "^4.0.0",
