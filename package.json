@@ -11,7 +11,7 @@
     },
     "dependencies": {
         "@azure/functions": "^4.0.0-alpha.6",
-        "durable-functions": "file:../../../durable/js-sdk"
+        "durable-functions": "^3.0.0-alpha.1"
     },
     "devDependencies": {
         "@types/chai": "^4.0.0",
@@ -22,5 +22,5 @@
         "typescript": "^4.0.0",
         "azure-functions-core-tools": "^4.0.4915"
     },
-    "main": "dist/src/index.js"
+    "main": "dist/src/functions/*.js"
 }
