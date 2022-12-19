@@ -32,7 +32,7 @@ This "durable" branch contains a sample app for [Durable Functions](https://gith
 1. Run `npm start`
 1. Voila ✨ you have a running Durable Functions app!
 
-### Troubleshooting
+## Troubleshooting
 
 If your app is using extension bundles, you may see an error saying "The orchestrator can not execute without an OrchestratorStarted event" when you try to run any orchestration, as below:
 
@@ -59,6 +59,6 @@ This is a known issue (see https://github.com/Azure/azure-functions-durable-exte
 
 1. If running your app using core tools directly, make sure you run `func extensions install` before running `func start`.
 
-### Steps to enable more Azure triggers
+## Steps to enable more Azure triggers
 
 The default configuration in this branch only support http, timer, and durable triggers. This is because this branch does not use extension bundles, but instead relies on using an `extensions.csproj` and `func extensions install` (if running locally) to install only the specific extensions needed for the app. See the above section for more details. Until https://github.com/Azure/azure-functions-durable-extension/issues/2338 is fixed, please add any extensions you need (e.g., Storage, EventHub, Service Bus) to the provided `extensins.csproj` file.
