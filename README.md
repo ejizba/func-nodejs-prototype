@@ -57,7 +57,7 @@ This is a known issue (see https://github.com/Azure/azure-functions-durable-exte
 
 1. Make sure there is an `extensions.csproj` at the root directory of the app, and that it includes references to all the extensions the app requires.
 
-1. If running your app using core tools directly, make sure you run `func extensions install` to install the extensions referenced in `extensions.csproj` before running `func start`.
+1. If running your app using core tools directly, make sure you run `func extensions install` before running `func start`.
 
 ### Steps to enable more Azure triggers
 
