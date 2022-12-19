@@ -32,6 +32,39 @@ This "durable" branch contains a sample app for [Durable Functions](https://gith
 1. Run `npm start`
 1. Voila ✨ you have a running Durable Functions app!
 
+### Troubleshooting
+
+If your app is using extension bundles, you may see an error saying "The orchestrator can not execute without an OrchestratorStarted event" when you try to run any orchestration, as below:
+
+```
+Exception: The orchestrator can not execute without an OrchestratorStarted event.
+Stack: TypeError: The orchestrator can not execute without an OrchestratorStarted event.
+    at Function.ensureNonNull (C:\Users\hossamnasr\ms\azure\durable\js-sdk\lib\src\utils.js:63:19)
+    at Orchestrator.<anonymous> (C:\Users\hossamnasr\ms\azure\durable\js-sdk\lib\src\orchestrator.js:45:58)
+    at Generator.next (<anonymous>)
+    at C:\Users\hossamnasr\ms\azure\durable\js-sdk\lib\src\orchestrator.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\hossamnasr\ms\azure\durable\js-sdk\lib\src\orchestrator.js:4:12)
+    at Orchestrator.handle (C:\Users\hossamnasr\ms\azure\durable\js-sdk\lib\src\orchestrator.js:26:16)
+    at C:\Users\hossamnasr\ms\azure\durable\js-sdk\lib\src\shim.js:18:22
+    at Generator.next (<anonymous>)
+    at C:\Users\hossamnasr\ms\azure\durable\js-sdk\lib\src\shim.js:8:71
+```
+
+This happens because there is currently an issue when using the Durable Functions extension in out-of-process scenario with the WebPubSub extension (See https://github.com/Azure/azure-functions-durable-extension/issues/2338 and https://github.com/Azure/azure-functions-durable-js/issues/409 for more details). Normally, this wouldn't be a common occurrence since the two extensions are rarely used together, but there was a separate issue in the Functions Host where it would load all extensions in the extension bundle for new programming model apps (See issue https://github.com/Azure/azure-functions-host/issues/8614 for more details).
+
+There is already a fix in the Durable Extension (https://github.com/Azure/azure-functions-durable-extension/pull/2341) that would mitigate this issue, and a fix in the Host (https://github.com/Azure/azure-functions-host/issues/8870) for the Host issue, but neither have made it into a public release.
+
+Until there is a version of the Durable Extension in an extension bundle that includes the mitigation, or a version of core tools that includes the Host fix, the only mitigation for this issue is to remove extension bundles and instead manually load the necessary extensions using an `extensions.csproj` file. For more instructions on how to manually install extensions using core tools and how to use the `extensions.csproj` file, see the guides [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cwindows%2Ccsharp%2Cportal%2Cbash#install-extensions) and [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#manually-install-extensions).
+
+To troubleshoot this error message:
+
+1. Make sure your `host.json` file does _not_ include references to extensionBundles.
+
+1. Make sure there is an `extensions.csproj` at the root directory of the app, and that it includes references to all the extensions the app requires.
+
+1. If running your app using core tools directly (not using `npm start`), make sure you run `func extensions install` to install the extensions referenced in `extensions.csproj` before running `func start`.
+
 ### Steps to enable more Azure triggers
 
-The default configuration in this branch only support http, timer, and durable triggers. This is because this branch does not use extension bundles, but instead relies on using an `extensions.csproj` and `func extensions install` (if running locally) to install only the specific extensions needed for the app. This is because there is currently an issue affecting using the new programming model with extension bundles. See the issue here for more details: https://github.com/Azure/azure-functions-durable-extension/issues/2338. Until https://github.com/Azure/azure-functions-durable-extension/issues/2338 is fixed, please add any extensions you need (e.g., Storage, EventHub, Service Bus) to the provided `extensins.csproj` file.
+The default configuration in this branch only support http, timer, and durable triggers. This is because this branch does not use extension bundles, but instead relies on using an `extensions.csproj` and `func extensions install` (if running locally) to install only the specific extensions needed for the app. See the above section for more details. Until https://github.com/Azure/azure-functions-durable-extension/issues/2338 is fixed, please add any extensions you need (e.g., Storage, EventHub, Service Bus) to the provided `extensins.csproj` file.
