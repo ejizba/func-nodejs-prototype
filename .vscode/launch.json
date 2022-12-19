@@ -11,13 +11,9 @@
         {
             "name": "Launch Unit Tests",
             "runtimeExecutable": "npm",
-            "runtimeArgs": [
-                "test"
-            ],
+            "runtimeArgs": ["test"],
             "request": "launch",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
+            "skipFiles": ["<node_internals>/**"],
             "type": "node"
         },
         {
@@ -25,6 +21,13 @@
             "request": "attach",
             "name": "Attach by Process ID",
             "processId": "${command:PickProcess}"
+        },
+        {
+            "name": "Attach to Node Functions",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "preLaunchTask": "func: host start"
         }
     ]
 }
