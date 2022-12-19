@@ -51,19 +51,13 @@ Stack: TypeError: The orchestrator can not execute without an OrchestratorStarte
     at C:\Users\hossamnasr\ms\azure\durable\js-sdk\lib\src\shim.js:8:71
 ```
 
-This happens because there is currently an issue when using the Durable Functions extension in out-of-process applications with the WebPubSub extension (See https://github.com/Azure/azure-functions-durable-extension/issues/2338 and https://github.com/Azure/azure-functions-durable-js/issues/409 for more details). Normally, this wouldn't be a common occurrence since the two extensions are rarely used together, but there was a separate issue in the Functions Host where it would load all extensions in the extension bundle for new programming model apps (See issue https://github.com/Azure/azure-functions-host/issues/8614 for more details).
+This is a known issue (see https://github.com/Azure/azure-functions-durable-extension/issues/2338 and https://github.com/Azure/azure-functions-durable-js/issues/409 for more details). If this happens, make sure you aren't using extension bundles and instead manually installing extensions in `extension.csproj` (for more instructions, see the guides [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cwindows%2Ccsharp%2Cportal%2Cbash#install-extensions) and [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#manually-install-extensions)). To double-check, follow these quick steps:
 
-There is already a fix in the Durable Extension (https://github.com/Azure/azure-functions-durable-extension/pull/2341) that would mitigate this issue, and a fix in the Host (https://github.com/Azure/azure-functions-host/issues/8870) for the Host issue, but neither have made it into a public release.
-
-Until there is a version of the Durable Extension in an extension bundle that includes the mitigation, or a version of core tools that includes the Host fix, the only mitigation for this issue is to remove extension bundles and instead manually load the necessary extensions using an `extensions.csproj` file. For more instructions on how to manually install extensions using core tools and how to use the `extensions.csproj` file, see the guides [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cwindows%2Ccsharp%2Cportal%2Cbash#install-extensions) and [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#manually-install-extensions).
-
-To troubleshoot this error message:
-
-1. Make sure your `host.json` file does _not_ include references to extensionBundles.
+1. Make sure your `host.json` file does _not_ include references to `extensionBundles`.
 
 1. Make sure there is an `extensions.csproj` at the root directory of the app, and that it includes references to all the extensions the app requires.
 
-1. If running your app using core tools directly (not using `npm start`), make sure you run `func extensions install` to install the extensions referenced in `extensions.csproj` before running `func start`.
+1. If running your app using core tools directly, make sure you run `func extensions install` before running `func start`.
 
 ### Steps to enable more Azure triggers
 
