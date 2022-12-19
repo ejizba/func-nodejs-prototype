@@ -51,7 +51,7 @@ Stack: TypeError: The orchestrator can not execute without an OrchestratorStarte
     at C:\Users\hossamnasr\ms\azure\durable\js-sdk\lib\src\shim.js:8:71
 ```
 
-See https://github.com/Azure/azure-functions-durable-extension/issues/2338 and https://github.com/Azure/azure-functions-durable-js/issues/409 for more details. If this happens, make sure you aren't using extension bundles and instead manually installing extensions in `extension.csproj` (for more instructions, see the guides [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cwindows%2Ccsharp%2Cportal%2Cbash#install-extensions) and [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#manually-install-extensions)). To double-check, follow these quick steps:
+This is a known issue (see https://github.com/Azure/azure-functions-durable-extension/issues/2338 and https://github.com/Azure/azure-functions-durable-js/issues/409 for more details). If this happens, make sure you aren't using extension bundles and instead manually installing extensions in `extension.csproj` (for more instructions, see the guides [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cwindows%2Ccsharp%2Cportal%2Cbash#install-extensions) and [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#manually-install-extensions)). To double-check, follow these quick steps:
 
 1. Make sure your `host.json` file does _not_ include references to extensionBundles.
 
