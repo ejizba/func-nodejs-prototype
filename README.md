@@ -12,7 +12,7 @@ This "durable" branch contains a sample app for [Durable Functions](https://gith
 
 ## Setup
 
-1. Clone this repository
+1. Clone this repository and checkout the `durable` branch
 1. Add a `local.settings.json` file with the following contents:
 
     ```json
