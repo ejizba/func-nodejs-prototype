@@ -5,7 +5,7 @@
     "scripts": {
         "build": "tsc",
         "watch": "tsc -w",
-        "prestart": "npm run build",
+        "prestart": "func extensions install && rimraf dist && npm run build",
         "start": "func start",
         "test": "mocha 'dist/test/**/*.test.js'"
     },
@@ -17,10 +17,11 @@
         "@types/chai": "^4.0.0",
         "@types/mocha": "^9.0.0",
         "@types/node": "^18.0.0",
+        "azure-functions-core-tools": "^4.0.4915",
         "chai": "^4.0.0",
         "mocha": "^9.0.0",
-        "typescript": "^4.0.0",
-        "azure-functions-core-tools": "^4.0.4915"
+        "rimraf": "^3.0.2",
+        "typescript": "^4.0.0"
     },
     "main": "dist/src/functions/*.js"
 }
