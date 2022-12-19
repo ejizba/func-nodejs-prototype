@@ -51,7 +51,7 @@ Stack: TypeError: The orchestrator can not execute without an OrchestratorStarte
     at C:\Users\hossamnasr\ms\azure\durable\js-sdk\lib\src\shim.js:8:71
 ```
 
-This happens because there is currently an issue when using the Durable Functions extension in out-of-process scenario with the WebPubSub extension (See https://github.com/Azure/azure-functions-durable-extension/issues/2338 and https://github.com/Azure/azure-functions-durable-js/issues/409 for more details). Normally, this wouldn't be a common occurrence since the two extensions are rarely used together, but there was a separate issue in the Functions Host where it would load all extensions in the extension bundle for new programming model apps (See issue https://github.com/Azure/azure-functions-host/issues/8614 for more details).
+This happens because there is currently an issue when using the Durable Functions extension in out-of-process applications with the WebPubSub extension (See https://github.com/Azure/azure-functions-durable-extension/issues/2338 and https://github.com/Azure/azure-functions-durable-js/issues/409 for more details). Normally, this wouldn't be a common occurrence since the two extensions are rarely used together, but there was a separate issue in the Functions Host where it would load all extensions in the extension bundle for new programming model apps (See issue https://github.com/Azure/azure-functions-host/issues/8614 for more details).
 
 There is already a fix in the Durable Extension (https://github.com/Azure/azure-functions-durable-extension/pull/2341) that would mitigate this issue, and a fix in the Host (https://github.com/Azure/azure-functions-host/issues/8870) for the Host issue, but neither have made it into a public release.
 
