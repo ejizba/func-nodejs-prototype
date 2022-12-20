@@ -85,6 +85,7 @@ typings/
 
 # TypeScript output
 dist
+!worker/dist
 out
 
 # Azure Functions artifacts

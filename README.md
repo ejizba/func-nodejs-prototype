@@ -1,3 +1,18 @@
+NOTES:
+
+This branch is to test the latest worker in Azure before it rolls out.
+
+1. Create a new Node 18 app like normal
+1. Make sure to add these app settings:
+    - `languageWorkers__node__workerDirectory` set to `D:\home\site\wwwroot\worker`
+    - `AzureWebJobsFeatureFlags` set to `EnableWorkerIndexing`
+1. Deploy this branch
+1. At this point, you can verify if it worked by clicking the function in VS Code. It should have an actual scriptFile ("index.js") instead of the value "n/a"
+    ![function](./function.png)
+1. If it didn't work, try a combination of restarting the app, redeploying the app from VS Code, and/or waiting a few minutes. I honestly don't know why it doesn't work immediately
+
+---
+
 # Azure Functions Node.js Framework v4 - Sample App
 
 This repository contains a sample app for the [new Node.js framework for Azure Functions](https://aka.ms/AzFuncNodeV4). The default "main" branch uses TypeScript, but you may switch to the "main-js" branch for the same app using just JavaScript.
