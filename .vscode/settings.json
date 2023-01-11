@@ -11,5 +11,6 @@
     ],
     "editor.formatOnSave": true,
     "typescript.preferences.importModuleSpecifier": "relative",
-    "azureFunctions.funcCliPath": "./node_modules/.bin/func"
+    "azureFunctions.funcCliPath": "./node_modules/.bin/func",
+    "azureFunctions.projectLanguageModel": 4
 }
