@@ -1,4 +1,4 @@
-const { app, HttpHandler, HttpRequest, InvocationContext } = require('@azure/functions');
+const { app } = require('@azure/functions');
 const df = require('durable-functions');
 
 // Replace with the name of your Durable Functions Activity
