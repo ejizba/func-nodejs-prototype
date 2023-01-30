@@ -3,25 +3,6 @@ import { expect } from 'chai';
 import 'mocha';
 import { httpTrigger1 } from '../../src/functions/httpTrigger1';
 
-function createTestInvocationContext(): InvocationContext {
-    return new InvocationContext({
-        functionName: 'testFunctionName',
-        invocationId: 'testInvocationId',
-        logHandler: (level, ...args) => {
-            switch (level) {
-                case 'error':
-                    console.error(...args);
-                    break;
-                case 'warning':
-                    console.warn(...args);
-                    break;
-                default:
-                    console.log(...args);
-            }
-        },
-    });
-}
-
 describe('httpTrigger1', () => {
     it('should return message with name from query', async () => {
         const request = new HttpRequest({
@@ -31,7 +12,7 @@ describe('httpTrigger1', () => {
             },
             url: 'http://localhost:7071/api/httpTrigger1',
         });
-        const response = await httpTrigger1(request, createTestInvocationContext());
+        const response = await httpTrigger1(request, new InvocationContext());
         expect(response.body).to.equal('Hello, Eric!');
     });
 
@@ -43,7 +24,7 @@ describe('httpTrigger1', () => {
                 string: 'Eric',
             },
         });
-        const response = await httpTrigger1(request, createTestInvocationContext());
+        const response = await httpTrigger1(request, new InvocationContext());
         expect(response.body).to.equal('Hello, Eric!');
     });
 
@@ -52,7 +33,7 @@ describe('httpTrigger1', () => {
             method: 'GET',
             url: 'http://localhost:7071/api/httpTrigger1',
         });
-        const response = await httpTrigger1(request, createTestInvocationContext());
+        const response = await httpTrigger1(request, new InvocationContext());
         expect(response.body).to.equal('Hello, world!');
     });
 });
