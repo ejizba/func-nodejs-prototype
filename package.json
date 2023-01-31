@@ -6,20 +6,22 @@
         "build": "tsc",
         "watch": "tsc -w",
         "prestart": "npm run build",
-        "start": "func start",
-        "test": "mocha 'dist/test/**/*.test.js'"
+        "start": "func start --typescript",
+        "test": "mocha 'dist/test/**/*.test.js'",
+        "azurite": "azurite --silent --location ./azurite --debug ./azurite/debug.log"
     },
     "dependencies": {
-        "@azure/functions": "^4.0.0-alpha.7"
+        "@azure/functions": "^4.0.0-alpha.7",
+        "azurite": "^3.21.0"
     },
     "devDependencies": {
         "@types/chai": "^4.0.0",
         "@types/mocha": "^9.0.0",
         "@types/node": "^18.0.0",
+        "azure-functions-core-tools": "^4.0.4915",
         "chai": "^4.0.0",
         "mocha": "^9.0.0",
-        "typescript": "^4.0.0",
-        "azure-functions-core-tools": "^4.0.4915"
+        "typescript": "^4.0.0"
     },
     "main": "dist/src/index.js"
 }
