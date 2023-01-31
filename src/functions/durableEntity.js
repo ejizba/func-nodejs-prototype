@@ -4,15 +4,13 @@ const df = require('durable-functions');
 // Replace with your own Durable entity name
 const entityName = 'Counter';
 
-const clientInput = df.input.durableClient();
-
 app.http('durableEntityStart1', {
     route: `${entityName}/{id}`,
-    extraInputs: [clientInput],
+    extraInputs: [df.input.durableClient()],
     handler: async (req, context) => {
         const id = req.params.id;
         const entityId = new df.EntityId(entityName, id);
-        const client = df.getClient(context, clientInput);
+        const client = df.getClient(context);
 
         if (req.method === 'POST') {
             // increment value
