@@ -1,11 +1,11 @@
-import { app, HttpHandler, HttpRequest, InvocationContext } from '@azure/functions';
+import { app, HttpHandler, HttpRequest, HttpResponse, InvocationContext } from '@azure/functions';
 import * as df from 'durable-functions';
-import { ActivityHandler, OrchestrationHandler } from 'durable-functions';
+import { ActivityHandler, OrchestrationContext, OrchestrationHandler } from 'durable-functions';
 
 // Replace with the name of your Durable Functions Activity
 const activityName = 'hello';
 
-const orchestrator: OrchestrationHandler = function* (context) {
+const orchestrator: OrchestrationHandler = function* (context: OrchestrationContext) {
     const outputs = [];
     outputs.push(yield context.df.callActivity(activityName, 'Tokyo'));
     outputs.push(yield context.df.callActivity(activityName, 'Seattle'));
@@ -15,23 +15,23 @@ const orchestrator: OrchestrationHandler = function* (context) {
 };
 df.app.orchestration('durableOrchestrator1', orchestrator);
 
-const helloActivity: ActivityHandler = (input: string) => {
+const helloActivity: ActivityHandler = (input: string): string => {
     return `Hello, ${input}`;
 };
 df.app.activity(activityName, { handler: helloActivity });
 
-const clientInput = df.input.durableClient();
+const httpStart: HttpHandler = async (request: HttpRequest, context: InvocationContext): Promise<HttpResponse> => {
+    const client = df.getClient(context);
+    const body: unknown = await request.text();
+    const instanceId: string = await client.startNew(request.params.orchestratorName, { input: body });
 
-const httpStart: HttpHandler = async (request: HttpRequest, context: InvocationContext) => {
-    const client = df.getClient(context, clientInput);
-    const body = await request.text();
-    const instanceId = await client.startNew(request.params.orchestratorName, undefined, body);
     context.log(`Started orchestration with ID = '${instanceId}'.`);
+
     return client.createCheckStatusResponse(request, instanceId);
 };
 
 app.http('durableOrchestrationStart1', {
     route: 'orchestrators/{orchestratorName}',
-    extraInputs: [clientInput],
+    extraInputs: [df.input.durableClient()],
     handler: httpStart,
 });
