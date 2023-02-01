@@ -9,7 +9,7 @@
     },
     "dependencies": {
         "@azure/functions": "^4.0.0-alpha.6",
-        "durable-functions": "^3.0.0-alpha.1"
+        "durable-functions": "^3.0.0-alpha.2"
     },
     "devDependencies": {
         "@types/chai": "^4.0.0",
