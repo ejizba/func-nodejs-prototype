@@ -1,6 +1,6 @@
 const { app } = require('@azure/functions');
 
-app.get('httpTrigger1', {
+app.http('httpTrigger1', {
     methods: ['POST', 'GET'],
     handler: async (request, context) => {
         context.log(`Http function processed request for url "${request.url}"`);
