@@ -8,7 +8,7 @@
         "test": "mocha 'dist/test/**/*.test.js'"
     },
     "dependencies": {
-        "@azure/functions": "^4.0.0-alpha.6",
+        "@azure/functions": "^4.0.0-alpha.8",
         "durable-functions": "^3.0.0-alpha.2"
     },
     "devDependencies": {
